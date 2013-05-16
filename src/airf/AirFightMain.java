@@ -12,6 +12,10 @@ import org.newdawn.slick.SlickException;
 import util.bezier.BezierCurve;
 import airf.EntityFactory.JetType;
 import airf.component.Path;
+import airf.pathing.AccelerationProfile;
+import airf.pathing.Course;
+import airf.pathing.CourseFactory;
+import airf.pathing.PathDefinition;
 import airf.system.HeadingSystem;
 import airf.system.JetSystem;
 import airf.system.MovementSystem;
@@ -68,17 +72,23 @@ public class AirFightMain extends BasicGame
         
         BezierCurve curve = new BezierCurve();
         curve.setAnchorStart(0, 0);
-        curve.setAnchorEnd(600, 600);
-        curve.setControlPointOne(800, 0);
-        curve.setControlPointTwo(800, 0);
+        curve.setAnchorEnd(300, 300);
+        curve.setControlPointOne(400, 0);
+        curve.setControlPointTwo(400, 0);
         curve.calculateLength(0.01f);
+        
         PathDefinition path = new PathDefinition(curve);
+        AccelerationProfile profile = new AccelerationProfile();
+        
+        
         Path pathc = new Path();
         pathc.p = 0;
-        pathc.v = (float)Math.sqrt(0.01f*0.01f + 0.02f*0.02f);
-        pathc.path = path;
+        pathc.v = (float)Math.sqrt(0.05f*0.05f + 0.05f*0.05f);
+        pathc.x = 150;
+        pathc.y = 150;
+        pathc.course = new Course(path, profile);
         
-        Entity testJet = EntityFactory.createJet(world, 50, 50, 0.01f, 0.02f, 270, JetType.WHITE);
+        Entity testJet = EntityFactory.createJet(world, 150, 150, 0.05f, 0.05f, 270, JetType.WHITE);
         testJet.addComponent(pathc);
         testJet.addToWorld();
         

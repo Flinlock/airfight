@@ -50,8 +50,8 @@ public class EntityFactory
         e.addComponent(heading);
 
         Velocity v = new Velocity();
-        v.x = 1*vx;
-        v.y = 1*vy;
+        v.x = vx;
+        v.y = vy;
         e.addComponent(v);
 
         return e;

@@ -1,10 +1,16 @@
-package airf;
+package airf.pathing;
 
 import java.awt.geom.Point2D;
 
 import util.ImmutableVector;
 import util.bezier.BezierCurve;
 
+/**
+ * Defines a 2-D parametric path using a rotated Bezier curve.
+ * 
+ * @author Michael McCarron
+ *
+ */
 public class PathDefinition
 {
     BezierCurve c;
@@ -43,16 +49,15 @@ public class PathDefinition
     {
         return p >= 1f;
     }
-    
+        
     public Point2D.Float getPoint(float p)
     {
         ImmutableVector v = c.getPoint(p).rot(rot);
         return new Point2D.Float(v.x,v.y);
     }
 
-    public float getOrth(float p)
+    public float getLength()
     {
-        return 0;
+        return c.getLength();
     }
-
 }
