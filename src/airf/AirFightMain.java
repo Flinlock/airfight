@@ -9,13 +9,9 @@ import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
 
-import util.bezier.BezierCurve;
 import airf.EntityFactory.JetType;
-import airf.component.Path;
-import airf.pathing.AccelerationProfile;
-import airf.pathing.Course;
-import airf.pathing.CourseFactory;
-import airf.pathing.PathDefinition;
+import airf.component.Jet;
+import airf.input.InputToIntent;
 import airf.system.HeadingSystem;
 import airf.system.JetSystem;
 import airf.system.MovementSystem;
@@ -57,40 +53,23 @@ public class AirFightMain extends BasicGame
     {   
         c.getGraphics().setBackground(Color.white);
         
-//        InputMapperSystem mapper = new InputMapperSystem();
-//        c.getInput().addMouseListener(mapper);
-//        c.getInput().addKeyListener(mapper);
-//        world.setSystem(mapper);
-        
+        InputToIntent mapper = new InputToIntent();
+        c.getInput().addMouseListener(mapper);
+        c.getInput().addKeyListener(mapper);
+                
         world.setSystem(new PathSystem());
         world.setSystem(new MovementSystem());
         world.setSystem(new HeadingSystem());
-        world.setSystem(new JetSystem());
+        JetSystem jsystem = new JetSystem();
+        world.setSystem(jsystem);
         spriteRenderSystem = world.setSystem(new SpriteRenderSystem(), true);
 
         world.initialize();
-        
-        BezierCurve curve = new BezierCurve();
-        curve.setAnchorStart(0, 0);
-        curve.setAnchorEnd(300, 300);
-        curve.setControlPointOne(400, 0);
-        curve.setControlPointTwo(400, 0);
-        curve.calculateLength(0.01f);
-        
-        PathDefinition path = new PathDefinition(curve);
-        AccelerationProfile profile = new AccelerationProfile();
-        
-        
-        Path pathc = new Path();
-        pathc.p = 0;
-        pathc.v = (float)Math.sqrt(0.05f*0.05f + 0.05f*0.05f);
-        pathc.x = 150;
-        pathc.y = 150;
-        pathc.course = new Course(path, profile);
-        
-        Entity testJet = EntityFactory.createJet(world, 150, 150, 0.05f, 0.05f, 270, JetType.WHITE);
-        testJet.addComponent(pathc);
+                
+        Entity testJet = EntityFactory.createJet(world, 150, 150, 0.04f, 0.04f, 0, JetType.BLACK, jsystem);
+//        Entity testJet = EntityFactory.createTestJet(world, 150, 150, 0.05f, 0.05f, 270, JetType.BLACK);
         testJet.addToWorld();
+        mapper.setPlayerJet(testJet.getComponent(Jet.class));
         
         timeSinceLastUpdate = 0;
     }

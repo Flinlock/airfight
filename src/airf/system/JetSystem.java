@@ -1,7 +1,8 @@
 package airf.system;
 
 import airf.component.Heading;
-import airf.component.Position;
+import airf.component.Jet;
+import airf.component.Path;
 import airf.component.Sprite;
 
 import com.artemis.Aspect;
@@ -14,11 +15,13 @@ public class JetSystem extends EntityProcessingSystem
 {
     @Mapper ComponentMapper<Heading> hm;
     @Mapper ComponentMapper<Sprite> sm;
+    @Mapper ComponentMapper<Jet> jm;
+    @Mapper ComponentMapper<Path> pathm;
     
     @SuppressWarnings("unchecked")
     public JetSystem()
     {
-        super(Aspect.getAspectForAll(Heading.class, Sprite.class));
+        super(Aspect.getAspectForAll(Heading.class, Sprite.class, Jet.class));
     }
 
     @Override
@@ -26,8 +29,18 @@ public class JetSystem extends EntityProcessingSystem
     {
         Heading h = hm.get(e);
         Sprite s = sm.get(e);
+        Jet j = jm.get(e);
         
-        s.rot = h.h;
+        s.rot = h.h+90;
+        
+        j.state = j.state.update(e);
+        if(j.state.changed())
+            world.changedEntity(e);
+    }
+
+    public Path getPath(Entity e)
+    {
+        return pathm.get(e);
     }
 
 }

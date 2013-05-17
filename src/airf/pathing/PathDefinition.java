@@ -22,8 +22,15 @@ public class PathDefinition
         rot = 0;
     }
     
+    /**
+     * Sets the rotation of the path.
+     * @param r Rotation in radians.
+     */
     public void setRotation(float r)
     {
+        if(r > 2*Math.PI || r < 0)
+            throw new IllegalArgumentException();
+        
         rot = r;
     }
     
@@ -52,8 +59,12 @@ public class PathDefinition
         
     public Point2D.Float getPoint(float p)
     {
-        ImmutableVector v = c.getPoint(p).rot(rot);
-        return new Point2D.Float(v.x,v.y);
+        ImmutableVector v = c.getPoint(p);//.rot(rot);
+        ImmutableVector origin = c.getAnchorStart();
+        v = v.sub(origin);
+        v = v.rot(2*(float)Math.PI - rot);
+        v = v.add(origin);
+        return new Point2D.Float(v.x,v.y);  // ensure rotation around origin
     }
 
     public float getLength()

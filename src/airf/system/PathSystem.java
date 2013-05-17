@@ -43,7 +43,7 @@ public class PathSystem extends EntityProcessingSystem
         Point2D.Float pnt = path.course.getPoint(path.p);
         p.x = pnt.x + path.x;
         p.y = pnt.y + path.y;
-                
+                        
         v.x = (p.x-p.lx)/(world.delta-update.dT);
         v.y = (p.y-p.ly)/(world.delta-update.dT);
         
@@ -55,8 +55,6 @@ public class PathSystem extends EntityProcessingSystem
             v.x = (p.x-p.lx)/(world.delta);
             v.y = (p.y-p.ly)/(world.delta);
             
-            e.removeComponent(path);
-            world.changedEntity(e);
         }
     }
     
