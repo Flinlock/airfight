@@ -9,8 +9,14 @@ import airf.component.Jet;
 public class InputToIntent implements KeyListener, MouseListener
 {
     Input input;
+    boolean shiftDown;
 
     Jet playerJet;
+    
+    public InputToIntent()
+    {
+        shiftDown = false;
+    }
     
     public void setPlayerJet(Jet j)
     {
@@ -72,32 +78,38 @@ public class InputToIntent implements KeyListener, MouseListener
     @Override
     public void keyPressed(int key, char c)
     {
+        if(key == Input.KEY_RSHIFT || key == Input.KEY_LSHIFT)
+        {
+            shiftDown = true;
+            return;
+        }
+        
         switch(key)
         {
-            case Input.KEY_1:
+            case Input.KEY_LEFT:
             {
-                playerJet.state.intentHardL();
+                if(shiftDown)
+                    playerJet.state.intentHardL();
+                else
+                    playerJet.state.intentSoftL();
                 break;
             }
-            case Input.KEY_2:
+            case Input.KEY_RIGHT:
             {
-                playerJet.state.intentHardR();
+                if(shiftDown)
+                    playerJet.state.intentHardR();
+                else
+                    playerJet.state.intentSoftR();
                 break;
             }
-            case Input.KEY_3:
+            case Input.KEY_UP:
             {
+                playerJet.state.intentSpeedUp();
                 break;
             }
-            case Input.KEY_4:
+            case Input.KEY_DOWN:
             {
-                break;
-            }
-            case Input.KEY_5:
-            {
-                break;
-            }
-            case Input.KEY_6:
-            {
+                playerJet.state.intentSlowDown();
                 break;
             }
         }
@@ -106,6 +118,11 @@ public class InputToIntent implements KeyListener, MouseListener
     @Override
     public void keyReleased(int key, char c)
     {
+        if(key == Input.KEY_RSHIFT || key == Input.KEY_LSHIFT)
+        {
+            shiftDown = false;
+            return;
+        }
     }
     
 }

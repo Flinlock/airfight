@@ -56,5 +56,79 @@ public class CourseFactory
         AccelerationProfile profile = new AccelerationProfile();
         
         return new Course(path, profile);
+    }
+
+    public static Course createCourseSoftR(float heading)
+    {
+        BezierCurve c = new BezierCurve();
+        
+        c.setAnchorStart(0, 0);
+        c.setAnchorEnd(-70, 222);
+        c.setControlPointOne(0, 110);
+        c.setControlPointTwo(-16, 196);
+        c.calculateLength(0.01f);
+
+        PathDefinition path = new PathDefinition(c);
+        path.setRotation(heading / 180 * (float)Math.PI);
+        
+        AccelerationProfile profile = new AccelerationProfile();
+        
+        return new Course(path, profile);
+    }
+
+    public static Course createCourseSoftL(float heading)
+    {
+        BezierCurve c = new BezierCurve();
+        
+        c.setAnchorStart(0, 0);
+        c.setAnchorEnd(70, 222);
+        c.setControlPointOne(0, 110);
+        c.setControlPointTwo(16, 196);
+        c.calculateLength(0.01f);
+
+        PathDefinition path = new PathDefinition(c);
+        path.setRotation(heading / 180 * (float)Math.PI);
+        
+        AccelerationProfile profile = new AccelerationProfile();
+        
+        return new Course(path, profile);
+    }
+
+    public static Course createCourseAccel(float heading)
+    {
+        BezierCurve c = new BezierCurve();
+        
+        c.setAnchorStart(0, 0);
+        c.setAnchorEnd(0, 160);
+        c.setControlPointOne(0, 0);
+        c.setControlPointTwo(0, 160);
+        c.calculateLength(0.01f);
+
+        PathDefinition path = new PathDefinition(c);
+        path.setRotation(heading / 180 * (float)Math.PI);
+        
+        AccelerationProfile profile = new AccelerationProfile();
+        profile.addDivider(0.0f, 0.000001f/(160f/270f));
+        
+        return new Course(path, profile);
+    }
+
+    public static Course createCourseDeaccel(float heading)
+    {
+        BezierCurve c = new BezierCurve();
+        
+        c.setAnchorStart(0, 0);
+        c.setAnchorEnd(0, 270);
+        c.setControlPointOne(0, 0);
+        c.setControlPointTwo(0, 270);
+        c.calculateLength(0.01f);
+
+        PathDefinition path = new PathDefinition(c);
+        path.setRotation(heading / 180 * (float)Math.PI);
+        
+        AccelerationProfile profile = new AccelerationProfile();
+        profile.addDivider(0.0f, -0.000001f);
+        
+        return new Course(path, profile);
     }   
 }

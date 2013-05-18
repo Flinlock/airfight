@@ -23,10 +23,19 @@ import com.artemis.World;
 
 public class AirFightMain extends BasicGame
 {
+    // TASK: Get an AI controlled airplane implemented that flies around randomly but stays on the screen
+    // TASK: Implment gun attacks, then try to shoot down the AI plane and tweak maneuvers/gun parameters
+    // TASK: Implement animation (guns, airplane turning)
+    
+    // TODO: Remove degrees from the entirety of the program, use Radians only
+    // TODO: Change all time dependent calculations to use a fixed deltaT, change game loop to constant 60 logic fps, unlimited graphics fps
+    // TODO: Consider refactoring the FSM and structure of the jet code as it evolves
+    // TODO: PathSystem should throw an exception if the course velocity ever goes negative
+    
     public static void main(String[] args) throws SlickException, FileNotFoundException
     {
         AppGameContainer app = new AppGameContainer(new AirFightMain(new World()));
-        app.setDisplayMode(1024, 768, false);
+        app.setDisplayMode(Constants.WIDTH, Constants.HEIGHT, false);
         app.start();
     }
     
@@ -66,7 +75,7 @@ public class AirFightMain extends BasicGame
 
         world.initialize();
                 
-        Entity testJet = EntityFactory.createJet(world, 150, 150, 0.04f, 0.04f, 0, JetType.BLACK, jsystem);
+        Entity testJet = EntityFactory.createJet(world, 150, 150, 0.01f, 0.01f, 0, JetType.BLACK, jsystem);
 //        Entity testJet = EntityFactory.createTestJet(world, 150, 150, 0.05f, 0.05f, 270, JetType.BLACK);
         testJet.addToWorld();
         mapper.setPlayerJet(testJet.getComponent(Jet.class));

@@ -64,6 +64,7 @@ public class EntityFactory
         
         Jet j = new Jet();
         j.state = new IdleState(sys);
+        j.fast = false;
         e.addComponent(j);
 
         return e;
@@ -96,6 +97,7 @@ public class EntityFactory
         
         Jet j = new Jet();
         j.state = new IdleState(sys);
+        j.fast = false;
         e.addComponent(j);
         
         ///////
