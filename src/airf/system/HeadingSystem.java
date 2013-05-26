@@ -37,14 +37,10 @@ public class HeadingSystem extends EntityProcessingSystem
         {
             if(p.y > p.ly)
                 h.h = 180f;
-            else if(p.y < p.ly)
+            else
                 h.h = 0f;
         }
-        
-        h.h = (float)(180*Math.atan2(p.y - p.ly, p.x - p.lx)/Math.PI) + 180;  // plus 180 degrees to change the range of the conversion from [-180,180) to [0, 360)
-        
-//        h.h -= 90;
-//        if(h.h < 0)
-//            h.h += 360;
+        else
+            h.h = (float)(180*Math.atan2(p.y - p.ly, p.x - p.lx)/Math.PI) + 180;  // plus 180 degrees to change the range of the conversion from [-180,180) to [0, 360)
     }
 }

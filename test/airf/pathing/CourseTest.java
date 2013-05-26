@@ -164,4 +164,10 @@ public class CourseTest
         
         assertEquals(v1,v2,0.01f);
     }
+    
+    @Test
+    public void testGetEndHeading()
+    {
+        assertEquals(Math.PI / 4 + Math.PI, cSimple.getEndHeading(), 0.01f);
+    }
 }

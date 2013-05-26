@@ -3,9 +3,21 @@ package airf.pathing;
 import util.bezier.BezierCurve;
 
 public class CourseFactory
-{
+{    
+    static private float convertHeading(float h)
+    {
+        float hAdjusted = h;
+        hAdjusted = 360 - hAdjusted - 90;  // convert from clockwise to counter clockwise rotation and adjust for coordinate frame differences
+        
+        if(hAdjusted < 0)
+            hAdjusted += 360;
+        
+        return hAdjusted;
+    }
+    
     public static Course createCourseHardL(float heading)
     {
+        heading = convertHeading(heading);
         BezierCurve c = new BezierCurve();
         
         c.setAnchorStart(0, 0);
@@ -24,6 +36,7 @@ public class CourseFactory
 
     public static Course createCourseTest(float heading)
     {
+        heading = convertHeading(heading);
         BezierCurve c = new BezierCurve();
         
         c.setAnchorStart(0, 0);
@@ -42,6 +55,7 @@ public class CourseFactory
 
     public static Course createCourseHardR(float heading)
     {
+        heading = convertHeading(heading);
         BezierCurve c = new BezierCurve();
         
         c.setAnchorStart(0, 0);
@@ -60,6 +74,7 @@ public class CourseFactory
 
     public static Course createCourseSoftR(float heading)
     {
+        heading = convertHeading(heading);
         BezierCurve c = new BezierCurve();
         
         c.setAnchorStart(0, 0);
@@ -78,6 +93,7 @@ public class CourseFactory
 
     public static Course createCourseSoftL(float heading)
     {
+        heading = convertHeading(heading);
         BezierCurve c = new BezierCurve();
         
         c.setAnchorStart(0, 0);
@@ -96,6 +112,7 @@ public class CourseFactory
 
     public static Course createCourseAccel(float heading)
     {
+        heading = convertHeading(heading);
         BezierCurve c = new BezierCurve();
         
         c.setAnchorStart(0, 0);
@@ -115,6 +132,7 @@ public class CourseFactory
 
     public static Course createCourseDeaccel(float heading)
     {
+        heading = convertHeading(heading);
         BezierCurve c = new BezierCurve();
         
         c.setAnchorStart(0, 0);

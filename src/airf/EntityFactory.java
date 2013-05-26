@@ -1,6 +1,7 @@
 package airf;
 
 import util.bezier.BezierCurve;
+import airf.EntityFactory.JetType;
 import airf.component.Heading;
 import airf.component.Jet;
 import airf.component.Path;
@@ -8,6 +9,7 @@ import airf.component.Position;
 import airf.component.Sprite;
 import airf.component.Velocity;
 import airf.jetstates.IdleState;
+import airf.jetstates.ai.IdleStateAI;
 import airf.pathing.AccelerationProfile;
 import airf.pathing.Course;
 import airf.pathing.PathDefinition;
@@ -123,6 +125,40 @@ public class EntityFactory
         pathc.y = 150;
         pathc.course = new Course(path, profile);
         e.addComponent(pathc);
+        
+        return e;
+    }
+
+    public static Entity createAIJet(World w, float x, float y, float vx, float vy, float h, JetType t, JetSystem sys)
+    {
+
+        Entity e = w.createEntity();
+
+        Position p = new Position();
+        p.x = x;
+        p.y = y;
+        e.addComponent(p);
+
+        Sprite sprite = new Sprite();
+        sprite.name = t.toString();
+        sprite.scaleX = 0.5f;
+        sprite.scaleY = 0.5f;
+        sprite.rot = h;
+        e.addComponent(sprite);
+        
+        Heading heading = new Heading();
+        heading.h = h;
+        e.addComponent(heading);
+
+        Velocity v = new Velocity();
+        v.x = vx;
+        v.y = vy;
+        e.addComponent(v);
+        
+        Jet j = new Jet();
+        j.state = new IdleStateAI(sys);
+        j.fast = false;
+        e.addComponent(j);
         
         return e;
     }

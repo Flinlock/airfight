@@ -12,7 +12,6 @@ import com.artemis.Entity;
 
 public class IdleState implements JetState
 {
-    enum IntentType {HARDL, TEST, HARDR, SOFTR, SOFTL, ACCEL, DEACCEL};
     IntentType intent;
     boolean actionPending;
     public boolean entityChanged = true;
@@ -43,33 +42,27 @@ public class IdleState implements JetState
                 Jet j = system.getComponent(Jet.class, e);
                 
                 actionPending = false;
-                
-                float hAdjusted = h.h;
-                hAdjusted = 360 - hAdjusted - 90;  // convert from clockwise to counter clockwise rotation and adjust for coordinate frame differences
-                
-                if(hAdjusted < 0)
-                    hAdjusted += 360;
-                
+                                
                 switch(intent)
                 {
                     case HARDL:
                     {
-                        p.course = CourseFactory.createCourseHardL(hAdjusted);
+                        p.course = CourseFactory.createCourseHardL(h.h);
                         break;
                     }
                     case HARDR:
                     {
-                        p.course = CourseFactory.createCourseHardR(hAdjusted);
+                        p.course = CourseFactory.createCourseHardR(h.h);
                         break;
                     }
                     case SOFTR:
                     {
-                        p.course = CourseFactory.createCourseSoftR(hAdjusted); 
+                        p.course = CourseFactory.createCourseSoftR(h.h); 
                         break;
                     }
                     case SOFTL:
                     {
-                        p.course = CourseFactory.createCourseSoftL(hAdjusted);
+                        p.course = CourseFactory.createCourseSoftL(h.h);
                         break;
                     }
                     case ACCEL:
@@ -77,7 +70,7 @@ public class IdleState implements JetState
                         if(!j.fast)
                         {
                             j.fast = true;
-                            p.course = CourseFactory.createCourseAccel(hAdjusted);
+                            p.course = CourseFactory.createCourseAccel(h.h);
                         }
                         else
                             return this;
@@ -89,7 +82,7 @@ public class IdleState implements JetState
                         if(j.fast)
                         {
                             j.fast = false;
-                            p.course = CourseFactory.createCourseDeaccel(hAdjusted);
+                            p.course = CourseFactory.createCourseDeaccel(h.h);
                         }
                         else
                             return this;
