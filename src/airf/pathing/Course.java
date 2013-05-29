@@ -17,11 +17,17 @@ public class Course
 {
     PathDefinition path;
     AccelerationProfile profile;
+    String name;
     
     public Course(PathDefinition path, AccelerationProfile profile)
     {
         this.path = path;
         this.profile = profile;
+    }
+    
+    public Course(PathDefinition path, AccelerationProfile profile, String name)
+    {
+        this.name = name;
     }
     
     /**
@@ -120,5 +126,13 @@ public class Course
         
         return ret;
     }
-
+    
+    @Override
+    public String toString()
+    {
+        if(name != null)
+            return name;
+        else
+            return super.toString();
+    }
 }

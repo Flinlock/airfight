@@ -148,5 +148,24 @@ public class CourseFactory
         profile.addDivider(0.0f, -0.000001f);
         
         return new Course(path, profile);
+    }
+
+    public static Course createCourseStraight(float heading)
+    {
+        heading = convertHeading(heading);
+        BezierCurve c = new BezierCurve();
+        
+        c.setAnchorStart(0, 0);
+        c.setAnchorEnd(0, 270);
+        c.setControlPointOne(0, 0);
+        c.setControlPointTwo(0, 270);
+        c.calculateLength(0.01f);
+
+        PathDefinition path = new PathDefinition(c);
+        path.setRotation(heading / 180 * (float)Math.PI);
+        
+        AccelerationProfile profile = new AccelerationProfile();
+        
+        return new Course(path, profile,"Straight Flight");
     }   
 }

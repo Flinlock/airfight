@@ -31,6 +31,9 @@ public class AirFightMain extends BasicGame
     //    takes the same amount of time and you have to queue up the next move by the next maneuver time
     //    slot, otherwise the plane defaults to straight flight.  Thus everyone's maneuver decisions are
     //    made simultaneously which requires predicting what your opponent will do.
+    //  To implement the above, need to create a path stack component, which keeps a stack of chosen paths
+    //   and a discrete time system which runs every X frames, removing the last path and executing the 
+    //   next path in the stack, or if there is one, adding a straight path maneuver and executing.
     
     // TASK: Get an AI controlled airplane implemented that flies around randomly but stays on the screen
     // TASK: Implment gun attacks, then try to shoot down the AI plane and tweak maneuvers/gun parameters

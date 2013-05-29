@@ -54,7 +54,6 @@ public class PathSystem extends EntityProcessingSystem
             
             v.x = (p.x-p.lx)/(world.delta);
             v.y = (p.y-p.ly)/(world.delta);
-            
         }
     }
     
