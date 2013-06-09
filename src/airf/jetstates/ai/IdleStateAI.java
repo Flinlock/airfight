@@ -64,7 +64,7 @@ public class IdleStateAI implements JetState
                 
         if(!isSafeLocation(pntFuture, h.h))
         {
-            p.course = CourseFactory.createCourseHardL(h.h);
+            p.course = CourseFactory.createCourseHardL(h.h, false);
 
             p.p = 0;
             p.v = (float)Math.sqrt(v.x*v.x + v.y*v.y);
@@ -84,22 +84,22 @@ public class IdleStateAI implements JetState
             {
                 case HARDL:
                 {
-                    p.course = CourseFactory.createCourseHardL(h.h);
+                    p.course = CourseFactory.createCourseHardL(h.h, false);
                     break;
                 }
                 case HARDR:
                 {
-                    p.course = CourseFactory.createCourseHardR(h.h);
+                    p.course = CourseFactory.createCourseHardR(h.h, false);
                     break;
                 }
                 case SOFTR:
                 {
-                    p.course = CourseFactory.createCourseSoftR(h.h); 
+                    p.course = CourseFactory.createCourseSoftR(h.h, false); 
                     break;
                 }
                 case SOFTL:
                 {
-                    p.course = CourseFactory.createCourseSoftL(h.h);
+                    p.course = CourseFactory.createCourseSoftL(h.h, false);
                     break;
                 }
                 case ACCEL:
@@ -119,7 +119,7 @@ public class IdleStateAI implements JetState
                     if(j.fast)
                     {
                         j.fast = false;
-                        p.course = CourseFactory.createCourseDeaccel(h.h);
+                        p.course = CourseFactory.createCourseDecel(h.h);
                     }
                     else
                         return this;
@@ -127,7 +127,7 @@ public class IdleStateAI implements JetState
                     break;
                 }
                 case TEST:
-                    p.course = CourseFactory.createCourseTest(h.h);
+                    p.course = CourseFactory.createCourseStraight(h.h, false);
                     break;                    
             }
 
@@ -164,7 +164,7 @@ public class IdleStateAI implements JetState
         boolean leftBad = false;
         boolean rightBad = false;
         
-        Course cL1 = CourseFactory.createCourseHardL(heading);
+        Course cL1 = CourseFactory.createCourseHardL(heading, false);
         Point2D.Float pntL1 = cL1.getPoint(1.0f);
         pntL1.x += pos.x;
         pntL1.y += pos.y;
@@ -176,7 +176,7 @@ public class IdleStateAI implements JetState
             leftBad = true;
 
         float headingL = cL1.getEndHeading();
-        Course cL2 = CourseFactory.createCourseHardL(headingL);
+        Course cL2 = CourseFactory.createCourseHardL(headingL, false);
         Point2D.Float pntL2 = cL2.getPoint(1.0f);
         pntL2.x += pntL1.x;
         pntL2.y += pntL1.y;
@@ -187,7 +187,7 @@ public class IdleStateAI implements JetState
         if(pntL2.y < 0 || pntL2.y > Constants.HEIGHT)
             leftBad = true;
         
-        Course cR1 = CourseFactory.createCourseHardR(heading);
+        Course cR1 = CourseFactory.createCourseHardR(heading, false);
         Point2D.Float pntR1 = cR1.getPoint(1.0f);
         pntR1.x += pos.x;
         pntR1.y += pos.y;
@@ -200,7 +200,7 @@ public class IdleStateAI implements JetState
         
 
         float headingR = cR1.getEndHeading();
-        Course cR2 = CourseFactory.createCourseHardR(headingR);
+        Course cR2 = CourseFactory.createCourseHardR(headingR, false);
         Point2D.Float pntR2 = cR2.getPoint(1.0f);
         pntR2.x += pntR1.x;
         pntR2.y += pntR1.y;

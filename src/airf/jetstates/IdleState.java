@@ -47,22 +47,22 @@ public class IdleState implements JetState
                 {
                     case HARDL:
                     {
-                        p.course = CourseFactory.createCourseHardL(h.h);
+                        p.course = CourseFactory.createCourseHardL(h.h, false);
                         break;
                     }
                     case HARDR:
                     {
-                        p.course = CourseFactory.createCourseHardR(h.h);
+                        p.course = CourseFactory.createCourseHardR(h.h, false);
                         break;
                     }
                     case SOFTR:
                     {
-                        p.course = CourseFactory.createCourseSoftR(h.h); 
+                        p.course = CourseFactory.createCourseSoftR(h.h, false); 
                         break;
                     }
                     case SOFTL:
                     {
-                        p.course = CourseFactory.createCourseSoftL(h.h);
+                        p.course = CourseFactory.createCourseSoftL(h.h, false);
                         break;
                     }
                     case ACCEL:
@@ -82,7 +82,7 @@ public class IdleState implements JetState
                         if(j.fast)
                         {
                             j.fast = false;
-                            p.course = CourseFactory.createCourseDeaccel(h.h);
+                            p.course = CourseFactory.createCourseDecel(h.h);
                         }
                         else
                             return this;
@@ -90,7 +90,7 @@ public class IdleState implements JetState
                         break;
                     }
                     case TEST:
-                        p.course = CourseFactory.createCourseTest(h.h);
+                        p.course = CourseFactory.createCourseStraight(h.h, false);
                         break;                    
                 }
                 
