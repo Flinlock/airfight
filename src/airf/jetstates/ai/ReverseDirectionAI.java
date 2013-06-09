@@ -37,7 +37,7 @@ public class ReverseDirectionAI implements JetState
         {
             if(first)
             {
-                p.course = CourseFactory.createCourseHardL(h.h);
+                p.course = CourseFactory.createCourseHardL(h.h, false);
 
                 p.p = 0;
                 p.v = (float)Math.sqrt(v.x*v.x + v.y*v.y);

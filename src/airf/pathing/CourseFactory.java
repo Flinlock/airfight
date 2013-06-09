@@ -15,16 +15,27 @@ public class CourseFactory
         return hAdjusted;
     }
     
-    public static Course createCourseHardL(float heading)
+    public static Course createCourseHardL(float heading, boolean fast)
     {
         heading = convertHeading(heading);
         BezierCurve c = new BezierCurve();
         
-        c.setAnchorStart(0, 0);
-        c.setAnchorEnd(150, 150);
-        c.setControlPointOne(0, 75);
-        c.setControlPointTwo(75, 150);
-        c.calculateLength(0.01f);
+        if(!fast)
+        {
+            c.setAnchorStart(0, 0);
+            c.setAnchorEnd(66.66f, 66.66f);
+            c.setControlPointOne(0, 36.66f);
+            c.setControlPointTwo(30, 66.66f);
+            c.calculateLength(0.01f);
+        }
+        else
+        {
+            c.setAnchorStart(0, 0);
+            c.setAnchorEnd(104.21f, 104.21f);
+            c.setControlPointOne(0, 57.58f);
+            c.setControlPointTwo(46.71f, 104.21f);
+            c.calculateLength(0.01f);            
+        }
 
         PathDefinition path = new PathDefinition(c);
         path.setRotation(heading / 180 * (float)Math.PI);
@@ -34,35 +45,27 @@ public class CourseFactory
         return new Course(path, profile);        
     }
 
-    public static Course createCourseTest(float heading)
+    public static Course createCourseHardR(float heading, boolean fast)
     {
         heading = convertHeading(heading);
         BezierCurve c = new BezierCurve();
         
-        c.setAnchorStart(0, 0);
-        c.setAnchorEnd(0, 300);
-        c.setControlPointOne(0, 0);
-        c.setControlPointTwo(0, 300);
-        c.calculateLength(0.01f);
-
-        PathDefinition path = new PathDefinition(c);
-        path.setRotation(heading * (float)Math.PI / 180); // heading
-        
-        AccelerationProfile profile = new AccelerationProfile();
-        
-        return new Course(path, profile);        
-    }
-
-    public static Course createCourseHardR(float heading)
-    {
-        heading = convertHeading(heading);
-        BezierCurve c = new BezierCurve();
-        
-        c.setAnchorStart(0, 0);
-        c.setAnchorEnd(-150, 150);
-        c.setControlPointOne(0, 75);
-        c.setControlPointTwo(-75, 150);
-        c.calculateLength(0.01f);
+        if(!fast)
+        {
+            c.setAnchorStart(0, 0);
+            c.setAnchorEnd(-66.66f, 66.66f);
+            c.setControlPointOne(0, 36.66f);
+            c.setControlPointTwo(-30, 66.66f);
+            c.calculateLength(0.01f);
+        }
+        else
+        {
+            c.setAnchorStart(0, 0);
+            c.setAnchorEnd(-104.21f, 104.21f);
+            c.setControlPointOne(0, 57.58f);
+            c.setControlPointTwo(-46.71f, 104.21f);
+            c.calculateLength(0.01f);              
+        }
 
         PathDefinition path = new PathDefinition(c);
         path.setRotation(heading / 180 * (float)Math.PI);
@@ -72,16 +75,27 @@ public class CourseFactory
         return new Course(path, profile);
     }
 
-    public static Course createCourseSoftR(float heading)
+    public static Course createCourseSoftR(float heading, boolean fast)
     {
         heading = convertHeading(heading);
         BezierCurve c = new BezierCurve();
         
-        c.setAnchorStart(0, 0);
-        c.setAnchorEnd(-70, 222);
-        c.setControlPointOne(0, 110);
-        c.setControlPointTwo(-16, 196);
-        c.calculateLength(0.01f);
+        if(!fast)
+        {
+            c.setAnchorStart(0, 0);
+            c.setAnchorEnd(-46.193f, 89.815f);
+            c.setControlPointOne(0, 37.12f);
+            c.setControlPointTwo(-18.18f, 69.7f);
+            c.calculateLength(0.01f);
+        }
+        else
+        {
+            c.setAnchorStart(0, 0);
+            c.setAnchorEnd(-72.123f, 140.5f);
+            c.setControlPointOne(0, 57.83f);
+            c.setControlPointTwo(-28.54f, 108.84f);
+            c.calculateLength(0.01f);            
+        }
 
         PathDefinition path = new PathDefinition(c);
         path.setRotation(heading / 180 * (float)Math.PI);
@@ -91,16 +105,27 @@ public class CourseFactory
         return new Course(path, profile);
     }
 
-    public static Course createCourseSoftL(float heading)
+    public static Course createCourseSoftL(float heading, boolean fast)
     {
         heading = convertHeading(heading);
         BezierCurve c = new BezierCurve();
-        
-        c.setAnchorStart(0, 0);
-        c.setAnchorEnd(70, 222);
-        c.setControlPointOne(0, 110);
-        c.setControlPointTwo(16, 196);
-        c.calculateLength(0.01f);
+
+        if(!fast)
+        {
+            c.setAnchorStart(0, 0);
+            c.setAnchorEnd(46.193f, 89.815f);
+            c.setControlPointOne(0, 37.12f);
+            c.setControlPointTwo(18.18f, 69.7f);
+            c.calculateLength(0.01f);
+        }
+        else
+        {
+            c.setAnchorStart(0, 0);
+            c.setAnchorEnd(72.123f, 140.5f);
+            c.setControlPointOne(0, 57.83f);
+            c.setControlPointTwo(28.54f, 108.84f);
+            c.calculateLength(0.01f);            
+        }
 
         PathDefinition path = new PathDefinition(c);
         path.setRotation(heading / 180 * (float)Math.PI);
@@ -116,9 +141,9 @@ public class CourseFactory
         BezierCurve c = new BezierCurve();
         
         c.setAnchorStart(0, 0);
-        c.setAnchorEnd(0, 160);
+        c.setAnchorEnd(0, 206.566f);
         c.setControlPointOne(0, 0);
-        c.setControlPointTwo(0, 160);
+        c.setControlPointTwo(0, 206.566f);
         c.calculateLength(0.01f);
 
         PathDefinition path = new PathDefinition(c);
@@ -130,15 +155,15 @@ public class CourseFactory
         return new Course(path, profile);
     }
 
-    public static Course createCourseDeaccel(float heading)
+    public static Course createCourseDecel(float heading)
     {
         heading = convertHeading(heading);
         BezierCurve c = new BezierCurve();
         
         c.setAnchorStart(0, 0);
-        c.setAnchorEnd(0, 270);
+        c.setAnchorEnd(0, 132.638f);
         c.setControlPointOne(0, 0);
-        c.setControlPointTwo(0, 270);
+        c.setControlPointTwo(0, 132.638f);
         c.calculateLength(0.01f);
 
         PathDefinition path = new PathDefinition(c);
@@ -149,23 +174,35 @@ public class CourseFactory
         
         return new Course(path, profile);
     }
-
-    public static Course createCourseStraight(float heading)
+    
+    public static Course createCourseStraight(float heading, boolean fast)
     {
         heading = convertHeading(heading);
         BezierCurve c = new BezierCurve();
         
-        c.setAnchorStart(0, 0);
-        c.setAnchorEnd(0, 270);
-        c.setControlPointOne(0, 0);
-        c.setControlPointTwo(0, 270);
-        c.calculateLength(0.01f);
+        if(!fast)
+        {
+            c.setAnchorStart(0, 0);
+            c.setAnchorEnd(0, 104.5f);
+            c.setControlPointOne(0, 0);
+            c.setControlPointTwo(0, 104.5f);
+            c.calculateLength(0.01f);
+        }
+        else
+        {
+            c.setAnchorStart(0, 0);
+            c.setAnchorEnd(0, 163.234f);
+            c.setControlPointOne(0, 0);
+            c.setControlPointTwo(0, 163.234f);
+            c.calculateLength(0.01f);                        
+        }
 
         PathDefinition path = new PathDefinition(c);
         path.setRotation(heading / 180 * (float)Math.PI);
         
         AccelerationProfile profile = new AccelerationProfile();
+        profile.addDivider(0.0f, -0.000001f);
         
-        return new Course(path, profile,"Straight Flight");
-    }   
+        return new Course(path, profile, "Straight Flight");
+    }
 }
