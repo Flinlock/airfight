@@ -5,7 +5,7 @@ import airf.EntityFactory.JetType;
 import airf.component.Heading;
 import airf.component.Jet;
 import airf.component.Path;
-import airf.component.PathQueue;
+import airf.component.ManeuverQueue;
 import airf.component.Position;
 import airf.component.Sprite;
 import airf.component.Velocity;
@@ -13,7 +13,7 @@ import airf.jetstates.IdleState;
 import airf.jetstates.ai.IdleStateAI;
 import airf.pathing.AccelerationProfile;
 import airf.pathing.Course;
-import airf.pathing.CourseFactory;
+import airf.pathing.ManeuverFactory;
 import airf.pathing.PathDefinition;
 import airf.system.JetSystem;
 
@@ -66,11 +66,11 @@ public class EntityFactory
         v.y = vy;
         e.addComponent(v);
         
-        PathQueue pq = new PathQueue();
+        ManeuverQueue pq = new ManeuverQueue();
         e.addComponent(pq);
         
         Path pth = new Path();
-        pth.course = CourseFactory.createCourseStraight(h);
+        pth.course = ManeuverFactory.createCourseStraight(h).getCourse();
         pth.x = x;
         pth.y = y;
         pth.p = 0;

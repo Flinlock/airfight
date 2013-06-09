@@ -1,0 +1,44 @@
+package airf.component;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import airf.jetstates.Maneuver;
+import airf.jetstates.Maneuver.AccType;
+
+import com.artemis.Component;
+
+public class ManeuverQueue extends Component
+{
+    public ManeuverQueue()
+    {
+        maneuvers = new ArrayList<>();
+        count = 0;
+    }
+    
+    public List<Maneuver> maneuvers;
+    public int count;
+    
+    
+    public static boolean willBeFast(ManeuverQueue pq, boolean isFast)
+    {
+        AccType a = AccType.NONE;
+        for(int i = pq.maneuvers.size()-1; i >= 0; i--)
+        {
+            Maneuver m = pq.maneuvers.get(i);
+            a = m.getAcc();
+            if(a != AccType.NONE)
+                break;
+        }
+        
+        if(a == AccType.NONE)
+            return isFast;
+        else
+            return a == AccType.ACCELERATE;
+    }
+    
+    public static void addManeuver(ManeuverQueue pq, Maneuver c)
+    {
+        pq.maneuvers.add(c);
+    }
+}

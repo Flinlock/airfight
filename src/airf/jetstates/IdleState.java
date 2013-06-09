@@ -1,11 +1,13 @@
 package airf.jetstates;
 
+import airf.Constants;
 import airf.component.Heading;
 import airf.component.Jet;
-import airf.component.Path;
+import airf.component.ManeuverQueue;
 import airf.component.Position;
 import airf.component.Velocity;
-import airf.pathing.CourseFactory;
+import airf.pathing.Course;
+import airf.pathing.ManeuverFactory;
 import airf.system.JetSystem;
 
 import com.artemis.Entity;
@@ -16,7 +18,7 @@ public class IdleState implements JetState
     boolean actionPending;
     public boolean entityChanged = true;
     JetSystem system;
-    
+        
     public IdleState(JetSystem system)
     {
         this.system = system;
@@ -33,45 +35,45 @@ public class IdleState implements JetState
     {
         synchronized(this)
         {
-            if(actionPending)
+            if(actionPending) // add a new path to the queue
             {
-                Path p = new Path();
-                Position pos = system.getComponent(Position.class, e);
-                Velocity v = system.getComponent(Velocity.class, e);
+                Maneuver m;
+                ManeuverQueue mq = system.getComponent(ManeuverQueue.class, e);
                 Heading h = system.getComponent(Heading.class, e);
                 Jet j = system.getComponent(Jet.class, e);
-                
+
                 actionPending = false;
-                                
+                
+                if(mq.maneuvers.size() >= Constants.QUEUE_MAX) // can we queue up another maneuver?
+                    return this;
+                                                
                 switch(intent)
                 {
                     case HARDL:
                     {
-                        p.course = CourseFactory.createCourseHardL(h.h, false);
+                        m = ManeuverFactory.createCourseHardL(h.h, false);
                         break;
                     }
                     case HARDR:
                     {
-                        p.course = CourseFactory.createCourseHardR(h.h, false);
+                        m = ManeuverFactory.createCourseHardR(h.h, false);
                         break;
                     }
                     case SOFTR:
                     {
                         p.course = CourseFactory.createCourseSoftR(h.h, false); 
+                        m = ManeuverFactory.createCourseSoftR(h.h, false); 
                         break;
                     }
                     case SOFTL:
                     {
-                        p.course = CourseFactory.createCourseSoftL(h.h, false);
+                        m = ManeuverFactory.createCourseSoftL(h.h, false);
                         break;
                     }
                     case ACCEL:
                     {
-                        if(!j.fast)
-                        {
-                            j.fast = true;
-                            p.course = CourseFactory.createCourseAccel(h.h);
-                        }
+                        if(!ManeuverQueue.willBeFast(mq,j.fast))
+                            m = ManeuverFactory.createCourseAccel(h.h);
                         else
                             return this;
                         
@@ -79,32 +81,24 @@ public class IdleState implements JetState
                     }
                     case DEACCEL:
                     {
-                        if(j.fast)
-                        {
-                            j.fast = false;
-                            p.course = CourseFactory.createCourseDecel(h.h);
-                        }
+                        if(ManeuverQueue.willBeFast(mq,j.fast))
+                            m = ManeuverFactory.createCourseDecel(h.h);
                         else
                             return this;
                         
                         break;
                     }
-                    case TEST:
-                        p.course = CourseFactory.createCourseStraight(h.h, false);
-                        break;                    
+                    default:
+                        m = ManeuverFactory.createCourseStraight(h.h, false);
+                        break;
                 }
-                
-                p.p = 0;
-                p.v = (float)Math.sqrt(v.x*v.x + v.y*v.y);
-                p.x = pos.x;
-                p.y = pos.y;
-                
-                e.addComponent(p);
-                
-                return new ManeuveringState(system);                
+
+                ManeuverQueue.addManeuver(mq, m);             
             }
-            entityChanged = false;
         }
+
+        entityChanged = false;
+        
         return this;
     }
 

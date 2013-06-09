@@ -1,51 +1,48 @@
 package airf.system;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+
 import org.junit.Before;
 import org.junit.Test;
-import static org.junit.Assert.*; 
 
+import airf.component.ManeuverQueue;
 import airf.component.Path;
-import airf.component.PathQueue;
-import airf.pathing.Course;
-import airf.pathing.CourseFactory;
+import airf.jetstates.Maneuver;
+import airf.pathing.ManeuverFactory;
 
 import com.artemis.Entity;
 import com.artemis.World;
 
 public class DiscreteTimeSystemTest
 {
-    Course c0,c1,c2;
+    Maneuver c0,c1,c2;
     World w;
     Entity e;
-    PathQueue q;
+    ManeuverQueue q;
     Path p;
 
     @Before
     public void setUp() throws Exception
     {
-        c0 = CourseFactory.createCourseAccel(0);
-        c1 = CourseFactory.createCourseHardL(0);
-        c2 = CourseFactory.createCourseHardR(0); 
+        c0 = ManeuverFactory.createCourseAccel(0);
+        c1 = ManeuverFactory.createCourseHardL(0);
+        c2 = ManeuverFactory.createCourseHardR(0); 
         
 
         w = new World();
         e = w.createEntity();
         
-        q = new PathQueue();
+        q = new ManeuverQueue();
         q.count = 0;
         
-        q.course.add(c1);
-        q.startX.add(0f);
-        q.startY.add(0f);
-        
-        q.course.add(c2);
-        q.startX.add(0f);
-        q.startY.add(0f);
+        ManeuverQueue.addManeuver(q, c1);
+        ManeuverQueue.addManeuver(q, c2);
                 
         e.addComponent(q);
         
         p = new Path();
-        p.course = c0;
+        p.course = c0.getCourse();
         p.p = 0;
         p.v = 0.01f;
         p.x = 0;
@@ -85,12 +82,12 @@ public class DiscreteTimeSystemTest
         
         for(int i = 0; i < 10; i++)
         {
-            assertTrue(c0 == p.course);
+            assertTrue(c0.getCourse() == p.course);
             w.process();
         }
         
-        assertTrue(c1 == p.course);
-        assertEquals(1, q.course.size());
+        assertTrue(c1.getCourse() == p.course);
+        assertEquals(1, q.maneuvers.size());
     }
     
     @Test
@@ -101,11 +98,11 @@ public class DiscreteTimeSystemTest
         w.initialize();
         w.setDelta(10);
         
-        q.course.clear();
+        q.maneuvers.clear();
         
         for(int i = 0; i < 3; i++)
         {
-            assertTrue(c0 == p.course);
+            assertTrue(c0.getCourse() == p.course);
             w.process();
         }
         

@@ -1,8 +1,10 @@
 package airf.pathing;
 
 import util.bezier.BezierCurve;
+import airf.jetstates.Maneuver;
+import airf.jetstates.Maneuver.AccType;
 
-public class CourseFactory
+public class ManeuverFactory
 {    
     static private float convertHeading(float h)
     {
@@ -15,7 +17,7 @@ public class CourseFactory
         return hAdjusted;
     }
     
-    public static Course createCourseHardL(float heading, boolean fast)
+    public static Maneuver createCourseHardL(float heading, boolean fast)
     {
         heading = convertHeading(heading);
         BezierCurve c = new BezierCurve();
@@ -42,10 +44,10 @@ public class CourseFactory
         
         AccelerationProfile profile = new AccelerationProfile();
         
-        return new Course(path, profile);        
+        return new Maneuver(new Course(path, profile),AccType.NONE);        
     }
 
-    public static Course createCourseHardR(float heading, boolean fast)
+    public static Maneuver createCourseHardR(float heading, boolean fast)
     {
         heading = convertHeading(heading);
         BezierCurve c = new BezierCurve();
@@ -71,11 +73,11 @@ public class CourseFactory
         path.setRotation(heading / 180 * (float)Math.PI);
         
         AccelerationProfile profile = new AccelerationProfile();
-        
-        return new Course(path, profile);
+
+        return new Maneuver(new Course(path, profile),AccType.NONE);
     }
 
-    public static Course createCourseSoftR(float heading, boolean fast)
+    public static Maneuver createCourseSoftR(float heading, boolean fast)
     {
         heading = convertHeading(heading);
         BezierCurve c = new BezierCurve();
@@ -101,11 +103,11 @@ public class CourseFactory
         path.setRotation(heading / 180 * (float)Math.PI);
         
         AccelerationProfile profile = new AccelerationProfile();
-        
-        return new Course(path, profile);
+
+        return new Maneuver(new Course(path, profile),AccType.NONE);
     }
 
-    public static Course createCourseSoftL(float heading, boolean fast)
+    public static Maneuver createCourseSoftL(float heading, boolean fast)
     {
         heading = convertHeading(heading);
         BezierCurve c = new BezierCurve();
@@ -131,11 +133,11 @@ public class CourseFactory
         path.setRotation(heading / 180 * (float)Math.PI);
         
         AccelerationProfile profile = new AccelerationProfile();
-        
-        return new Course(path, profile);
+
+        return new Maneuver(new Course(path, profile),AccType.NONE);
     }
 
-    public static Course createCourseAccel(float heading)
+    public static Maneuver createCourseAccel(float heading)
     {
         heading = convertHeading(heading);
         BezierCurve c = new BezierCurve();
@@ -151,11 +153,11 @@ public class CourseFactory
         
         AccelerationProfile profile = new AccelerationProfile();
         profile.addDivider(0.0f, 0.000001f/(160f/270f));
-        
-        return new Course(path, profile);
+
+        return new Maneuver(new Course(path, profile),AccType.ACCELERATE);
     }
 
-    public static Course createCourseDecel(float heading)
+    public static Maneuver createCourseDecel(float heading)
     {
         heading = convertHeading(heading);
         BezierCurve c = new BezierCurve();
@@ -171,11 +173,11 @@ public class CourseFactory
         
         AccelerationProfile profile = new AccelerationProfile();
         profile.addDivider(0.0f, -0.000001f);
-        
-        return new Course(path, profile);
+
+        return new Maneuver(new Course(path, profile),AccType.DEACCELERATE);
     }
-    
-    public static Course createCourseStraight(float heading, boolean fast)
+
+    public static Maneuver createCourseStraight(float heading, boolean fast)
     {
         heading = convertHeading(heading);
         BezierCurve c = new BezierCurve();
@@ -201,8 +203,7 @@ public class CourseFactory
         path.setRotation(heading / 180 * (float)Math.PI);
         
         AccelerationProfile profile = new AccelerationProfile();
-        profile.addDivider(0.0f, -0.000001f);
-        
-        return new Course(path, profile, "Straight Flight");
-    }
+
+        return new Maneuver(new Course(path, profile, "Straight Flight"),AccType.NONE);
+    }   
 }

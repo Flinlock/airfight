@@ -3,9 +3,9 @@ package airf.system;
 import java.awt.geom.Point2D;
 
 import airf.component.Path;
-import airf.component.PathQueue;
+import airf.component.ManeuverQueue;
 import airf.pathing.Course;
-import airf.pathing.CourseFactory;
+import airf.pathing.ManeuverFactory;
 
 import com.artemis.Aspect;
 import com.artemis.ComponentMapper;
@@ -15,7 +15,7 @@ import com.artemis.systems.EntityProcessingSystem;
 
 public class DiscreteTimeSystem extends EntityProcessingSystem
 {
-    @Mapper ComponentMapper<PathQueue> pqm;
+    @Mapper ComponentMapper<ManeuverQueue> pqm;
     @Mapper ComponentMapper<Path> pm;
     
     int period;
@@ -23,32 +23,33 @@ public class DiscreteTimeSystem extends EntityProcessingSystem
     @SuppressWarnings("unchecked")
     public DiscreteTimeSystem(int period)
     {
-        super(Aspect.getAspectForAll(PathQueue.class, Path.class));
+        super(Aspect.getAspectForAll(ManeuverQueue.class, Path.class));
         this.period = period;
     }
 
     @Override
     protected void process(Entity e)
     {        
-        PathQueue pq = pqm.get(e);
+        ManeuverQueue pq = pqm.get(e);
         
         if(++pq.count == period)
         {
             pq.count = 0;
             Path p = pm.get(e);
             
-            if(!pq.course.isEmpty())
+            if(!pq.maneuvers.isEmpty())
             {
-                p.course = pq.course.remove(0);
-                p.x = pq.startX.remove(0);
-                p.y = pq.startY.remove(0);
+                Point2D.Float pnt = p.course.getPoint(1f);
+                p.course = pq.maneuvers.remove(0).getCourse();
+                p.x = pnt.x;
+                p.y = pnt.y;
                 p.p = 0;
             }
             else
             {
-                Point2D.Float pnt = p.course.getPoint(1.0f);
+                Point2D.Float pnt = p.course.getPoint(1f);
                 float h = p.course.getEndHeading();
-                p.course = CourseFactory.createCourseStraight(h);
+                p.course = ManeuverFactory.createCourseStraight(h).getCourse();
                 p.x = pnt.x;
                 p.y = pnt.y;
                 p.p = 0;

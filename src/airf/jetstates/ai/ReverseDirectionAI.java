@@ -5,7 +5,7 @@ import airf.component.Path;
 import airf.component.Position;
 import airf.component.Velocity;
 import airf.jetstates.JetState;
-import airf.pathing.CourseFactory;
+import airf.pathing.ManeuverFactory;
 import airf.system.JetSystem;
 
 import com.artemis.Entity;
@@ -37,7 +37,7 @@ public class ReverseDirectionAI implements JetState
         {
             if(first)
             {
-                p.course = CourseFactory.createCourseHardL(h.h, false);
+                p.course = ManeuverFactory.createCourseHardL(h.h, false);
 
                 p.p = 0;
                 p.v = (float)Math.sqrt(v.x*v.x + v.y*v.y);

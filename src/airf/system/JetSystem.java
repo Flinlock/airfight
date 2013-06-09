@@ -3,6 +3,7 @@ package airf.system;
 import airf.component.Heading;
 import airf.component.Jet;
 import airf.component.Path;
+import airf.component.ManeuverQueue;
 import airf.component.Position;
 import airf.component.Sprite;
 import airf.component.Velocity;
@@ -22,6 +23,7 @@ public class JetSystem extends EntityProcessingSystem
     @Mapper ComponentMapper<Path> pathm;
     @Mapper ComponentMapper<Position> pm;
     @Mapper ComponentMapper<Velocity> vm;
+    @Mapper ComponentMapper<ManeuverQueue> pqm;
     
     @SuppressWarnings("unchecked")
     public JetSystem()
@@ -68,6 +70,9 @@ public class JetSystem extends EntityProcessingSystem
         
         if(type == Heading.class)
             return (T)hm.get(e);
+        
+        if(type == ManeuverQueue.class)
+            return (T)pqm.get(e);
         
         throw new IllegalArgumentException();
     }

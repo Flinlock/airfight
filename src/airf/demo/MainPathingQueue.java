@@ -26,7 +26,7 @@ import com.artemis.World;
 
 public class MainPathingQueue extends BasicGame
 {
-    // TODO: All courses should be changed to be the same length, or divisible by some minimum
+    // TODO: All courses should be changed to be the same length (in time), or divisible by some minimum
     //       length.
     // TODO: Eventually change all velocity/updates to remove dependency on worldDelta which is 
     //       now fixed.
