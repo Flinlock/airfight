@@ -17,6 +17,7 @@ public class ManeuverFactory
         return hAdjusted;
     }
     
+    // heading is in degrees
     public static Maneuver createCourseHardL(float heading, boolean fast)
     {
         heading = convertHeading(heading);

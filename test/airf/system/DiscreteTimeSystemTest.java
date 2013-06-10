@@ -26,8 +26,8 @@ public class DiscreteTimeSystemTest
     public void setUp() throws Exception
     {
         c0 = ManeuverFactory.createCourseAccel(0);
-        c1 = ManeuverFactory.createCourseHardL(0);
-        c2 = ManeuverFactory.createCourseHardR(0); 
+        c1 = ManeuverFactory.createCourseHardL(0,false);
+        c2 = ManeuverFactory.createCourseHardR(0,false); 
         
 
         w = new World();

@@ -41,4 +41,12 @@ public class ManeuverQueue extends Component
     {
         pq.maneuvers.add(c);
     }
+
+    public static float getFinalHeading(ManeuverQueue mq)
+    {
+        if(mq.maneuvers.isEmpty())
+            return -1;
+        
+        return mq.maneuvers.get(mq.maneuvers.size()-1).getCourse().getEndHeading();
+    }
 }

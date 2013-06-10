@@ -1,15 +1,15 @@
 package airf;
 
 import util.bezier.BezierCurve;
-import airf.EntityFactory.JetType;
 import airf.component.Heading;
 import airf.component.Jet;
-import airf.component.Path;
 import airf.component.ManeuverQueue;
+import airf.component.Path;
 import airf.component.Position;
 import airf.component.Sprite;
 import airf.component.Velocity;
 import airf.jetstates.IdleState;
+import airf.jetstates.Maneuver;
 import airf.jetstates.ai.IdleStateAI;
 import airf.pathing.AccelerationProfile;
 import airf.pathing.Course;
@@ -22,6 +22,17 @@ import com.artemis.World;
 
 public class EntityFactory
 {  
+    final static float vSlow;
+    final static float vFast;
+    static
+    {
+        Maneuver m = ManeuverFactory.createCourseStraight(0, false);
+        vSlow = m.getCourse().getLength() / Constants.TIME_SLOT_PERIOD;
+        
+        m = ManeuverFactory.createCourseStraight(0, true);
+        vFast = m.getCourse().getLength() / Constants.TIME_SLOT_PERIOD;
+    }
+    
     public enum JetType
     {
         BLACK("jet_black"),
@@ -41,7 +52,7 @@ public class EntityFactory
         }
     }
     
-    public static Entity createJet(World w, float x, float y, float vx, float vy, float h, JetType t, JetSystem sys)
+    public static Entity createJet(World w, float x, float y, boolean fast, float h, JetType t, JetSystem sys)
     {
         Entity e = w.createEntity();
 
@@ -60,21 +71,20 @@ public class EntityFactory
         Heading heading = new Heading();
         heading.h = h;
         e.addComponent(heading);
-
+        
         Velocity v = new Velocity();
-        v.x = vx;
-        v.y = vy;
         e.addComponent(v);
         
         ManeuverQueue pq = new ManeuverQueue();
         e.addComponent(pq);
         
         Path pth = new Path();
-        pth.course = ManeuverFactory.createCourseStraight(h).getCourse();
+        pth.course = ManeuverFactory.createCourseStraight(h,false).getCourse();
         pth.x = x;
         pth.y = y;
         pth.p = 0;
-        pth.v = (float)Math.sqrt( Math.pow(vx, 2) + Math.pow(vy, 2) );
+        pth.v = fast ? vFast : vSlow;
+        e.addComponent(pth);
         
         Jet j = new Jet();
         j.state = new IdleState(sys);

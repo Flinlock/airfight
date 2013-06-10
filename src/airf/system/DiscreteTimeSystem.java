@@ -41,18 +41,21 @@ public class DiscreteTimeSystem extends EntityProcessingSystem
             {
                 Point2D.Float pnt = p.course.getPoint(1f);
                 p.course = pq.maneuvers.remove(0).getCourse();
-                p.x = pnt.x;
-                p.y = pnt.y;
+                p.x += pnt.x;
+                p.y += pnt.y;
                 p.p = 0;
             }
             else
             {
                 Point2D.Float pnt = p.course.getPoint(1f);
                 float h = p.course.getEndHeading();
-                p.course = ManeuverFactory.createCourseStraight(h).getCourse();
-                p.x = pnt.x;
-                p.y = pnt.y;
+                h = (float)(h/Math.PI*180);
+                p.course = ManeuverFactory.createCourseStraight(h,false).getCourse();
+                p.x += pnt.x;
+                p.y += pnt.y;
                 p.p = 0;
+
+                System.out.println("Maneuver Queue Empty: Adding Straight Course!");
             }
         }
             

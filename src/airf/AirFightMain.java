@@ -12,6 +12,7 @@ import org.newdawn.slick.SlickException;
 import airf.EntityFactory.JetType;
 import airf.component.Jet;
 import airf.input.InputToIntent;
+import airf.system.DiscreteTimeSystem;
 import airf.system.HeadingSystem;
 import airf.system.JetSystem;
 import airf.system.MovementSystem;
@@ -61,7 +62,7 @@ public class AirFightMain extends BasicGame
 
     public AirFightMain(World w)
     {
-        super("AirFight Proto");
+        super("AirFight Proto - Maneuvers Demo");
         world = w;
     }
 
@@ -81,22 +82,20 @@ public class AirFightMain extends BasicGame
         c.getInput().addMouseListener(mapper);
         c.getInput().addKeyListener(mapper);
                 
+        world.setSystem(new DiscreteTimeSystem(Constants.TIME_SLOT_PERIOD / UPDATE_PERIOD));
         world.setSystem(new PathSystem());
         world.setSystem(new MovementSystem());
         world.setSystem(new HeadingSystem());
         JetSystem jsystem = new JetSystem();
         world.setSystem(jsystem);
         spriteRenderSystem = world.setSystem(new SpriteRenderSystem(), true);
-
+                
+        Entity jet = EntityFactory.createJet(world, 150, 150, false, 180, JetType.WHITE, jsystem);
+        jet.addToWorld();
+        mapper.setPlayerJet(jet.getComponent(Jet.class));
+        
         world.initialize();
                 
-//        Entity testJet = EntityFactory.createJet(world, 150, 150, 0.01f, 0.01f, 0, JetType.WHITE, jsystem);
-//        testJet.addToWorld();
-//        mapper.setPlayerJet(testJet.getComponent(Jet.class));
-        
-        Entity enemyJet = EntityFactory.createAIJet(world, 250, 150, 0.01f, 0.01f, 0, JetType.BLACK, jsystem);
-        enemyJet.addToWorld();
-        
         timeSinceLastUpdate = 0;
     }
 
@@ -105,7 +104,6 @@ public class AirFightMain extends BasicGame
     {
         timeSinceLastUpdate += delta;
         while(timeSinceLastUpdate >= UPDATE_PERIOD)
-//        if(timeSinceLastUpdate >= UPDATE_PERIOD )
         {
             world.setDelta(UPDATE_PERIOD);
             world.process();

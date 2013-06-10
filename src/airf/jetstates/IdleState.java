@@ -4,9 +4,7 @@ import airf.Constants;
 import airf.component.Heading;
 import airf.component.Jet;
 import airf.component.ManeuverQueue;
-import airf.component.Position;
-import airf.component.Velocity;
-import airf.pathing.Course;
+import airf.component.Path;
 import airf.pathing.ManeuverFactory;
 import airf.system.JetSystem;
 
@@ -30,6 +28,15 @@ public class IdleState implements JetState
         return entityChanged;
     }
     
+    private float getNextHeading(ManeuverQueue mq, Path p)
+    {
+        float fH = ManeuverQueue.getFinalHeading(mq);  // need to get the heading of the jet at the end of the last maneuver on the queue
+        if(fH == -1)
+            fH = p.course.getEndHeading();
+         
+        return fH / (float)Math.PI * 180f;
+    }
+    
     @Override
     public JetState update(Entity e)
     {
@@ -41,6 +48,7 @@ public class IdleState implements JetState
                 ManeuverQueue mq = system.getComponent(ManeuverQueue.class, e);
                 Heading h = system.getComponent(Heading.class, e);
                 Jet j = system.getComponent(Jet.class, e);
+                Path p = system.getComponent(Path.class, e);
 
                 actionPending = false;
                 
@@ -50,30 +58,29 @@ public class IdleState implements JetState
                 switch(intent)
                 {
                     case HARDL:
-                    {
-                        m = ManeuverFactory.createCourseHardL(h.h, false);
+                    {       
+                        m = ManeuverFactory.createCourseHardL(getNextHeading(mq,p), false);
                         break;
                     }
                     case HARDR:
                     {
-                        m = ManeuverFactory.createCourseHardR(h.h, false);
+                        m = ManeuverFactory.createCourseHardR(getNextHeading(mq,p), false);
                         break;
                     }
                     case SOFTR:
-                    {
-                        p.course = CourseFactory.createCourseSoftR(h.h, false); 
-                        m = ManeuverFactory.createCourseSoftR(h.h, false); 
+                    { 
+                        m = ManeuverFactory.createCourseSoftR(getNextHeading(mq,p), false); 
                         break;
                     }
                     case SOFTL:
                     {
-                        m = ManeuverFactory.createCourseSoftL(h.h, false);
+                        m = ManeuverFactory.createCourseSoftL(getNextHeading(mq,p), false);
                         break;
                     }
                     case ACCEL:
                     {
                         if(!ManeuverQueue.willBeFast(mq,j.fast))
-                            m = ManeuverFactory.createCourseAccel(h.h);
+                            m = ManeuverFactory.createCourseAccel(getNextHeading(mq,p));
                         else
                             return this;
                         
@@ -82,14 +89,14 @@ public class IdleState implements JetState
                     case DEACCEL:
                     {
                         if(ManeuverQueue.willBeFast(mq,j.fast))
-                            m = ManeuverFactory.createCourseDecel(h.h);
+                            m = ManeuverFactory.createCourseDecel(getNextHeading(mq,p));
                         else
                             return this;
                         
                         break;
                     }
                     default:
-                        m = ManeuverFactory.createCourseStraight(h.h, false);
+                        m = ManeuverFactory.createCourseStraight(getNextHeading(mq,p), false);
                         break;
                 }
 
