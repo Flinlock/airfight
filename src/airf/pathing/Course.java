@@ -17,16 +17,19 @@ public class Course
 {
     PathDefinition path;
     AccelerationProfile profile;
+    float velocity;
     String name;
     
-    public Course(PathDefinition path, AccelerationProfile profile)
+    public Course(float initialVelocity, PathDefinition path, AccelerationProfile profile)
     {
+        this.velocity = initialVelocity;
         this.path = path;
         this.profile = profile;
     }
     
-    public Course(PathDefinition path, AccelerationProfile profile, String name)
+    public Course(float initialVelocity, PathDefinition path, AccelerationProfile profile, String name)
     {
+        this.velocity = initialVelocity;
         this.path = path;
         this.profile = profile;
         this.name = name;
@@ -146,5 +149,10 @@ public class Course
             return name;
         else
             return super.toString();
+    }
+
+    public float getInitialVelocity()
+    {
+        return velocity;
     }
 }

@@ -2,9 +2,9 @@ package airf.system;
 
 import java.awt.geom.Point2D;
 
-import airf.component.Path;
 import airf.component.ManeuverQueue;
-import airf.pathing.Course;
+import airf.component.Path;
+import airf.jetstates.Maneuver;
 import airf.pathing.ManeuverFactory;
 
 import com.artemis.Aspect;
@@ -42,9 +42,11 @@ public class DiscreteTimeSystem extends EntityProcessingSystem
             if(!pq.maneuvers.isEmpty())
             {
                 Point2D.Float pnt = p.course.getPoint(1f);
-                p.course = pq.maneuvers.remove(0).getCourse();
+                Maneuver man = pq.maneuvers.remove(0);
+                p.course = man.getCourse();
                 p.x += pnt.x;
                 p.y += pnt.y;
+                p.v = p.course.getInitialVelocity();
                 p.p = 0;
             }
             else
@@ -55,6 +57,7 @@ public class DiscreteTimeSystem extends EntityProcessingSystem
                 p.course = mf.createCourseStraight(h,false).getCourse();
                 p.x += pnt.x;
                 p.y += pnt.y;
+                p.v = p.course.getInitialVelocity();
                 p.p = 0;
 
                 System.out.println("Maneuver Queue Empty: Adding Straight Course!");
