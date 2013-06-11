@@ -1,12 +1,27 @@
 package airf.pathing;
 
 import util.bezier.BezierCurve;
+import airf.Constants;
 import airf.jetstates.Maneuver;
 import airf.jetstates.Maneuver.AccType;
 
 public class ManeuverFactory
 {    
-    static private float convertHeading(float h)
+    float vSlow;
+    float vFast;
+    int timeSlotPeriod;
+    
+    public ManeuverFactory(int timeSlotPeriod)
+    {
+        this.timeSlotPeriod = timeSlotPeriod;
+        Maneuver m = createCourseStraight(0, false);
+        vSlow = m.getCourse().getLength() / timeSlotPeriod; // 0.0209
+        
+        m = createCourseStraight(0, true);
+        vFast = m.getCourse().getLength() / timeSlotPeriod; // 0.032646798
+    }
+    
+    private float convertHeading(float h)
     {
         float hAdjusted = h;
         hAdjusted = 360 - hAdjusted - 90;  // convert from clockwise to counter clockwise rotation and adjust for coordinate frame differences
@@ -18,7 +33,7 @@ public class ManeuverFactory
     }
     
     // heading is in degrees
-    public static Maneuver createCourseHardL(float heading, boolean fast)
+    public Maneuver createCourseHardL(float heading, boolean fast)
     {
         heading = convertHeading(heading);
         BezierCurve c = new BezierCurve();
@@ -48,7 +63,7 @@ public class ManeuverFactory
         return new Maneuver(new Course(path, profile),AccType.NONE);        
     }
 
-    public static Maneuver createCourseHardR(float heading, boolean fast)
+    public Maneuver createCourseHardR(float heading, boolean fast)
     {
         heading = convertHeading(heading);
         BezierCurve c = new BezierCurve();
@@ -78,7 +93,7 @@ public class ManeuverFactory
         return new Maneuver(new Course(path, profile),AccType.NONE);
     }
 
-    public static Maneuver createCourseSoftR(float heading, boolean fast)
+    public Maneuver createCourseSoftR(float heading, boolean fast)
     {
         heading = convertHeading(heading);
         BezierCurve c = new BezierCurve();
@@ -108,7 +123,7 @@ public class ManeuverFactory
         return new Maneuver(new Course(path, profile),AccType.NONE);
     }
 
-    public static Maneuver createCourseSoftL(float heading, boolean fast)
+    public Maneuver createCourseSoftL(float heading, boolean fast)
     {
         heading = convertHeading(heading);
         BezierCurve c = new BezierCurve();
@@ -138,7 +153,7 @@ public class ManeuverFactory
         return new Maneuver(new Course(path, profile),AccType.NONE);
     }
 
-    public static Maneuver createCourseAccel(float heading)
+    public Maneuver createCourseAccel(float heading)
     {
         heading = convertHeading(heading);
         BezierCurve c = new BezierCurve();
@@ -153,12 +168,17 @@ public class ManeuverFactory
         path.setRotation(heading / 180 * (float)Math.PI);
         
         AccelerationProfile profile = new AccelerationProfile();
-        profile.addDivider(0.0f, 0.000001f/(160f/270f));
+        float a = (float)((c.getLength() - vSlow*(Constants.TIME_SLOT_PERIOD))*2/Math.pow(Constants.TIME_SLOT_PERIOD, 2));                
+        profile.addDivider(0, a );
+        // d = d_0 + v_0*t + 1/2a*t*t
+        // c.getLength() = vSlow*t + 1/2*a*t*t
+        // c.getLength() = vSlow*(Constants.TIME_SLOT_PERIOD) + 1/2*a*(Constants.TIME_SLOT_PERIOD)^2
+        
 
         return new Maneuver(new Course(path, profile),AccType.ACCELERATE);
     }
 
-    public static Maneuver createCourseDecel(float heading)
+    public Maneuver createCourseDecel(float heading)
     {
         heading = convertHeading(heading);
         BezierCurve c = new BezierCurve();
@@ -173,12 +193,12 @@ public class ManeuverFactory
         path.setRotation(heading / 180 * (float)Math.PI);
         
         AccelerationProfile profile = new AccelerationProfile();
-        profile.addDivider(0.0f, -0.000001f);
+        profile.addDivider(0, (vSlow - vFast) / (float)Constants.TIME_SLOT_PERIOD );
 
         return new Maneuver(new Course(path, profile),AccType.DEACCELERATE);
     }
 
-    public static Maneuver createCourseStraight(float heading, boolean fast)
+    public Maneuver createCourseStraight(float heading, boolean fast)
     {
         heading = convertHeading(heading);
         BezierCurve c = new BezierCurve();

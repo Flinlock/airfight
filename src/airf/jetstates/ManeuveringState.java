@@ -1,6 +1,7 @@
 package airf.jetstates;
 
 import airf.component.Path;
+import airf.pathing.ManeuverFactory;
 import airf.system.JetSystem;
 
 import com.artemis.Entity;
@@ -9,10 +10,12 @@ public class ManeuveringState implements JetState
 {
     JetSystem system;
     public boolean entityChanged = true;
+    ManeuverFactory mf;
     
-    public ManeuveringState(JetSystem s)
+    public ManeuveringState(JetSystem s, ManeuverFactory mf)
     {
         system = s;
+        this.mf = mf;
     }
     
     @Override 
@@ -28,7 +31,7 @@ public class ManeuveringState implements JetState
         if(p.p >= 1.0)
         {
             e.removeComponent(p);
-            return new IdleState(system);
+            return new IdleState(system,mf);
         }
         
         entityChanged = false;

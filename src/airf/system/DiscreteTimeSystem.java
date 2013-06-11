@@ -18,13 +18,15 @@ public class DiscreteTimeSystem extends EntityProcessingSystem
     @Mapper ComponentMapper<ManeuverQueue> pqm;
     @Mapper ComponentMapper<Path> pm;
     
+    ManeuverFactory mf;    
     int period;
 
     @SuppressWarnings("unchecked")
-    public DiscreteTimeSystem(int period)
+    public DiscreteTimeSystem(int period, ManeuverFactory mf)
     {
         super(Aspect.getAspectForAll(ManeuverQueue.class, Path.class));
         this.period = period;
+        this.mf = mf;
     }
 
     @Override
@@ -50,7 +52,7 @@ public class DiscreteTimeSystem extends EntityProcessingSystem
                 Point2D.Float pnt = p.course.getPoint(1f);
                 float h = p.course.getEndHeading();
                 h = (float)(h/Math.PI*180);
-                p.course = ManeuverFactory.createCourseStraight(h,false).getCourse();
+                p.course = mf.createCourseStraight(h,false).getCourse();
                 p.x += pnt.x;
                 p.y += pnt.y;
                 p.p = 0;

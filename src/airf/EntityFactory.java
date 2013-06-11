@@ -9,11 +9,10 @@ import airf.component.Position;
 import airf.component.Sprite;
 import airf.component.Velocity;
 import airf.jetstates.IdleState;
-import airf.jetstates.Maneuver;
+import airf.jetstates.JetState;
 import airf.jetstates.ai.IdleStateAI;
 import airf.pathing.AccelerationProfile;
 import airf.pathing.Course;
-import airf.pathing.ManeuverFactory;
 import airf.pathing.PathDefinition;
 import airf.system.JetSystem;
 
@@ -22,16 +21,6 @@ import com.artemis.World;
 
 public class EntityFactory
 {  
-    final static float vSlow;
-    final static float vFast;
-    static
-    {
-        Maneuver m = ManeuverFactory.createCourseStraight(0, false);
-        vSlow = m.getCourse().getLength() / Constants.TIME_SLOT_PERIOD;
-        
-        m = ManeuverFactory.createCourseStraight(0, true);
-        vFast = m.getCourse().getLength() / Constants.TIME_SLOT_PERIOD;
-    }
     
     public enum JetType
     {
@@ -52,7 +41,7 @@ public class EntityFactory
         }
     }
     
-    public static Entity createJet(World w, float x, float y, boolean fast, float h, JetType t, JetSystem sys)
+    public static Entity createJet(World w, float x, float y, boolean fast, float vel, float h, JetType t, Course course, JetState state)
     {
         Entity e = w.createEntity();
 
@@ -79,109 +68,20 @@ public class EntityFactory
         e.addComponent(pq);
         
         Path pth = new Path();
-        pth.course = ManeuverFactory.createCourseStraight(h,false).getCourse();
+        pth.course = course;
         pth.x = x;
         pth.y = y;
         pth.p = 0;
-        pth.v = fast ? vFast : vSlow;
+        pth.v = vel;
         e.addComponent(pth);
         
         Jet j = new Jet();
-        j.state = new IdleState(sys);
+        j.state = state;
         j.fast = false;
         e.addComponent(j);
 
         return e;
     }
 
-    public static Entity createTestJet(World w, float x, float y, float vx, float vy, float h, JetType t, JetSystem sys)
-    {
-        Entity e = w.createEntity();
 
-        Position p = new Position();
-        p.x = x;
-        p.y = y;
-        e.addComponent(p);
-
-        Sprite sprite = new Sprite();
-        sprite.name = t.toString();
-        sprite.scaleX = 0.5f;
-        sprite.scaleY = 0.5f;
-        sprite.rot = h;
-        e.addComponent(sprite);
-        
-        Heading heading = new Heading();
-        heading.h = h;
-        e.addComponent(heading);
-
-        Velocity v = new Velocity();
-        v.x = vx;
-        v.y = vy;
-        e.addComponent(v);
-        
-        Jet j = new Jet();
-        j.state = new IdleState(sys);
-        j.fast = false;
-        e.addComponent(j);
-        
-        ///////
-        
-        BezierCurve curve = new BezierCurve();
-        curve.setAnchorStart(0, 0);
-        curve.setAnchorEnd(300, 300);
-        curve.setControlPointOne(400, 0);
-        curve.setControlPointTwo(400, 0);
-        curve.calculateLength(0.01f);
-        
-        PathDefinition path = new PathDefinition(curve);
-        AccelerationProfile profile = new AccelerationProfile();
-        profile.addDivider(0.25f, 0.0001f);
-        profile.addDivider(0.5f, -0.0001f);
-        profile.addDivider(0.75f, 0);
-        
-        
-        Path pathc = new Path();
-        pathc.p = 0;
-        pathc.v = (float)Math.sqrt(0.05f*0.05f + 0.05f*0.05f);
-        pathc.x = 150;
-        pathc.y = 150;
-        pathc.course = new Course(path, profile);
-        e.addComponent(pathc);
-        
-        return e;
-    }
-
-    public static Entity createAIJet(World w, float x, float y, float vx, float vy, float h, JetType t, JetSystem sys)
-    {
-
-        Entity e = w.createEntity();
-
-        Position p = new Position();
-        p.x = x;
-        p.y = y;
-        e.addComponent(p);
-
-        Sprite sprite = new Sprite();
-        sprite.name = t.toString();
-        sprite.scaleX = 0.5f;
-        sprite.scaleY = 0.5f;
-        sprite.rot = h;
-        e.addComponent(sprite);
-        
-        Heading heading = new Heading();
-        heading.h = h;
-        e.addComponent(heading);
-
-        Velocity v = new Velocity();
-        v.x = vx;
-        v.y = vy;
-        e.addComponent(v);
-        
-        Jet j = new Jet();
-        j.state = new IdleStateAI(sys);
-        j.fast = false;
-        e.addComponent(j);
-        
-        return e;
-    }
 }

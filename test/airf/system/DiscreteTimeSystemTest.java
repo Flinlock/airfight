@@ -21,13 +21,15 @@ public class DiscreteTimeSystemTest
     Entity e;
     ManeuverQueue q;
     Path p;
+    ManeuverFactory mf;
 
     @Before
     public void setUp() throws Exception
     {
-        c0 = ManeuverFactory.createCourseAccel(0);
-        c1 = ManeuverFactory.createCourseHardL(0,false);
-        c2 = ManeuverFactory.createCourseHardR(0,false); 
+        mf = new ManeuverFactory(5000);
+        c0 = mf.createCourseAccel(0);
+        c1 = mf.createCourseHardL(0,false);
+        c2 = mf.createCourseHardR(0,false); 
         
 
         w = new World();
@@ -56,7 +58,7 @@ public class DiscreteTimeSystemTest
     @Test
     public void testCountFollowPeriod()
     {
-        DiscreteTimeSystem sys = new DiscreteTimeSystem(5);
+        DiscreteTimeSystem sys = new DiscreteTimeSystem(5,mf);
         w.setSystem(sys);
         w.initialize();
         w.setDelta(10);
@@ -75,7 +77,7 @@ public class DiscreteTimeSystemTest
     @Test
     public void testPathChangeOnPeriodEnd()
     {
-        DiscreteTimeSystem sys = new DiscreteTimeSystem(10);
+        DiscreteTimeSystem sys = new DiscreteTimeSystem(10,mf);
         w.setSystem(sys);
         w.initialize();
         w.setDelta(10);
@@ -93,7 +95,7 @@ public class DiscreteTimeSystemTest
     @Test
     public void testEmptyQueueDefaultsToStraightPath()
     {
-        DiscreteTimeSystem sys = new DiscreteTimeSystem(3);
+        DiscreteTimeSystem sys = new DiscreteTimeSystem(3,mf);
         w.setSystem(sys);
         w.initialize();
         w.setDelta(10);

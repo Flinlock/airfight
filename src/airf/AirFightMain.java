@@ -12,6 +12,8 @@ import org.newdawn.slick.SlickException;
 import airf.EntityFactory.JetType;
 import airf.component.Jet;
 import airf.input.InputToIntent;
+import airf.jetstates.IdleState;
+import airf.pathing.ManeuverFactory;
 import airf.system.DiscreteTimeSystem;
 import airf.system.HeadingSystem;
 import airf.system.JetSystem;
@@ -76,21 +78,25 @@ public class AirFightMain extends BasicGame
     @Override
     public void init(GameContainer c) throws SlickException
     {   
+        ManeuverFactory mf = new ManeuverFactory(Constants.TIME_SLOT_PERIOD);
+        
         c.getGraphics().setBackground(Color.white);
         
         InputToIntent mapper = new InputToIntent();
         c.getInput().addMouseListener(mapper);
         c.getInput().addKeyListener(mapper);
                 
-        world.setSystem(new DiscreteTimeSystem(Constants.TIME_SLOT_PERIOD / UPDATE_PERIOD));
+        world.setSystem(new DiscreteTimeSystem(Constants.TIME_SLOT_PERIOD / UPDATE_PERIOD, mf));
         world.setSystem(new PathSystem());
-        world.setSystem(new MovementSystem());
+//        world.setSystem(new MovementSystem());
         world.setSystem(new HeadingSystem());
         JetSystem jsystem = new JetSystem();
         world.setSystem(jsystem);
         spriteRenderSystem = world.setSystem(new SpriteRenderSystem(), true);
                 
-        Entity jet = EntityFactory.createJet(world, 150, 150, false, 180, JetType.WHITE, jsystem);
+        Entity jet = EntityFactory.createJet(world, 150, 150, false, 0.0209f, 180, JetType.WHITE, 
+                mf.createCourseStraight(180, false).getCourse(),
+                new IdleState(jsystem, mf));
         jet.addToWorld();
         mapper.setPlayerJet(jet.getComponent(Jet.class));
         
