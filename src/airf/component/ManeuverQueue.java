@@ -18,10 +18,11 @@ public class ManeuverQueue extends Component
     
     public List<Maneuver> maneuvers;
     public int count;
+    public Maneuver finishedManeuver;
     
     
     public static boolean willBeFast(ManeuverQueue pq, boolean isFast)
-    {
+    {        
         AccType a = AccType.NONE;
         for(int i = pq.maneuvers.size()-1; i >= 0; i--)
         {

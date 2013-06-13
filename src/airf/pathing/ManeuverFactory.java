@@ -39,6 +39,9 @@ public class ManeuverFactory
         BezierCurve c = new BezierCurve();
         float v;
         
+        if(fast)
+            System.out.println("Creating fast course");
+        
         if(!fast)
         {
             c.setAnchorStart(0, 0);
@@ -71,6 +74,9 @@ public class ManeuverFactory
         heading = convertHeading(heading);
         BezierCurve c = new BezierCurve();
         float v;
+
+        if(fast)
+            System.out.println("Creating fast course");
         
         if(!fast)
         {
@@ -105,6 +111,9 @@ public class ManeuverFactory
         BezierCurve c = new BezierCurve();
         float v;
         
+        if(fast)
+            System.out.println("Creating fast course");
+        
         if(!fast)
         {
             c.setAnchorStart(0, 0);
@@ -138,6 +147,9 @@ public class ManeuverFactory
         BezierCurve c = new BezierCurve();
         float v;
 
+        if(fast)
+            System.out.println("Creating fast course");
+
         if(!fast)
         {
             c.setAnchorStart(0, 0);
@@ -170,7 +182,7 @@ public class ManeuverFactory
         heading = convertHeading(heading);
         BezierCurve c = new BezierCurve();
         float v;
-        
+
         c.setAnchorStart(0, 0);
         c.setAnchorEnd(0, 206.566f);
         c.setControlPointOne(0, 0);
@@ -211,7 +223,7 @@ public class ManeuverFactory
         AccelerationProfile profile = new AccelerationProfile();
         profile.addDivider(0, (vSlow - vFast) / (float)Constants.TIME_SLOT_PERIOD );
 
-        return new Maneuver(new Course(v, path, profile),AccType.DEACCELERATE);
+        return new Maneuver(new Course(v, path, profile),AccType.DECELERATE);
     }
 
     public Maneuver createCourseStraight(float heading, boolean fast)
@@ -219,6 +231,9 @@ public class ManeuverFactory
         heading = convertHeading(heading);
         BezierCurve c = new BezierCurve();
         float v;
+
+        if(fast)
+            System.out.println("Creating fast course");
         
         if(!fast)
         {

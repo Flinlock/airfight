@@ -42,7 +42,7 @@ public class JetSystem extends EntityProcessingSystem
         if(j.state.changed())
             world.changedEntity(e);
     }
-
+    
     public Path getPath(Entity e)
     {
         return pathm.get(e);

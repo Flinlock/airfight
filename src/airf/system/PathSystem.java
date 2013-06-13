@@ -32,9 +32,9 @@ public class PathSystem extends EntityProcessingSystem
         pos.ly = pos.y;
         
         path.totalTime += world.delta;
-        float p = path.course.calculateP(path.totalTime);
+        float p = path.course.getCourse().calculateP(path.totalTime);
         
-        Point2D.Float pnt = path.course.getPoint(p);
+        Point2D.Float pnt = path.course.getCourse().getPoint(p);
         pos.x = pnt.x + path.x;
         pos.y = pnt.y + path.y;
                         

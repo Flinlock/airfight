@@ -1,10 +1,13 @@
 package airf.jetstates;
 
+import java.awt.geom.Point2D;
+
 import airf.Constants;
 import airf.component.Heading;
 import airf.component.Jet;
 import airf.component.ManeuverQueue;
 import airf.component.Path;
+import airf.jetstates.Maneuver.AccType;
 import airf.pathing.ManeuverFactory;
 import airf.system.JetSystem;
 
@@ -34,7 +37,7 @@ public class IdleState implements JetState
     {
         float fH;
         if(mq.maneuvers.isEmpty())
-            fH = p.course.getEndHeading();
+            fH = p.course.getCourse().getEndHeading();
         else
             fH = ManeuverQueue.getFinalHeading(mq);
         
@@ -46,15 +49,42 @@ public class IdleState implements JetState
     {
         synchronized(this)
         {
+            ManeuverQueue mq = system.getComponent(ManeuverQueue.class, e);
+            Jet j = system.getComponent(Jet.class, e);
+
+            if(mq.finishedManeuver != null)
+            {
+                System.out.println("Finishing Manuever!");
+                AccType acc = mq.finishedManeuver.getAcc();
+                if(acc == AccType.ACCELERATE)
+                {
+                    System.out.print("accelerating");
+                    j.fast = true;
+                }
+                else if(acc == AccType.DECELERATE)
+                {
+                    System.out.print("decelerating");
+                    j.fast = false;
+                }
+            }
+            
+            Path p = system.getComponent(Path.class, e);
+            
+            if(p.course == null)
+                p.course = mf.createCourseStraight(p.h,j.fast);
+            
             if(actionPending) // add a new path to the queue
             {
                 Maneuver m;
-                ManeuverQueue mq = system.getComponent(ManeuverQueue.class, e);
-                Heading h = system.getComponent(Heading.class, e);
-                Jet j = system.getComponent(Jet.class, e);
-                Path p = system.getComponent(Path.class, e);
 
                 actionPending = false;
+                
+                boolean tmp = j.fast;
+                if(p.course.getAcc() == AccType.ACCELERATE)
+                    tmp = true;
+                else if(p.course.getAcc() == AccType.DECELERATE)
+                    tmp = false;
+                boolean fast = ManeuverQueue.willBeFast(mq,tmp);
                 
                 if(mq.maneuvers.size() >= Constants.QUEUE_MAX) // can we queue up another maneuver?
                     return this;
@@ -63,27 +93,27 @@ public class IdleState implements JetState
                 {
                     case HARDL:
                     {       
-                        m = mf.createCourseHardL(getNextHeading(mq,p), false);
+                        m = mf.createCourseHardL(getNextHeading(mq,p), fast);
                         break;
                     }
                     case HARDR:
                     {
-                        m = mf.createCourseHardR(getNextHeading(mq,p), false);
+                        m = mf.createCourseHardR(getNextHeading(mq,p), fast);
                         break;
                     }
                     case SOFTR:
                     { 
-                        m = mf.createCourseSoftR(getNextHeading(mq,p), false); 
+                        m = mf.createCourseSoftR(getNextHeading(mq,p), fast); 
                         break;
                     }
                     case SOFTL:
                     {
-                        m = mf.createCourseSoftL(getNextHeading(mq,p), false);
+                        m = mf.createCourseSoftL(getNextHeading(mq,p), fast);
                         break;
                     }
                     case ACCEL:
                     {
-                        if(!ManeuverQueue.willBeFast(mq,j.fast))
+                        if(!fast)
                             m = mf.createCourseAccel(getNextHeading(mq,p));
                         else
                             return this;
@@ -92,7 +122,7 @@ public class IdleState implements JetState
                     }
                     case DEACCEL:
                     {
-                        if(ManeuverQueue.willBeFast(mq,j.fast))
+                        if(fast)
                             m = mf.createCourseDecel(getNextHeading(mq,p));
                         else
                             return this;
@@ -100,7 +130,7 @@ public class IdleState implements JetState
                         break;
                     }
                     default:
-                        m = mf.createCourseStraight(getNextHeading(mq,p), false);
+                        m = mf.createCourseStraight(getNextHeading(mq,p), fast);
                         break;
                 }
 

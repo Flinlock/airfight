@@ -6,7 +6,7 @@ public class Maneuver
 {
     Course course;
     AccType acc;
-    public enum AccType {NONE, ACCELERATE, DEACCELERATE};
+    public enum AccType {NONE, ACCELERATE, DECELERATE};
     
     public Maneuver(Course c, AccType a)
     {

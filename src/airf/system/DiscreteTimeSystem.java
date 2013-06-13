@@ -1,6 +1,7 @@
 package airf.system;
 
 import java.awt.geom.Point2D;
+import java.util.ArrayList;
 
 import airf.component.ManeuverQueue;
 import airf.component.Path;
@@ -17,7 +18,7 @@ public class DiscreteTimeSystem extends EntityProcessingSystem
 {
     @Mapper ComponentMapper<ManeuverQueue> pqm;
     @Mapper ComponentMapper<Path> pm;
-    
+        
     ManeuverFactory mf;    
     int period;
 
@@ -28,7 +29,7 @@ public class DiscreteTimeSystem extends EntityProcessingSystem
         this.period = period;
         this.mf = mf;
     }
-
+        
     @Override
     protected void process(Entity e)
     {        
@@ -39,28 +40,34 @@ public class DiscreteTimeSystem extends EntityProcessingSystem
             pq.count = 0;
             Path p = pm.get(e);
             
+            pq.finishedManeuver = p.course;
+            
             if(!pq.maneuvers.isEmpty())
             {
-                Point2D.Float pnt = p.course.getPoint(1f);
+                Point2D.Float pnt = p.course.getCourse().getPoint(1f);
                 Maneuver man = pq.maneuvers.remove(0);
-                p.course = man.getCourse();
+                float h = p.course.getCourse().getEndHeading();
+                h = (float)(h/Math.PI*180);
+                p.course = man;
                 p.x += pnt.x;
                 p.y += pnt.y;
+                p.h = h;
                 p.totalTime = 0;
             }
             else
             {
-                Point2D.Float pnt = p.course.getPoint(1f);
-                float h = p.course.getEndHeading();
+                Point2D.Float pnt = p.course.getCourse().getPoint(1f);
+                float h = p.course.getCourse().getEndHeading();
                 h = (float)(h/Math.PI*180);
-                p.course = mf.createCourseStraight(h,false).getCourse();
+                p.course = null;
                 p.x += pnt.x;
                 p.y += pnt.y;
+                p.h = h;
                 p.totalTime = 0;
-
-                System.out.println("Maneuver Queue Empty: Adding Straight Course!");
             }
         }
+        else
+            pq.finishedManeuver = null;
             
     }
 

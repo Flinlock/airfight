@@ -1,13 +1,14 @@
 package airf.component;
 
-import airf.pathing.Course;
+import airf.jetstates.Maneuver;
 
 import com.artemis.Component;
 
 public class Path extends Component
 {
-    public Course course;    
+    public Maneuver course;    
     public float x;  // path start coordinates
     public float y;
     public int totalTime;
+    public float h;
 }

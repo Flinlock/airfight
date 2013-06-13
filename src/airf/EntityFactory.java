@@ -7,7 +7,7 @@ import airf.component.Path;
 import airf.component.Position;
 import airf.component.Sprite;
 import airf.jetstates.JetState;
-import airf.pathing.Course;
+import airf.jetstates.Maneuver;
 
 import com.artemis.Entity;
 import com.artemis.World;
@@ -34,7 +34,7 @@ public class EntityFactory
         }
     }
     
-    public static Entity createJet(World w, float x, float y, boolean fast, float vel, float h, JetType t, Course course, JetState state)
+    public static Entity createJet(World w, float x, float y, boolean fast, float vel, float h, JetType t, Maneuver m, JetState state)
     {
         Entity e = w.createEntity();
 
@@ -58,10 +58,11 @@ public class EntityFactory
         e.addComponent(pq);
         
         Path pth = new Path();
-        pth.course = course;
+        pth.course = m;
         pth.x = x;
         pth.y = y;
         pth.totalTime = 0;
+        pth.h = 0;
         e.addComponent(pth);
         
         Jet j = new Jet();
