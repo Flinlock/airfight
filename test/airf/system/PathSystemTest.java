@@ -57,7 +57,7 @@ public class PathSystemTest
         
         profile = new AccelerationProfile();
         
-        crs = new Course(path, profile);
+        crs = new Course(0.1f, path, profile);
         p.course = crs;
         p.p = 0;
         p.v = 0.1f;

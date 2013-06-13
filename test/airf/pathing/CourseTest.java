@@ -16,6 +16,14 @@ public class CourseTest
     Course cComplex;
     Course cComplexConstant;
     float lComplex;
+    PathDefinition path1;
+    AccelerationProfile profile1;
+    PathDefinition path2;
+    AccelerationProfile profile2;
+    PathDefinition path3;
+    AccelerationProfile profile3;
+    PathDefinition path4;
+    AccelerationProfile profile4;
 
     @Before
     public void setUp() throws Exception
@@ -27,11 +35,9 @@ public class CourseTest
         c.setControlPointTwo(1, 1);
         c.calculateLength(0.01f);
         
-        PathDefinition path = new PathDefinition(c);        
+        path1 = new PathDefinition(c);        
         
-        AccelerationProfile profile = new AccelerationProfile();
-                
-        cSimple = new Course(path, profile);  // a straight line path from (0,0) to (1,1) with no acceleration
+        profile1 = new AccelerationProfile();
 
         ///////////////////////////////////
         
@@ -42,13 +48,11 @@ public class CourseTest
         c.setControlPointTwo(1, 1);
         c.calculateLength(0.01f);
         
-        path = new PathDefinition(c);        
+        path2 = new PathDefinition(c);        
         
-        profile = new AccelerationProfile();
-        profile.addDivider(0, 1);
-                
-        cSimpleAcc = new Course(path, profile);  // a straight line path from (0,0) to (1,1) with acceleration of 1
-        
+        profile2 = new AccelerationProfile();
+        profile2.addDivider(0, 1);
+                        
         ///////////////////////////////////
         
         c = new BezierCurve();
@@ -58,15 +62,14 @@ public class CourseTest
         c.setControlPointTwo(15, -1);
         c.calculateLength(0.01f);
         
-        path = new PathDefinition(c);        
-        lComplex = path.getLength();
+        path3 = new PathDefinition(c);        
+        lComplex = path3.getLength();
         
-        profile = new AccelerationProfile();
-        profile.addDivider(0, 1f);
-        profile.addDivider(0.33f, -1f);
-        profile.addDivider(0.66f, 0);
+        profile3 = new AccelerationProfile();
+        profile3.addDivider(0, 1f);
+        profile3.addDivider(0.33f, -1f);
+        profile3.addDivider(0.66f, 0);
 
-        cComplex = new Course(path, profile);  // a curvy path with zero, positive, and negative acceleration
 
         ///////////////////////////////////
 
@@ -77,18 +80,18 @@ public class CourseTest
         c.setControlPointTwo(15, -1);
         c.calculateLength(0.01f);
 
-        path = new PathDefinition(c);        
-        lComplex = path.getLength();
+        path4 = new PathDefinition(c);        
+        lComplex = path4.getLength();
 
-        profile = new AccelerationProfile();
+        profile4 = new AccelerationProfile();
 
-        cComplexConstant = new Course(path, profile);  // a curvy path with zero acceleration
     }
 
     @Test
     public void testTravelSimple()
     {
         float v = (float)Math.sqrt(2);
+        cSimple = new Course(v, path1, profile1);  // a straight line path from (0,0) to (1,1) with no acceleration
         CourseUpdate update = cSimple.calculateUpdate(0, v, 0.5f);
         
         assertEquals(0.5f, update.pNew, 0.01f);
@@ -102,6 +105,7 @@ public class CourseTest
     public void testTravelWithAcceleration()
     {
         float L = (float)Math.sqrt(2);
+        cSimpleAcc = new Course(1, path2, profile2);  // a straight line path from (0,0) to (1,1) with acceleration of 1
         CourseUpdate update = cSimpleAcc.calculateUpdate(0, 1, 0.5f);
         
         assertEquals((0 + 1*0.5f + 1/2f*0.5f*0.5f)/L, update.pNew, 0.01f);
@@ -114,6 +118,7 @@ public class CourseTest
     public void testTravelOffSimple()
     {
         float v = (float)Math.sqrt(2);
+        cSimple = new Course(v, path1, profile1);  // a straight line path from (0,0) to (1,1) with no acceleration
         CourseUpdate update = cSimple.calculateUpdate(0, v, 1.5f);
         
         assertEquals(1.0f, update.pNew, 0.01f);
@@ -126,6 +131,7 @@ public class CourseTest
     @Test
     public void testTravelComplex()
     {
+        cComplex = new Course(500, path3, profile3);  // a curvy path with zero, positive, and negative acceleration
         CourseUpdate update = cComplex.calculateUpdate(0, 500, 1f);
         
         assertEquals(500, update.vNew, 0.01f);
@@ -135,6 +141,7 @@ public class CourseTest
     @Test
     public void testConstantVelocity()
     {
+        cComplexConstant = new Course(50, path4, profile4);  // a curvy path with zero acceleration
         CourseUpdate u1 = cComplexConstant.calculateUpdate(0, 50, 0.25f);
         CourseUpdate u2 = cComplexConstant.calculateUpdate(0.5f, 50, 0.2f);
                         
@@ -147,6 +154,7 @@ public class CourseTest
     @Test
     public void testConstantVelocityLinearEstimate()
     {
+        cComplexConstant = new Course(50, path4, profile4);  // a curvy path with zero acceleration
         CourseUpdate u1 = cComplexConstant.calculateUpdate(0, 50, 0.003f);
         CourseUpdate u2 = cComplexConstant.calculateUpdate(0.5f, 50, 0.003f);
         
@@ -168,6 +176,7 @@ public class CourseTest
     @Test
     public void testGetEndHeading()
     {
+        cSimple = new Course(1, path1, profile1);  // a straight line path from (0,0) to (1,1) with no acceleration
         assertEquals(Math.PI / 4 + Math.PI, cSimple.getEndHeading(), 0.01f);
     }
 }
