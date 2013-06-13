@@ -1,11 +1,6 @@
 package airf.jetstates.ai;
 
-import airf.component.Heading;
-import airf.component.Path;
-import airf.component.Position;
-import airf.component.Velocity;
 import airf.jetstates.JetState;
-import airf.pathing.ManeuverFactory;
 import airf.system.JetSystem;
 
 import com.artemis.Entity;

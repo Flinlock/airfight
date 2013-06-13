@@ -8,7 +8,6 @@ import org.junit.Test;
 import util.bezier.BezierCurve;
 import airf.component.Path;
 import airf.component.Position;
-import airf.component.Velocity;
 import airf.pathing.AccelerationProfile;
 import airf.pathing.Course;
 import airf.pathing.PathDefinition;
@@ -25,7 +24,6 @@ public class PathSystemTest
     AccelerationProfile profile;
     Course crs;
     Path p;
-    Velocity v;
     Position pos;
 
     @Before
@@ -38,8 +36,6 @@ public class PathSystemTest
         e = world.createEntity();
         p = new Path();
         e.addComponent(p);
-        v = new Velocity();
-        e.addComponent(v);
         pos = new Position();
         e.addComponent(pos);
         e.addToWorld();
@@ -59,10 +55,9 @@ public class PathSystemTest
         
         crs = new Course(0.1f, path, profile);
         p.course = crs;
-        p.p = 0;
-        p.v = 0.1f;
         p.x = 0;
         p.y = 0;
+        p.totalTime = 0;
     }
     
     @Test
@@ -73,8 +68,6 @@ public class PathSystemTest
         
         assertEquals(0, pos.x, 0.01f);
         assertEquals(150, pos.y, 0.01f);
-        assertEquals(0.1f, v.y, 0.01f);
-        assertEquals(0f, v.x, 0.01f);
     }
     
     @Test
@@ -86,8 +79,6 @@ public class PathSystemTest
         
         assertEquals(150, pos.x, 0.01f);
         assertEquals(0, pos.y, 0.01f);
-        assertEquals(0.1f, v.x, 0.01f);
-        assertEquals(0f, v.y, 0.01f);
     }
 
 }

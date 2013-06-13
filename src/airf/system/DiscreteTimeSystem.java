@@ -46,8 +46,7 @@ public class DiscreteTimeSystem extends EntityProcessingSystem
                 p.course = man.getCourse();
                 p.x += pnt.x;
                 p.y += pnt.y;
-                p.v = p.course.getInitialVelocity();
-                p.p = 0;
+                p.totalTime = 0;
             }
             else
             {
@@ -57,8 +56,7 @@ public class DiscreteTimeSystem extends EntityProcessingSystem
                 p.course = mf.createCourseStraight(h,false).getCourse();
                 p.x += pnt.x;
                 p.y += pnt.y;
-                p.v = p.course.getInitialVelocity();
-                p.p = 0;
+                p.totalTime = 0;
 
                 System.out.println("Maneuver Queue Empty: Adding Straight Course!");
             }

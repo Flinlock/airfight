@@ -45,10 +45,9 @@ public class DiscreteTimeSystemTest
         
         p = new Path();
         p.course = c0.getCourse();
-        p.p = 0;
-        p.v = 0.01f;
         p.x = 0;
         p.y = 0;
+        p.totalTime = 0;
         
         e.addComponent(p);
         

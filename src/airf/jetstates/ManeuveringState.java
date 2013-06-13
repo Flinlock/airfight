@@ -27,14 +27,14 @@ public class ManeuveringState implements JetState
     @Override
     public JetState update(Entity e)
     {
-        Path p = system.getComponent(Path.class, e);
-        if(p.p >= 1.0)
-        {
-            e.removeComponent(p);
-            return new IdleState(system,mf);
-        }
-        
-        entityChanged = false;
+//        Path p = system.getComponent(Path.class, e);
+//        if(p.p >= 1.0)
+//        {
+//            e.removeComponent(p);
+//            return new IdleState(system,mf);
+//        }
+//        
+//        entityChanged = false;
         return this;
     }
 

@@ -1,20 +1,13 @@
 package airf;
 
-import util.bezier.BezierCurve;
 import airf.component.Heading;
 import airf.component.Jet;
 import airf.component.ManeuverQueue;
 import airf.component.Path;
 import airf.component.Position;
 import airf.component.Sprite;
-import airf.component.Velocity;
-import airf.jetstates.IdleState;
 import airf.jetstates.JetState;
-import airf.jetstates.ai.IdleStateAI;
-import airf.pathing.AccelerationProfile;
 import airf.pathing.Course;
-import airf.pathing.PathDefinition;
-import airf.system.JetSystem;
 
 import com.artemis.Entity;
 import com.artemis.World;
@@ -60,10 +53,7 @@ public class EntityFactory
         Heading heading = new Heading();
         heading.h = h;
         e.addComponent(heading);
-        
-        Velocity v = new Velocity();
-        e.addComponent(v);
-        
+                
         ManeuverQueue pq = new ManeuverQueue();
         e.addComponent(pq);
         
@@ -71,8 +61,7 @@ public class EntityFactory
         pth.course = course;
         pth.x = x;
         pth.y = y;
-        pth.p = 0;
-        pth.v = vel;
+        pth.totalTime = 0;
         e.addComponent(pth);
         
         Jet j = new Jet();

@@ -5,16 +5,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import airf.Constants;
-import airf.component.Heading;
-import airf.component.Jet;
-import airf.component.Path;
-import airf.component.Position;
-import airf.component.Velocity;
 import airf.jetstates.IntentType;
 import airf.jetstates.JetState;
-import airf.pathing.Course;
-import airf.pathing.ManeuverFactory;
 import airf.system.JetSystem;
 
 import com.artemis.Entity;
