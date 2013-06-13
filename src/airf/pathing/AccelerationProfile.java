@@ -103,8 +103,9 @@ public class AccelerationProfile implements Iterable<Point2D.Float>
         }
     }
 
+    // TODO: Change this from Point2D.Float to something with meaningful field names
     @Override
-    public Iterator<Point2D.Float> iterator()
+    public Iterator<Point2D.Float> iterator() 
     {
         return new Iterator<Point2D.Float>()
         {
@@ -113,7 +114,7 @@ public class AccelerationProfile implements Iterable<Point2D.Float>
             @Override
             public boolean hasNext()
             {
-                return sections.size() > index+1;
+                return sections.size() > index;
             }
 
             @Override
@@ -133,7 +134,9 @@ public class AccelerationProfile implements Iterable<Point2D.Float>
                     ret.y = sec.acc;
                     ret.x = nSec.pStart;
                 }
-                    
+                
+
+                index++;                    
                 return ret;
             }
 

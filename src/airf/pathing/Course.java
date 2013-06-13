@@ -36,6 +36,55 @@ public class Course
     }
     
     /**
+     * 
+     * @param elapsedTime Time spent on this maneuver so far.
+     * @return Percent traveled along the course.
+     */
+    public float calculateP(int elapsedTime)
+    {
+        float p = 0;
+        float v = velocity;
+        float t = elapsedTime;
+        for(Point2D.Float accPair : profile)
+        {
+            float acc = accPair.y;  // point at which acceleration changes
+            float pEnd = accPair.x; // acceleration up to that point
+            float pTmp = p + v*t + 0.5f*acc*t*t; 
+            if(pTmp > pEnd)
+            {
+                float dP = pEnd - p;
+                
+                //dP = v*t + 0.5f*acc*t*t;
+                
+                float a = 0.5f*acc;
+                float b = v;
+                float c = -dP;
+                                
+                // let's calculate the time it takes to move from p to pEnd
+                float dT;
+                if(a != 0)
+                    dT = (float)((-b+Math.sqrt(b*b - 4*a*c)) / (2*a));
+                else
+                    dT = -c/b; 
+                
+                // let's move to pEnd and update velocity
+                p = pEnd;
+                v += acc*dT;
+                t -= dT;
+            }
+            else
+            {
+                float dP = v*t + 0.5f*acc*t*t;
+                p += dP;
+                v += acc*t;
+                break;
+            }
+        }
+        
+        return p;
+    }
+    
+    /**
      * Calculate the new position and velocity after traveling
      * along the course for dT seconds assuming an initial
      * position on the course of p and initial velocity v.
