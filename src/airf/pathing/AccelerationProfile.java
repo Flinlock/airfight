@@ -1,11 +1,12 @@
 package airf.pathing;
 
+import java.awt.geom.Point2D;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
-public class AccelerationProfile
+public class AccelerationProfile implements Iterable<Point2D.Float>
 {
     List<SectionData> sections;
 
@@ -100,6 +101,48 @@ public class AccelerationProfile
             
             return 0;
         }
+    }
+
+    @Override
+    public Iterator<Point2D.Float> iterator()
+    {
+        return new Iterator<Point2D.Float>()
+        {
+            int index = 0;
+
+            @Override
+            public boolean hasNext()
+            {
+                return sections.size() > index+1;
+            }
+
+            @Override
+            public Point2D.Float next()
+            {
+                Point2D.Float ret = new Point2D.Float();
+                SectionData sec = sections.get(index);
+                
+                if(index+1 == sections.size())
+                {
+                    ret.x = 1.0f;
+                    ret.y = sec.acc;
+                }
+                else
+                {
+                    SectionData nSec = sections.get(index+1);
+                    ret.y = sec.acc;
+                    ret.x = nSec.pStart;
+                }
+                    
+                return ret;
+            }
+
+            @Override
+            public void remove()
+            {                
+            }
+            
+        };
     }
 
 }
