@@ -124,4 +124,71 @@ public class LinearSpline
         
         return new ImmutableVector(qx,qy);
     }
+
+    /**
+     * Return the slope of the spline section that
+     * contains the point which is
+     * exactly t percent along the spline. If t is
+     * negative, the slope of the first spline section is
+     * returned.  If t > 1.0, the slope of the final
+     * spline section is returned.
+     * 
+     * @param t Percentage of the length of the spline at which the slope is desired.
+     * @return The slope of the spline section which contains the point exactly t percent along the spline.
+     */
+    public float getSlope(float t)
+    {
+        if(t <= 0)
+        {
+            Point2D.Float p1 = points.get(0);
+            Point2D.Float p2 = points.get(1);
+            return calcSlope(p1, p2);
+        }
+        
+        if(t >= 1.0)
+        {
+            Point2D.Float p1 = points.get(points.size()-2);
+            Point2D.Float p2 = points.get(points.size()-1);
+            return calcSlope(p1, p2);
+        }
+        
+        float p = 0;
+        boolean found = false;
+        
+        int i;
+        for(i = 0; i < percents.size(); i++)
+        {
+            float dP = percents.get(i);
+            if(p + dP > t)
+            {
+                found = true;
+                break;
+            }
+            p += percents.get(i);
+        }
+
+        if(!found)
+            throw new IllegalStateException();
+
+        Point2D.Float p1 = points.get(i);
+        Point2D.Float p2 = points.get(i+1);
+        
+        return calcSlope(p1, p2);
+    }
+
+    private float calcSlope(java.awt.geom.Point2D.Float p1, java.awt.geom.Point2D.Float p2)
+    {
+        float rise = p2.y - p1.y;
+        float run = p2.x - p1.x;
+        
+        if(run == 0)
+        {
+            if(rise > 0)
+                return Float.POSITIVE_INFINITY;
+            else
+                return Float.NEGATIVE_INFINITY;
+        }
+        
+        return rise / run;
+    }
 }
