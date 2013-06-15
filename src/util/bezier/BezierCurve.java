@@ -43,6 +43,35 @@ public class BezierCurve
         
         lengthValid = false;
     }
+    
+    /**
+     * Returns the angle of the tangent at the point corresponding to p percent
+     * along the curve.
+     * 
+     * The heading takes on values of -pi to pi relative to the positive
+     * x axis (assuming a normal cartesian coordinate frame) where
+     * clockwise rotation takes on negative headings.
+     * 
+     * The angle is given for the tangent in the direction of increasing p
+     * along the curve.
+     * 
+     * @param p Percentage along the curve at which the tangent angle is desired.
+     * @return The tangent angle at the point exactly p percent along the path in radians.
+     */
+    public float getTangentAngle(float p)
+    {
+        if(!lengthValid)
+            throw new IllegalStateException("Approximation has not been calculated yet!");
+        
+        float slope = linearApproximation.getSlope(p);
+        
+        float angle = (float)Math.atan2(slope, 1);
+                
+        if(angle == -0f)
+            angle = (float)Math.PI;
+        
+        return angle;
+    }
         
     public float getLength()
     {

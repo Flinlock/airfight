@@ -54,6 +54,39 @@ public class BezierCurveTest
     }
     
     @Test
+    public void testTangentAngleOfStraightFortyFiveLine()
+    {
+        c.setAnchorStart(1, 0);
+        c.setAnchorEnd(9, 8);
+        c.setControlPointOne(1f, 0);
+        c.setControlPointTwo(9f, 8f);
+        c.calculateLength(0.01f);
+        
+        assertEquals(45f*Math.PI / 180f, c.getTangentAngle(0.1f), 0.01f);         
+    }
+    
+    @Test
+    public void testTangentAngleOfStraightOnXAxisLine()
+    {
+        c.setAnchorStart(1, 0);
+        c.setAnchorEnd(9, 0);
+        c.setControlPointOne(1f, 0);
+        c.setControlPointTwo(9f, 0f);
+        c.calculateLength(0.01f);
+        
+        assertEquals(0, c.getTangentAngle(0.1f), 0.01f);
+        
+
+        c.setAnchorStart(1, 0);
+        c.setAnchorEnd(-9, 0);
+        c.setControlPointOne(1f, 0);
+        c.setControlPointTwo(-9f, 0f);
+        c.calculateLength(0.01f);
+        
+        assertEquals(180f/180f*Math.PI, c.getTangentAngle(0.1f), 0.01f);
+    }
+    
+    @Test
     public void testBezierSplit()
     {
         c.setAnchorEnd(4, 3);
@@ -118,6 +151,7 @@ public class BezierCurveTest
         c.setAnchorEnd(400, 400);
         c.setControlPointOne(200, 200);
         c.setControlPointTwo(200, 200);
+        c.calculateLength(0.01f);
         
         ImmutableVector pnt = c.getPoint(0);
         assertEquals(0, pnt.x, 0.01f);
@@ -131,6 +165,7 @@ public class BezierCurveTest
         c.setAnchorEnd(400, 400);
         c.setControlPointOne(200, 200);
         c.setControlPointTwo(200, 200);
+        c.calculateLength(0.01f);
         
         ImmutableVector pnt = c.getPoint(1f);
         assertEquals(400, pnt.x, 0.01f);
@@ -144,6 +179,7 @@ public class BezierCurveTest
         c.setAnchorEnd(400, 400);
         c.setControlPointOne(200, 200);
         c.setControlPointTwo(200, 200);
+        c.calculateLength(0.01f);
         
         ImmutableVector pnt = c.getPoint(0.5f);
         assertEquals((0 + 3*200 + 3*200 + 400)/8, pnt.x, 0.01f);
