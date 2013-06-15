@@ -63,13 +63,10 @@ public class BezierCurve
         if(!lengthValid)
             throw new IllegalStateException("Approximation has not been calculated yet!");
         
-        float slope = linearApproximation.getSlope(p);
+        Slope slope = linearApproximation.getSlope(p);
         
-        float angle = (float)Math.atan2(slope, 1);
+        float angle = (float)Math.atan2(slope.getRise(), slope.getRun());
                 
-        if(angle == -0f)
-            angle = (float)Math.PI;
-        
         return angle;
     }
         
