@@ -136,7 +136,7 @@ public class LinearSpline
      * @param t Percentage of the length of the spline at which the slope is desired.
      * @return The slope of the spline section which contains the point exactly t percent along the spline.
      */
-    public float getSlope(float t)
+    public Slope getSlope(float t)
     {
         if(t <= 0)
         {
@@ -176,19 +176,11 @@ public class LinearSpline
         return calcSlope(p1, p2);
     }
 
-    private float calcSlope(java.awt.geom.Point2D.Float p1, java.awt.geom.Point2D.Float p2)
+    private Slope calcSlope(java.awt.geom.Point2D.Float p1, java.awt.geom.Point2D.Float p2)
     {
         float rise = p2.y - p1.y;
         float run = p2.x - p1.x;
-        
-        if(run == 0)
-        {
-            if(rise > 0)
-                return Float.POSITIVE_INFINITY;
-            else
-                return Float.NEGATIVE_INFINITY;
-        }
-        
-        return rise / run;
+                
+        return new Slope(rise, run);
     }
 }

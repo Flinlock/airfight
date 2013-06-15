@@ -42,9 +42,9 @@ public class LinearSplineTest
     @Test
     public void testGetSlope()
     {
-        assertEquals(1, s.getSlope(0), 0.01f);
-        assertEquals(-1, s.getSlope(0.5f), 0.01f);
-        assertEquals(-1, s.getSlope(1.0f), 0.01f);
+        assertEquals(1, s.getSlope(0).getRatio(), 0.01f);
+        assertEquals(-1, s.getSlope(0.5f).getRatio(), 0.01f);
+        assertEquals(-1, s.getSlope(1.0f).getRatio(), 0.01f);
     }
 
 }
