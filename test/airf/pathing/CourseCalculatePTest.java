@@ -25,6 +25,14 @@ public class CourseCalculatePTest
         path = new PathDefinition(c);
         prof = new AccelerationProfile();
     }
+    
+    @Test
+    public void testHeading()
+    {
+        Course c = new Course(0.1f,  path, prof);
+        
+        assertEquals(45f / 180f * Math.PI, c.getHeading(0.5f), 0.01f);
+    }
 
     @Test
     public void testCalculateP()

@@ -8,6 +8,7 @@ import java.util.Map;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 
+import airf.Constants;
 import airf.component.Position;
 import airf.component.Sprite;
 
@@ -73,9 +74,9 @@ public class SpriteRenderSystem extends EntitySystem
                 return;
             
             float posX = p.x - (img.getWidth() / 2 * s.scaleX);
-            float posY = p.y - (img.getHeight() / 2 * s.scaleY);
+            float posY = Constants.HEIGHT - p.y - (img.getHeight() / 2 * s.scaleY);
 
-            img.setRotation(s.rot);
+            img.setRotation((float)(s.rot / Math.PI * 180));
             img.draw(posX, posY, s.scaleX);
 //        }
     }

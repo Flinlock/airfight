@@ -48,6 +48,6 @@ public class ManeuverQueue extends Component
         if(mq.maneuvers.isEmpty())
             return -1;
         
-        return mq.maneuvers.get(mq.maneuvers.size()-1).getCourse().getEndHeading();
+        return mq.maneuvers.get(mq.maneuvers.size()-1).getCourse().getHeading(1);
     }
 }

@@ -10,24 +10,26 @@ public class ManeuverFactory
     float vSlow;
     float vFast;
     int timeSlotPeriod;
+    float lenFast;
+    float lenSlow;
     
     public ManeuverFactory(int timeSlotPeriod)
     {
         this.timeSlotPeriod = timeSlotPeriod;
-        Maneuver m = createCourseStraight(0, false);
-        vSlow = m.getCourse().getLength() / timeSlotPeriod; // 0.0209
+        vSlow = 1f / (float)timeSlotPeriod;
+        vFast = vSlow;
         
-        m = createCourseStraight(0, true);
-        vFast = m.getCourse().getLength() / timeSlotPeriod; // 0.032646798
+        lenSlow = createCourseStraight(0, false).getCourse().getLength();
+        lenFast = createCourseStraight(0, true).getCourse().getLength();
     }
     
-    private float convertHeading(float h)
+    private float convertHeading(float h) // TODO: Remove
     {
         float hAdjusted = h;
-        hAdjusted = 360 - hAdjusted - 90;  // convert from clockwise to counter clockwise rotation and adjust for coordinate frame differences
-        
-        if(hAdjusted < 0)
-            hAdjusted += 360;
+//        hAdjusted = 360 - hAdjusted - 90;  // convert from clockwise to counter clockwise rotation and adjust for coordinate frame differences
+//        
+//        if(hAdjusted < 0)
+//            hAdjusted += 360;
         
         return hAdjusted;
     }
@@ -38,7 +40,7 @@ public class ManeuverFactory
         heading = convertHeading(heading);
         BezierCurve c = new BezierCurve();
         float v;
-        
+
         if(fast)
             System.out.println("Creating fast course");
         
@@ -46,8 +48,8 @@ public class ManeuverFactory
         {
             c.setAnchorStart(0, 0);
             c.setAnchorEnd(66.66f, 66.66f);
-            c.setControlPointOne(0, 36.66f);
-            c.setControlPointTwo(30, 66.66f);
+            c.setControlPointOne(36.66f, 0);
+            c.setControlPointTwo(66.66f, 36.66f);
             c.calculateLength(0.01f);
             v = vSlow;
         }
@@ -55,44 +57,8 @@ public class ManeuverFactory
         {
             c.setAnchorStart(0, 0);
             c.setAnchorEnd(104.21f, 104.21f);
-            c.setControlPointOne(0, 57.58f);
-            c.setControlPointTwo(46.71f, 104.21f);
-            c.calculateLength(0.01f);
-            v = vFast;            
-        }
-
-        PathDefinition path = new PathDefinition(c);
-        path.setRotation(heading / 180 * (float)Math.PI);
-        
-        AccelerationProfile profile = new AccelerationProfile();
-        
-        return new Maneuver(new Course(v, path, profile),AccType.NONE);        
-    }
-
-    public Maneuver createCourseHardR(float heading, boolean fast)
-    {
-        heading = convertHeading(heading);
-        BezierCurve c = new BezierCurve();
-        float v;
-
-        if(fast)
-            System.out.println("Creating fast course");
-        
-        if(!fast)
-        {
-            c.setAnchorStart(0, 0);
-            c.setAnchorEnd(-66.66f, 66.66f);
-            c.setControlPointOne(0, 36.66f);
-            c.setControlPointTwo(-30, 66.66f);
-            c.calculateLength(0.01f);
-            v = vSlow;
-        }
-        else
-        {
-            c.setAnchorStart(0, 0);
-            c.setAnchorEnd(-104.21f, 104.21f);
-            c.setControlPointOne(0, 57.58f);
-            c.setControlPointTwo(-46.71f, 104.21f);
+            c.setControlPointOne(57.58f, 0);
+            c.setControlPointTwo(104.21f, 57.58f);
             c.calculateLength(0.01f);
             v = vFast;              
         }
@@ -102,10 +68,10 @@ public class ManeuverFactory
         
         AccelerationProfile profile = new AccelerationProfile();
 
-        return new Maneuver(new Course(v, path, profile),AccType.NONE);
+        return new Maneuver(new Course(v, path, profile),AccType.NONE);              
     }
 
-    public Maneuver createCourseSoftR(float heading, boolean fast)
+    public Maneuver createCourseHardR(float heading, boolean fast)
     {
         heading = convertHeading(heading);
         BezierCurve c = new BezierCurve();
@@ -117,20 +83,56 @@ public class ManeuverFactory
         if(!fast)
         {
             c.setAnchorStart(0, 0);
-            c.setAnchorEnd(-46.193f, 89.815f);
-            c.setControlPointOne(0, 37.12f);
-            c.setControlPointTwo(-18.18f, 69.7f);
+            c.setAnchorEnd(66.66f, -66.66f);
+            c.setControlPointOne(36.66f, 0);
+            c.setControlPointTwo(66.66f, -36.66f);
             c.calculateLength(0.01f);
             v = vSlow;
         }
         else
         {
             c.setAnchorStart(0, 0);
-            c.setAnchorEnd(-72.123f, 140.5f);
-            c.setControlPointOne(0, 57.83f);
-            c.setControlPointTwo(-28.54f, 108.84f);
+            c.setAnchorEnd(104.21f, -104.21f);
+            c.setControlPointOne(57.58f, 0);
+            c.setControlPointTwo(104.21f, -57.58f);
             c.calculateLength(0.01f);
             v = vFast;            
+        }
+
+        PathDefinition path = new PathDefinition(c);
+        path.setRotation(heading / 180 * (float)Math.PI);
+        
+        AccelerationProfile profile = new AccelerationProfile();
+        
+        return new Maneuver(new Course(v, path, profile),AccType.NONE);  
+    }
+
+    public Maneuver createCourseSoftR(float heading, boolean fast)
+    {
+        heading = convertHeading(heading);
+        BezierCurve c = new BezierCurve();
+        float v;
+
+        if(fast)
+            System.out.println("Creating fast course");
+
+        if(!fast)
+        {
+            c.setAnchorStart(0, 0);
+            c.setAnchorEnd(46.193f, -89.815f);
+            c.setControlPointOne(0, 37.12f);
+            c.setControlPointTwo(18.18f, -69.7f);
+            c.calculateLength(0.01f);
+            v = vSlow;
+        }
+        else
+        {
+            c.setAnchorStart(0, 0);
+            c.setAnchorEnd(72.123f, -140.5f);
+            c.setControlPointOne(0, 57.83f);
+            c.setControlPointTwo(28.54f, -108.84f);
+            c.calculateLength(0.01f); 
+            v = vFast;           
         }
 
         PathDefinition path = new PathDefinition(c);
@@ -146,10 +148,10 @@ public class ManeuverFactory
         heading = convertHeading(heading);
         BezierCurve c = new BezierCurve();
         float v;
-
+        
         if(fast)
             System.out.println("Creating fast course");
-
+        
         if(!fast)
         {
             c.setAnchorStart(0, 0);
@@ -165,8 +167,8 @@ public class ManeuverFactory
             c.setAnchorEnd(72.123f, 140.5f);
             c.setControlPointOne(0, 57.83f);
             c.setControlPointTwo(28.54f, 108.84f);
-            c.calculateLength(0.01f); 
-            v = vFast;           
+            c.calculateLength(0.01f);
+            v = vFast;            
         }
 
         PathDefinition path = new PathDefinition(c);
@@ -184,9 +186,9 @@ public class ManeuverFactory
         float v;
 
         c.setAnchorStart(0, 0);
-        c.setAnchorEnd(0, 206.566f);
+        c.setAnchorEnd(206.566f, 0);
         c.setControlPointOne(0, 0);
-        c.setControlPointTwo(0, 206.566f);
+        c.setControlPointTwo(206.566f, 0);
         c.calculateLength(0.01f);
         v = vSlow;
 
@@ -194,14 +196,17 @@ public class ManeuverFactory
         path.setRotation(heading / 180 * (float)Math.PI);
         
         AccelerationProfile profile = new AccelerationProfile();
-        float a = (float)((c.getLength() - vSlow*(Constants.TIME_SLOT_PERIOD))*2/Math.pow(Constants.TIME_SLOT_PERIOD, 2));                
-        profile.addDivider(0, a );
-        // d = d_0 + v_0*t + 1/2a*t*t
-        // c.getLength() = vSlow*t + 1/2*a*t*t
-        // c.getLength() = vSlow*(Constants.TIME_SLOT_PERIOD) + 1/2*a*(Constants.TIME_SLOT_PERIOD)^2
         
+        float vStart = lenSlow / (float)Constants.TIME_SLOT_PERIOD;
+        float vEnd = lenFast / (float)Constants.TIME_SLOT_PERIOD;
+        float acc = (vEnd - vStart) / (float)Constants.TIME_SLOT_PERIOD;
+        float accNorm = acc / path.getLength();
+        
+        float vNorm =  lenSlow / path.getLength() * vSlow;
+                
+        profile.addDivider(0, accNorm);
 
-        return new Maneuver(new Course(v, path, profile),AccType.ACCELERATE);
+        return new Maneuver(new Course(vNorm, path, profile),AccType.ACCELERATE);
     }
 
     public Maneuver createCourseDecel(float heading)
@@ -238,18 +243,18 @@ public class ManeuverFactory
         if(!fast)
         {
             c.setAnchorStart(0, 0);
-            c.setAnchorEnd(0, 104.5f);
+            c.setAnchorEnd(104.5f, 0);
             c.setControlPointOne(0, 0);
-            c.setControlPointTwo(0, 104.5f);
+            c.setControlPointTwo(104.5f, 0);
             c.calculateLength(0.01f);
             v = vSlow;
         }
         else
         {
             c.setAnchorStart(0, 0);
-            c.setAnchorEnd(0, 163.234f);
+            c.setAnchorEnd(163.234f, 0);
             c.setControlPointOne(0, 0);
-            c.setControlPointTwo(0, 163.234f);
+            c.setControlPointTwo(163.234f, 0);
             c.calculateLength(0.01f); 
             v = vFast;                       
         }

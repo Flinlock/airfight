@@ -60,7 +60,6 @@ public class AirFightMain extends BasicGame
     private World world;
     private SpriteRenderSystem spriteRenderSystem;
 //    private int UPDATE_PERIOD = 17;//1000 / 60;
-    private int UPDATE_PERIOD = 33;//1000 / 60;
     int timeSinceLastUpdate;
 
     public AirFightMain(World w)
@@ -87,20 +86,20 @@ public class AirFightMain extends BasicGame
         c.getInput().addMouseListener(mapper);
         c.getInput().addKeyListener(mapper);
                 
-        DiscreteTimeSystem dts = new DiscreteTimeSystem(Constants.TIME_SLOT_PERIOD / UPDATE_PERIOD, mf); 
+        DiscreteTimeSystem dts = new DiscreteTimeSystem(Constants.TIME_SLOT_PERIOD / Constants.UPDATE_PERIOD, mf); 
         world.setSystem(dts);
         JetSystem jsystem = new JetSystem();
         world.setSystem(jsystem);
         world.setSystem(new PathSystem());
 //        world.setSystem(new MovementSystem());
-        world.setSystem(new HeadingSystem());
+//        world.setSystem(new HeadingSystem());
         
         spriteRenderSystem = world.setSystem(new SpriteRenderSystem(), true);
         
         world.initialize();        
                 
-        Entity jet = EntityFactory.createJet(world, 150, 150, false, 0.0209f, 180, JetType.WHITE, 
-                mf.createCourseStraight(180, false),
+        Entity jet = EntityFactory.createJet(world, 150, 150, false, JetType.WHITE, 
+                mf.createCourseStraight(0, false),
                 new IdleState(jsystem, mf));
         jet.addToWorld();
         mapper.setPlayerJet(jet.getComponent(Jet.class));
@@ -112,11 +111,11 @@ public class AirFightMain extends BasicGame
     public void update(GameContainer container, int delta) throws SlickException
     {
         timeSinceLastUpdate += delta;
-        while(timeSinceLastUpdate >= UPDATE_PERIOD)
+        while(timeSinceLastUpdate >= Constants.UPDATE_PERIOD)
         {
-            world.setDelta(UPDATE_PERIOD);
+            world.setDelta(Constants.UPDATE_PERIOD);
             world.process();
-            timeSinceLastUpdate -= UPDATE_PERIOD;
+            timeSinceLastUpdate -= Constants.UPDATE_PERIOD;
         }
     }
 

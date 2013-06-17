@@ -6,8 +6,11 @@ import org.junit.Before;
 import org.junit.Test;
 
 import util.bezier.BezierCurve;
+import airf.component.Heading;
 import airf.component.Path;
 import airf.component.Position;
+import airf.jetstates.Maneuver;
+import airf.jetstates.Maneuver.AccType;
 import airf.pathing.AccelerationProfile;
 import airf.pathing.Course;
 import airf.pathing.PathDefinition;
@@ -25,6 +28,7 @@ public class PathSystemTest
     Course crs;
     Path p;
     Position pos;
+    Heading h;
 
     @Before
     public void setUp() throws Exception
@@ -38,6 +42,8 @@ public class PathSystemTest
         e.addComponent(p);
         pos = new Position();
         e.addComponent(pos);
+        h =  new Heading();
+        e.addComponent(h);
         e.addToWorld();
         
         c = new BezierCurve();
@@ -54,7 +60,7 @@ public class PathSystemTest
         profile = new AccelerationProfile();
         
         crs = new Course(0.1f, path, profile);
-        p.course = crs;
+        p.course = new Maneuver(crs, AccType.NONE);
         p.x = 0;
         p.y = 0;
         p.totalTime = 0;
@@ -68,6 +74,7 @@ public class PathSystemTest
         
         assertEquals(0, pos.x, 0.01f);
         assertEquals(150, pos.y, 0.01f);
+        assertEquals(0, h.h, 0.01f);
     }
     
     @Test
@@ -77,8 +84,9 @@ public class PathSystemTest
         world.setDelta(1500);
         world.process();
         
-        assertEquals(150, pos.x, 0.01f);
+        assertEquals(-150, pos.x, 0.01f);
         assertEquals(0, pos.y, 0.01f);
+        assertEquals(Math.PI / 2, h.h, 0.01f);
     }
 
 }

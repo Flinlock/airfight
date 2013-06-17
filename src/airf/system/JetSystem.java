@@ -35,8 +35,8 @@ public class JetSystem extends EntityProcessingSystem
         Heading h = hm.get(e);
         Sprite s = sm.get(e);
         Jet j = jm.get(e);
-        
-        s.rot = h.h+90;
+
+        s.rot = (float)((2*Math.PI - h.h) + 3*Math.PI/2);
         
         j.state = j.state.update(e);
         if(j.state.changed())

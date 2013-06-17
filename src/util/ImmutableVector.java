@@ -61,7 +61,7 @@ public class ImmutableVector
     /**
      * Calculate a rotated version of this vector.
      * 
-     * @param r Amount to rotate counter-clockwise rotation in Radians.
+     * @param r Amount to rotate counter-clockwise in Radians.
      * @return Rotated vector.
      */
     public ImmutableVector rot(float r)

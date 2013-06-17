@@ -22,7 +22,7 @@ public class AccelerationProfile implements Iterable<Point2D.Float>
      * section or 1.0, whichever is first.
      * 
      * @param pStart Start of this section.
-     * @param acc Acceleration in this section.
+     * @param acc Acceleration in this section (in percent per s^2)
      */
     public void addDivider(float pStart, float acc)
     {   

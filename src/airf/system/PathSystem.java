@@ -2,6 +2,7 @@ package airf.system;
 
 import java.awt.geom.Point2D;
 
+import airf.component.Heading;
 import airf.component.Path;
 import airf.component.Position;
 
@@ -14,12 +15,13 @@ import com.artemis.systems.EntityProcessingSystem;
 public class PathSystem extends EntityProcessingSystem
 {   
     @Mapper ComponentMapper<Position> pm;
-    @Mapper ComponentMapper<Path> pathm; 
+    @Mapper ComponentMapper<Path> pathm;
+    @Mapper ComponentMapper<Heading> hm;
     
     @SuppressWarnings("unchecked")
     public PathSystem()
     {
-        super(Aspect.getAspectForAll(Position.class, Path.class));        
+        super(Aspect.getAspectForAll(Position.class, Path.class, Heading.class));        
     }
 
     @Override
@@ -27,6 +29,7 @@ public class PathSystem extends EntityProcessingSystem
     {
         Position pos = pm.get(e);
         Path path = pathm.get(e);
+        Heading h = hm.get(e);
         
         pos.lx = pos.x;
         pos.ly = pos.y;
@@ -37,6 +40,8 @@ public class PathSystem extends EntityProcessingSystem
         Point2D.Float pnt = path.course.getCourse().getPoint(p);
         pos.x = pnt.x + path.x;
         pos.y = pnt.y + path.y;
+        
+        h.h = path.course.getCourse().getHeading(p);
                         
         // Assume timeslots are set up so that this never occurs
         if(p > 1.0f)

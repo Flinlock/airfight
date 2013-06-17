@@ -46,7 +46,7 @@ public class DiscreteTimeSystem extends EntityProcessingSystem
             {
                 Point2D.Float pnt = p.course.getCourse().getPoint(1f);
                 Maneuver man = pq.maneuvers.remove(0);
-                float h = p.course.getCourse().getEndHeading();
+                float h = p.course.getCourse().getHeading(1);
                 h = (float)(h/Math.PI*180);
                 p.course = man;
                 p.x += pnt.x;
@@ -57,7 +57,7 @@ public class DiscreteTimeSystem extends EntityProcessingSystem
             else
             {
                 Point2D.Float pnt = p.course.getCourse().getPoint(1f);
-                float h = p.course.getCourse().getEndHeading();
+                float h = p.course.getCourse().getHeading(1);
                 h = (float)(h/Math.PI*180);
                 p.course = null;
                 p.x += pnt.x;

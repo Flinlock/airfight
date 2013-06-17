@@ -1,5 +1,6 @@
 package airf.system;
 
+import static org.junit.Assert.*;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
@@ -44,7 +45,7 @@ public class DiscreteTimeSystemTest
         e.addComponent(q);
         
         p = new Path();
-        p.course = c0.getCourse();
+        p.course = c0;
         p.x = 0;
         p.y = 0;
         p.totalTime = 0;
@@ -83,11 +84,11 @@ public class DiscreteTimeSystemTest
         
         for(int i = 0; i < 10; i++)
         {
-            assertTrue(c0.getCourse() == p.course);
+            assertTrue(c0 == p.course);
             w.process();
         }
         
-        assertTrue(c1.getCourse() == p.course);
+        assertTrue(c1 == p.course);
         assertEquals(1, q.maneuvers.size());
     }
     
@@ -103,11 +104,10 @@ public class DiscreteTimeSystemTest
         
         for(int i = 0; i < 3; i++)
         {
-            assertTrue(c0.getCourse() == p.course);
+            assertTrue(c0 == p.course);
             w.process();
         }
         
-        assertEquals("Straight Flight", p.course.toString());
-        // TODO: Test parameters of the straight flight course.
+        assertNull(p.course);
     }
 }

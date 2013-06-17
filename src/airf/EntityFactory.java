@@ -34,7 +34,7 @@ public class EntityFactory
         }
     }
     
-    public static Entity createJet(World w, float x, float y, boolean fast, float vel, float h, JetType t, Maneuver m, JetState state)
+    public static Entity createJet(World w, float x, float y, boolean fast, JetType t, Maneuver m, JetState state)
     {
         Entity e = w.createEntity();
 
@@ -47,11 +47,10 @@ public class EntityFactory
         sprite.name = t.toString();
         sprite.scaleX = 0.5f;
         sprite.scaleY = 0.5f;
-        sprite.rot = h;
+        sprite.rot = 0;
         e.addComponent(sprite);
         
         Heading heading = new Heading();
-        heading.h = h;
         e.addComponent(heading);
                 
         ManeuverQueue pq = new ManeuverQueue();

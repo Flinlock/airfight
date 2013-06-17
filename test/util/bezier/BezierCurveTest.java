@@ -87,6 +87,21 @@ public class BezierCurveTest
     }
     
     @Test
+    public void testTangentAngleOfCurvedBezierEndPoints()
+    {
+        c.setAnchorStart(1, 0);
+        c.setAnchorEnd(9, 0);
+        c.setControlPointOne(2f, 1f);
+        c.setControlPointTwo(5f, -2f);
+        c.calculateLength(0.01f);
+        
+        assertEquals(Math.atan2((1f-0f), (2f-1f)), c.getTangentAngle(0), 0.01f);
+        assertEquals(45f/180f * Math.PI, c.getTangentAngle(0), 0.01f);
+        
+        assertEquals(Math.atan2(0f-(-2f),9f - 5f), c.getTangentAngle(1), 0.01f);
+    }
+    
+    @Test
     public void testBezierSplit()
     {
         c.setAnchorEnd(4, 3);

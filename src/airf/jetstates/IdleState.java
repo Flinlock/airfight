@@ -37,9 +37,14 @@ public class IdleState implements JetState
     {
         float fH;
         if(mq.maneuvers.isEmpty())
-            fH = p.course.getCourse().getEndHeading();
+            fH = p.course.getCourse().getHeading(1);
         else
             fH = ManeuverQueue.getFinalHeading(mq);
+        
+//        if(fH > 360)
+//            fH -= 360;
+//        if(fH < 0)
+//            fH += 360;
         
         return fH / (float)Math.PI * 180f;
     }
