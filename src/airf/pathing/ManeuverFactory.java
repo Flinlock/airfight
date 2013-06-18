@@ -183,17 +183,15 @@ public class ManeuverFactory
     {
         heading = convertHeading(heading);
         BezierCurve c = new BezierCurve();
-        float v;
 
         c.setAnchorStart(0, 0);
-        c.setAnchorEnd(206.566f, 0);
+        c.setAnchorEnd(133.867f, 0);
         c.setControlPointOne(0, 0);
-        c.setControlPointTwo(206.566f, 0);
+        c.setControlPointTwo(133.867f, 0);
         c.calculateLength(0.01f);
-        v = vSlow;
 
         PathDefinition path = new PathDefinition(c);
-        path.setRotation(heading / 180 * (float)Math.PI);
+        path.setRotation(heading / 180f * (float)Math.PI);
         
         AccelerationProfile profile = new AccelerationProfile();
         
@@ -213,22 +211,28 @@ public class ManeuverFactory
     {
         heading = convertHeading(heading);
         BezierCurve c = new BezierCurve();
-        float v;
         
         c.setAnchorStart(0, 0);
-        c.setAnchorEnd(0, 132.638f);
+        c.setAnchorEnd(133.867f, 0);
         c.setControlPointOne(0, 0);
-        c.setControlPointTwo(0, 132.638f);
+        c.setControlPointTwo(133.867f, 0);
         c.calculateLength(0.01f);
-        v = vFast;
 
         PathDefinition path = new PathDefinition(c);
-        path.setRotation(heading / 180 * (float)Math.PI);
+        path.setRotation(heading / 180f * (float)Math.PI);
         
         AccelerationProfile profile = new AccelerationProfile();
-        profile.addDivider(0, (vSlow - vFast) / (float)Constants.TIME_SLOT_PERIOD );
+        
+        float vEnd = lenSlow / (float)Constants.TIME_SLOT_PERIOD;
+        float vStart = lenFast / (float)Constants.TIME_SLOT_PERIOD;
+        float acc = (vEnd - vStart) / (float)Constants.TIME_SLOT_PERIOD;
+        float accNorm = acc / path.getLength();
+        
+        float vNorm =  lenFast / path.getLength() * vFast;
+                
+        profile.addDivider(0, accNorm);
 
-        return new Maneuver(new Course(v, path, profile),AccType.DECELERATE);
+        return new Maneuver(new Course(vNorm, path, profile),AccType.DECELERATE);
     }
 
     public Maneuver createCourseStraight(float heading, boolean fast)

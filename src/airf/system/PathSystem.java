@@ -42,7 +42,7 @@ public class PathSystem extends EntityProcessingSystem
         pos.y = pnt.y + path.y;
         
         h.h = path.course.getCourse().getHeading(p);
-                        
+
         // Assume timeslots are set up so that this never occurs
         if(p > 1.0f)
             throw new IllegalStateException();
