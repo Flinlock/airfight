@@ -91,7 +91,7 @@ public class PathDefinitionTest
         path.setRotation((float)Math.PI / 2 * 2);
         assertEquals(270f / 180f * Math.PI, path.getHeading(0.5f), 0.1f);
         path.setRotation((float)Math.PI / 2 * 3);
-        assertEquals(360f / 180f * Math.PI, path.getHeading(0.5f), 0.1f);
+        assertEquals(0 / 180f * Math.PI, path.getHeading(0.5f), 0.1f);
     }
     
     @Test

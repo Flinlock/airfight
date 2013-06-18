@@ -64,7 +64,7 @@ public class ManeuverQueueTest
         h = m.getCourse().getHeading(1);
         
         assertEquals(h, ManeuverQueue.getFinalHeading(mq), 0.02f);
-        assertEquals(2 * Math.PI, h, 0.02f);        
+        assertEquals(0, h, 0.02f);        
     }
     
 }
