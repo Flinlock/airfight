@@ -10,15 +10,17 @@ import com.artemis.Component;
 
 public class ManeuverQueue extends Component
 {
-    public ManeuverQueue()
+    public ManeuverQueue(int queueSize)
     {
         maneuvers = new ArrayList<>();
         count = 0;
+        maxQueueSize = queueSize;
     }
     
     public List<Maneuver> maneuvers;
     public int count;
     public Maneuver finishedManeuver;
+    public int maxQueueSize;
     
     
     public static boolean willBeFast(ManeuverQueue pq, boolean isFast)
@@ -49,5 +51,10 @@ public class ManeuverQueue extends Component
             return -1;
         
         return mq.maneuvers.get(mq.maneuvers.size()-1).getCourse().getHeading(1);
+    }
+
+    public static boolean isFull(ManeuverQueue mq)
+    {
+        return mq.maneuvers.size() == mq.maxQueueSize;
     }
 }

@@ -1,7 +1,6 @@
 package airf.pathing;
 
 import util.bezier.BezierCurve;
-import airf.Constants;
 import airf.jetstates.Maneuver;
 import airf.jetstates.Maneuver.AccType;
 
@@ -9,7 +8,7 @@ public class ManeuverFactory
 {    
     float vSlow;
     float vFast;
-    int timeSlotPeriod;
+    float timeSlotPeriod;
     float lenFast;
     float lenSlow;
     
@@ -195,9 +194,9 @@ public class ManeuverFactory
         
         AccelerationProfile profile = new AccelerationProfile();
         
-        float vStart = lenSlow / (float)Constants.TIME_SLOT_PERIOD;
-        float vEnd = lenFast / (float)Constants.TIME_SLOT_PERIOD;
-        float acc = (vEnd - vStart) / (float)Constants.TIME_SLOT_PERIOD;
+        float vStart = lenSlow / timeSlotPeriod;
+        float vEnd = lenFast / timeSlotPeriod;
+        float acc = (vEnd - vStart) / timeSlotPeriod;
         float accNorm = acc / path.getLength();
         
         float vNorm =  lenSlow / path.getLength() * vSlow;
@@ -223,9 +222,9 @@ public class ManeuverFactory
         
         AccelerationProfile profile = new AccelerationProfile();
         
-        float vEnd = lenSlow / (float)Constants.TIME_SLOT_PERIOD;
-        float vStart = lenFast / (float)Constants.TIME_SLOT_PERIOD;
-        float acc = (vEnd - vStart) / (float)Constants.TIME_SLOT_PERIOD;
+        float vEnd = lenSlow / timeSlotPeriod;
+        float vStart = lenFast / timeSlotPeriod;
+        float acc = (vEnd - vStart) / timeSlotPeriod;
         float accNorm = acc / path.getLength();
         
         float vNorm =  lenFast / path.getLength() * vFast;

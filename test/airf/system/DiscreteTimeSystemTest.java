@@ -36,7 +36,7 @@ public class DiscreteTimeSystemTest
         w = new World();
         e = w.createEntity();
         
-        q = new ManeuverQueue();
+        q = new ManeuverQueue(3);
         q.count = 0;
         
         ManeuverQueue.addManeuver(q, c1);

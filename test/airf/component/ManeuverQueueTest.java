@@ -21,7 +21,7 @@ public class ManeuverQueueTest
     @Test
     public void testOneQueue()
     {
-        ManeuverQueue mq = new ManeuverQueue();
+        ManeuverQueue mq = new ManeuverQueue(3);
         ManeuverQueue.addManeuver(mq, mf.createCourseHardL(90, false));
         
         assertEquals(Math.PI,ManeuverQueue.getFinalHeading(mq),0.02f);
@@ -30,7 +30,7 @@ public class ManeuverQueueTest
     @Test
     public void testDoubleQueue()
     {        
-        ManeuverQueue mq = new ManeuverQueue();
+        ManeuverQueue mq = new ManeuverQueue(3);
         
         Maneuver m = mf.createCourseHardL(90, false);
         ManeuverQueue.addManeuver(mq, m);
@@ -49,7 +49,7 @@ public class ManeuverQueueTest
     @Test
     public void testTripleQueue()
     {     
-        ManeuverQueue mq = new ManeuverQueue();
+        ManeuverQueue mq = new ManeuverQueue(3);
         
         Maneuver m = mf.createCourseHardL(90, false);
         ManeuverQueue.addManeuver(mq, m);

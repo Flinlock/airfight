@@ -1,9 +1,5 @@
 package airf.jetstates;
 
-import java.awt.geom.Point2D;
-
-import airf.Constants;
-import airf.component.Heading;
 import airf.component.Jet;
 import airf.component.ManeuverQueue;
 import airf.component.Path;
@@ -91,7 +87,7 @@ public class IdleState implements JetState
                     tmp = false;
                 boolean fast = ManeuverQueue.willBeFast(mq,tmp);
                 
-                if(mq.maneuvers.size() >= Constants.QUEUE_MAX) // can we queue up another maneuver?
+                if(ManeuverQueue.isFull(mq)) // can we queue up another maneuver?
                     return this;
                                                 
                 switch(intent)
