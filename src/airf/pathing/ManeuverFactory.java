@@ -119,20 +119,20 @@ public class ManeuverFactory
         if(!fast)
         {
             c.setAnchorStart(0, 0);
-            c.setAnchorEnd(46.193f, -89.815f);
-            c.setControlPointOne(0, 37.12f);
-            c.setControlPointTwo(18.18f, -69.7f);
+            c.setAnchorEnd(90.315f, -46.693f);
+            c.setControlPointOne(37.86f, 0);
+            c.setControlPointTwo(70f, -18.21f);
             c.calculateLength(0.01f);
             v = vSlow;
         }
         else
         {
             c.setAnchorStart(0, 0);
-            c.setAnchorEnd(72.123f, -140.5f);
-            c.setControlPointOne(0, 57.83f);
-            c.setControlPointTwo(28.54f, -108.84f);
-            c.calculateLength(0.01f); 
-            v = vFast;           
+            c.setAnchorEnd(141f, -72.623f);
+            c.setControlPointOne(58.21f, 0);
+            c.setControlPointTwo(109.64f, -28.21f);
+            c.calculateLength(0.01f);
+            v = vFast;            
         }
 
         PathDefinition path = new PathDefinition(c);
@@ -155,18 +155,18 @@ public class ManeuverFactory
         if(!fast)
         {
             c.setAnchorStart(0, 0);
-            c.setAnchorEnd(46.193f, 89.815f);
-            c.setControlPointOne(0, 37.12f);
-            c.setControlPointTwo(18.18f, 69.7f);
+            c.setAnchorEnd(90.315f, 46.693f);
+            c.setControlPointOne(37.86f, 0);
+            c.setControlPointTwo(70f, 18.21f);
             c.calculateLength(0.01f);
             v = vSlow;
         }
         else
         {
             c.setAnchorStart(0, 0);
-            c.setAnchorEnd(72.123f, 140.5f);
-            c.setControlPointOne(0, 57.83f);
-            c.setControlPointTwo(28.54f, 108.84f);
+            c.setAnchorEnd(141f, 72.623f);
+            c.setControlPointOne(58.21f, 0);
+            c.setControlPointTwo(109.64f, 28.21f);
             c.calculateLength(0.01f);
             v = vFast;            
         }
