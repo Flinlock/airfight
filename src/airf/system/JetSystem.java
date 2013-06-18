@@ -2,10 +2,10 @@ package airf.system;
 
 import airf.component.Heading;
 import airf.component.Jet;
+import airf.component.ManeuverQueue;
 import airf.component.Path;
 import airf.component.Position;
 import airf.component.Sprite;
-import airf.component.Velocity;
 
 import com.artemis.Aspect;
 import com.artemis.Component;
@@ -21,7 +21,7 @@ public class JetSystem extends EntityProcessingSystem
     @Mapper ComponentMapper<Jet> jm;
     @Mapper ComponentMapper<Path> pathm;
     @Mapper ComponentMapper<Position> pm;
-    @Mapper ComponentMapper<Velocity> vm;
+    @Mapper ComponentMapper<ManeuverQueue> pqm;
     
     @SuppressWarnings("unchecked")
     public JetSystem()
@@ -35,14 +35,14 @@ public class JetSystem extends EntityProcessingSystem
         Heading h = hm.get(e);
         Sprite s = sm.get(e);
         Jet j = jm.get(e);
-        
-        s.rot = h.h+90;
+
+        s.rot = (float)((2*Math.PI - h.h) + 3*Math.PI/2);
         
         j.state = j.state.update(e);
         if(j.state.changed())
             world.changedEntity(e);
     }
-
+    
     public Path getPath(Entity e)
     {
         return pathm.get(e);
@@ -62,12 +62,12 @@ public class JetSystem extends EntityProcessingSystem
         
         if(type == Position.class)
             return (T)pm.get(e);
-        
-        if(type == Velocity.class)
-            return (T)vm.get(e);
-        
+                
         if(type == Heading.class)
             return (T)hm.get(e);
+        
+        if(type == ManeuverQueue.class)
+            return (T)pqm.get(e);
         
         throw new IllegalArgumentException();
     }

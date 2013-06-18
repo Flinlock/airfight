@@ -9,38 +9,42 @@ import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
 
-import airf.AirFightMain;
-import airf.Constants;
 import airf.EntityFactory;
 import airf.EntityFactory.JetType;
 import airf.component.Jet;
 import airf.input.InputToIntent;
-import airf.system.HeadingSystem;
+import airf.jetstates.IdleState;
+import airf.pathing.ManeuverFactory;
+import airf.system.DiscreteTimeSystem;
 import airf.system.JetSystem;
-import airf.system.MovementSystem;
 import airf.system.PathSystem;
 import airf.system.SpriteRenderSystem;
 
 import com.artemis.Entity;
 import com.artemis.World;
 
-public class MainPathing extends BasicGame
+public class ManeuverDemo extends BasicGame
 {
+    public static final int WIDTH = 1024;
+    public static final int HEIGHT = 768;
+    public static final int QUEUE_MAX = 3;
+    public static final int TIME_SLOT_PERIOD = 5000;
+    public static final int UPDATE_PERIOD = 33;
+    
     public static void main(String[] args) throws SlickException, FileNotFoundException
     {
-        AppGameContainer app = new AppGameContainer(new MainPathing(new World()));
-        app.setDisplayMode(Constants.WIDTH, Constants.HEIGHT, false);
+        AppGameContainer app = new AppGameContainer(new ManeuverDemo(new World()));
+        app.setDisplayMode(WIDTH, HEIGHT, false);
         app.start();
     }
     
     private World world;
     private SpriteRenderSystem spriteRenderSystem;
-    private int UPDATE_PERIOD = 17;//1000 / 60;
     int timeSinceLastUpdate;
 
-    public MainPathing(World w)
+    public ManeuverDemo(World w)
     {
-        super("AirFight Proto");
+        super("AirFight Proto - Maneuvers Demo");
         world = w;
     }
 
@@ -54,26 +58,31 @@ public class MainPathing extends BasicGame
     @Override
     public void init(GameContainer c) throws SlickException
     {   
+        ManeuverFactory mf = new ManeuverFactory(TIME_SLOT_PERIOD);
+        
         c.getGraphics().setBackground(Color.white);
         
         InputToIntent mapper = new InputToIntent();
         c.getInput().addMouseListener(mapper);
         c.getInput().addKeyListener(mapper);
                 
-        world.setSystem(new PathSystem());
-        world.setSystem(new MovementSystem());
-        world.setSystem(new HeadingSystem());
+        DiscreteTimeSystem dts = new DiscreteTimeSystem(TIME_SLOT_PERIOD / UPDATE_PERIOD, mf); 
+        world.setSystem(dts);
         JetSystem jsystem = new JetSystem();
         world.setSystem(jsystem);
-        spriteRenderSystem = world.setSystem(new SpriteRenderSystem(), true);
-
-        world.initialize();
-                
-        Entity testJet = EntityFactory.createJet(world, 150, 150, 0.01f, 0.01f, 0, JetType.WHITE, jsystem);
-//        Entity testJet = EntityFactory.createTestJet(world, 150, 150, 0.05f, 0.05f, 270, JetType.BLACK);
-        testJet.addToWorld();
-        mapper.setPlayerJet(testJet.getComponent(Jet.class));
+        world.setSystem(new PathSystem());
         
+        spriteRenderSystem = world.setSystem(new SpriteRenderSystem(HEIGHT), true);
+        
+        world.initialize();        
+                
+        Entity jet = EntityFactory.createJet(world, 150, 150, false, JetType.WHITE, 
+                mf.createCourseStraight(0, false),
+                new IdleState(jsystem, mf),
+                QUEUE_MAX);
+        jet.addToWorld();
+        mapper.setPlayerJet(jet.getComponent(Jet.class));
+                
         timeSinceLastUpdate = 0;
     }
 
@@ -81,11 +90,12 @@ public class MainPathing extends BasicGame
     public void update(GameContainer container, int delta) throws SlickException
     {
         timeSinceLastUpdate += delta;
-//        if(timeSinceLastUpdate >= UPDATE_PERIOD )
-//        {
-            world.setDelta(timeSinceLastUpdate);
+        while(timeSinceLastUpdate >= UPDATE_PERIOD)
+        {
+            world.setDelta(UPDATE_PERIOD);
             world.process();
-            timeSinceLastUpdate = 0;
-//        }
+            timeSinceLastUpdate -= UPDATE_PERIOD;
+        }
     }
+
 }

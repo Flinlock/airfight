@@ -23,13 +23,15 @@ public class PathDefinition
     }
     
     /**
-     * Sets the rotation of the path.
+     * Sets the rotation of the path. Positive rotation is counter
+     * clockwise. Rotation must be between [0, 2*pi].
+     * 
      * @param r Rotation in radians.
      */
     public void setRotation(float r)
     {
         if(r > 2*Math.PI || r < 0)
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException("Rotation of " + Float.toString(r) + " is not allowed.");
         
         rot = r;
     }
@@ -62,7 +64,8 @@ public class PathDefinition
         ImmutableVector v = c.getPoint(p);//.rot(rot);
         ImmutableVector origin = c.getAnchorStart();
         v = v.sub(origin);
-        v = v.rot(2*(float)Math.PI - rot);
+//        v = v.rot(2*(float)Math.PI - rot);
+        v = v.rot(rot);
         v = v.add(origin);
         return new Point2D.Float(v.x,v.y);  // ensure rotation around origin
     }
@@ -70,5 +73,31 @@ public class PathDefinition
     public float getLength()
     {
         return c.getLength();
+    }
+
+    /**
+     * Returns the heading of an object traveling along the path in
+     * the direction of increasing p when the object is at p percent
+     * along the path.
+     * 
+     * The heading takes on values of 0 to 2*pi. A heading of zero falls
+     * along the positive x axis (assuming a normal cartesian coordinate 
+     * frame) and increasing heading corresponds to rotating counter
+     * clockwise (so pi/2 is a heading pointing along the positive y axis).
+     * 
+     * @param p Percentage along the path at which the heading is desired.
+     * @return The heading of the object at the point exactly p percent along the path in radians.
+     */
+    public float getHeading(float p)
+    {
+        float heading = c.getTangentAngle(p);
+        heading += rot;
+                
+        if(heading < 0)
+            heading += 2*Math.PI;
+        if(heading > 2*Math.PI)
+            heading -= 2*Math.PI;
+        
+        return heading;
     }
 }

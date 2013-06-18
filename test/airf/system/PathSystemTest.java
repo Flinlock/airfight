@@ -6,9 +6,11 @@ import org.junit.Before;
 import org.junit.Test;
 
 import util.bezier.BezierCurve;
+import airf.component.Heading;
 import airf.component.Path;
 import airf.component.Position;
-import airf.component.Velocity;
+import airf.jetstates.Maneuver;
+import airf.jetstates.Maneuver.AccType;
 import airf.pathing.AccelerationProfile;
 import airf.pathing.Course;
 import airf.pathing.PathDefinition;
@@ -25,8 +27,8 @@ public class PathSystemTest
     AccelerationProfile profile;
     Course crs;
     Path p;
-    Velocity v;
     Position pos;
+    Heading h;
 
     @Before
     public void setUp() throws Exception
@@ -38,10 +40,10 @@ public class PathSystemTest
         e = world.createEntity();
         p = new Path();
         e.addComponent(p);
-        v = new Velocity();
-        e.addComponent(v);
         pos = new Position();
         e.addComponent(pos);
+        h =  new Heading();
+        e.addComponent(h);
         e.addToWorld();
         
         c = new BezierCurve();
@@ -57,37 +59,47 @@ public class PathSystemTest
         
         profile = new AccelerationProfile();
         
-        crs = new Course(path, profile);
-        p.course = crs;
-        p.p = 0;
-        p.v = 0.1f;
+        crs = new Course(0.1f, path, profile);
+        p.course = new Maneuver(crs, AccType.NONE);
         p.x = 0;
         p.y = 0;
+        p.totalTime = 0;
     }
     
     @Test
     public void testStraightPathExecution()
     {
-        world.setDelta(1500);
+        world.setDelta(10);
         world.process();
         
         assertEquals(0, pos.x, 0.01f);
         assertEquals(150, pos.y, 0.01f);
-        assertEquals(0.1f, v.y, 0.01f);
-        assertEquals(0f, v.x, 0.01f);
+        assertEquals(0, h.h, 0.01f);
     }
     
     @Test
     public void testRotatedStraightPathExecution()
     {
         path.setRotation((float)Math.PI / 2);
-        world.setDelta(1500);
+        world.setDelta(10);
         world.process();
         
-        assertEquals(150, pos.x, 0.01f);
+        assertEquals(-150, pos.x, 0.01f);
         assertEquals(0, pos.y, 0.01f);
-        assertEquals(0.1f, v.x, 0.01f);
-        assertEquals(0f, v.y, 0.01f);
+        assertEquals(Math.PI / 2, h.h, 0.01f);
+    }
+    
+    @Test
+    public void testStraightAcceleratedPathExecution()
+    {
+        profile.addDivider(0, 0.1f);
+        
+        world.setDelta(1);
+        world.process();
+        
+        assertEquals(0, pos.x, 0.01f);
+        // d = d_0 + v*t + 1/2*a*t^2
+        assertEquals((0.1f*1 + 0.5f*0.1f*1)*150, pos.y, 0.01f);
     }
 
 }

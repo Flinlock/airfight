@@ -25,15 +25,17 @@ public class SpriteRenderSystem extends EntitySystem
     
     private Map<String, Image> sprites;
     private List<Entity> sortedEntities;
+    private int height;
     
     
     @SuppressWarnings("unchecked")
-    public SpriteRenderSystem()
+    public SpriteRenderSystem(int height)
     {
         super(Aspect.getAspectForAll(Position.class, Sprite.class));
         
         sortedEntities = new ArrayList<>();
         sprites = new HashMap<>();
+        this.height = height;
     }
     
     @Override
@@ -73,9 +75,9 @@ public class SpriteRenderSystem extends EntitySystem
                 return;
             
             float posX = p.x - (img.getWidth() / 2 * s.scaleX);
-            float posY = p.y - (img.getHeight() / 2 * s.scaleY);
+            float posY = height - p.y - (img.getHeight() / 2 * s.scaleY);
 
-            img.setRotation(s.rot);
+            img.setRotation((float)(s.rot / Math.PI * 180));
             img.draw(posX, posY, s.scaleX);
 //        }
     }
