@@ -81,7 +81,7 @@ public class ManeuverDemo extends BasicGame
                 new IdleState(jsystem, mf),
                 QUEUE_MAX);
         jet.addToWorld();
-        mapper.setPlayerJet(jet.getComponent(Jet.class));
+        mapper.setSelectedJet(jet);
                 
         timeSinceLastUpdate = 0;
     }
