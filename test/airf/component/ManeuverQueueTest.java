@@ -5,7 +5,7 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Before;
 import org.junit.Test;
 
-import airf.jetstates.Maneuver;
+import airf.pathing.Maneuver;
 import airf.pathing.ManeuverFactory;
 
 public class ManeuverQueueTest

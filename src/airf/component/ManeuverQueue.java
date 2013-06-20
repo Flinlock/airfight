@@ -3,8 +3,8 @@ package airf.component;
 import java.util.ArrayList;
 import java.util.List;
 
-import airf.jetstates.Maneuver;
-import airf.jetstates.Maneuver.AccType;
+import airf.pathing.Maneuver;
+import airf.pathing.Maneuver.AccType;
 
 import com.artemis.Component;
 

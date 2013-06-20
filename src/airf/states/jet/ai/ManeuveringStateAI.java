@@ -1,29 +1,27 @@
-package airf.jetstates;
+package airf.states.jet.ai;
 
-import airf.component.Path;
-import airf.pathing.ManeuverFactory;
+import airf.states.JetState;
 import airf.system.JetSystem;
 
 import com.artemis.Entity;
 
-public class ManeuveringState implements JetState
+public class ManeuveringStateAI implements JetState
 {
     JetSystem system;
     public boolean entityChanged = true;
-    ManeuverFactory mf;
-    
-    public ManeuveringState(JetSystem s, ManeuverFactory mf)
+
+    public ManeuveringStateAI(JetSystem s)
     {
+        System.out.println("Entering ManeuveringStateAI.");
         system = s;
-        this.mf = mf;
     }
-    
+
     @Override 
     public boolean changed()
     {
         return entityChanged;
     }
-    
+
     @Override
     public JetState update(Entity e)
     {
@@ -31,9 +29,9 @@ public class ManeuveringState implements JetState
 //        if(p.p >= 1.0)
 //        {
 //            e.removeComponent(p);
-//            return new IdleState(system,mf);
+//            return new IdleStateAI(system);
 //        }
-//        
+//
 //        entityChanged = false;
         return this;
     }

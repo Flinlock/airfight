@@ -1,4 +1,4 @@
-package airf.jetstates;
+package airf.states.jet.player;
 
 
 public enum IntentType 

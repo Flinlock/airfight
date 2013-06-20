@@ -1,6 +1,6 @@
 package airf.component;
 
-import airf.jetstates.Maneuver;
+import airf.pathing.Maneuver;
 
 import com.artemis.Component;
 

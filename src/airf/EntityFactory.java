@@ -6,8 +6,8 @@ import airf.component.ManeuverQueue;
 import airf.component.Path;
 import airf.component.Position;
 import airf.component.Sprite;
-import airf.jetstates.JetState;
-import airf.jetstates.Maneuver;
+import airf.pathing.Maneuver;
+import airf.states.JetState;
 
 import com.artemis.Entity;
 import com.artemis.World;

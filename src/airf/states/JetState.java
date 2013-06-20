@@ -1,4 +1,4 @@
-package airf.jetstates;
+package airf.states;
 
 import com.artemis.Entity;
 

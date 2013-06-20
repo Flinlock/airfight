@@ -1,6 +1,5 @@
-package airf.jetstates;
+package util.bezier;
 
-import util.bezier.BezierCurve;
 
 public class TestLength
 {

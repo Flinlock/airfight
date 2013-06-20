@@ -1,8 +1,7 @@
 package airf.pathing;
 
 import util.bezier.BezierCurve;
-import airf.jetstates.Maneuver;
-import airf.jetstates.Maneuver.AccType;
+import airf.pathing.Maneuver.AccType;
 
 public class ManeuverFactory
 {    

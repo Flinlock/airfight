@@ -1,6 +1,5 @@
-package airf.jetstates;
+package airf.pathing;
 
-import airf.pathing.Course;
 
 public class Maneuver
 {

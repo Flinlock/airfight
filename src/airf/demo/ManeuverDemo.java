@@ -11,10 +11,9 @@ import org.newdawn.slick.SlickException;
 
 import airf.EntityFactory;
 import airf.EntityFactory.JetType;
-import airf.component.Jet;
 import airf.input.InputToIntent;
-import airf.jetstates.IdleState;
 import airf.pathing.ManeuverFactory;
+import airf.states.jet.player.IdleState;
 import airf.system.DiscreteTimeSystem;
 import airf.system.JetSystem;
 import airf.system.PathSystem;
