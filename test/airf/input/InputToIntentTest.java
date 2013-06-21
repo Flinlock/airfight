@@ -22,8 +22,9 @@ public class InputToIntentTest
     @Test
     public void testSelectJet()
     {
+        int screenHeight = 1000;
         World w = new World();
-        InputToIntent i = new InputToIntent();
+        InputToIntent i = new InputToIntent(screenHeight);
         Entity jet1 = w.createEntity();
         Entity jet2 = w.createEntity();
         
@@ -39,12 +40,12 @@ public class InputToIntentTest
         jet2.addComponent(pos);
         i.addJet(jet2);
         
-        i.setSelectedJet(jet1);        
+        i.setSelectedJet(jet1);
         assertTrue(i.getSelectedJet() == jet1);
         i.mousePressed(Input.MOUSE_LEFT_BUTTON, 2, 4);
-        assertTrue(i.getSelectedJet() == jet1);
-        i.mousePressed(Input.MOUSE_LEFT_BUTTON, 300, 150);
         assertTrue(i.getSelectedJet() == jet2);
+        i.mousePressed(Input.MOUSE_LEFT_BUTTON, 900, 150);
+        assertTrue(i.getSelectedJet() == jet1);
     }
 
 }

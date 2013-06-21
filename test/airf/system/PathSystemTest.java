@@ -70,7 +70,7 @@ public class PathSystemTest
     public void testStraightPathExecution()
     {
         world.setDelta(10);
-        world.process();
+        world.process(false);
         
         assertEquals(0, pos.x, 0.01f);
         assertEquals(150, pos.y, 0.01f);
@@ -82,7 +82,7 @@ public class PathSystemTest
     {
         path.setRotation((float)Math.PI / 2);
         world.setDelta(10);
-        world.process();
+        world.process(false);
         
         assertEquals(-150, pos.x, 0.01f);
         assertEquals(0, pos.y, 0.01f);
@@ -95,7 +95,7 @@ public class PathSystemTest
         profile.addDivider(0, 0.1f);
         
         world.setDelta(1);
-        world.process();
+        world.process(false);
         
         assertEquals(0, pos.x, 0.01f);
         // d = d_0 + v*t + 1/2*a*t^2

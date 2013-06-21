@@ -66,11 +66,11 @@ public class DiscreteTimeSystemTest
         for(int i = 0; i < 5; i++)
         {
             assertEquals(i, q.count);
-            w.process();
+            w.process(false);
         }
         
         assertEquals(0, q.count);
-        w.process();
+        w.process(false);
         assertEquals(1, q.count);
     }
     
@@ -85,7 +85,7 @@ public class DiscreteTimeSystemTest
         for(int i = 0; i < 10; i++)
         {
             assertTrue(c0 == p.course);
-            w.process();
+            w.process(false);
         }
         
         assertTrue(c1 == p.course);
@@ -105,7 +105,7 @@ public class DiscreteTimeSystemTest
         for(int i = 0; i < 3; i++)
         {
             assertTrue(c0 == p.course);
-            w.process();
+            w.process(false);
         }
         
         assertNull(p.course);

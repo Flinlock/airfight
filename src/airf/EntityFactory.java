@@ -48,8 +48,8 @@ public class EntityFactory
 
         Sprite sprite = new Sprite();
         sprite.name = t.toString();
-        sprite.scaleX = 0.5f;
-        sprite.scaleY = 0.5f;
+        sprite.scaleX = 0.4f;
+        sprite.scaleY = 0.4f;
         sprite.rot = 0;
         e.addComponent(sprite);
         
