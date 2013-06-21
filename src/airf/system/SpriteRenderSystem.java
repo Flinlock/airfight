@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.newdawn.slick.Color;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 
@@ -45,6 +46,7 @@ public class SpriteRenderSystem extends EntitySystem
         {
             sprites.put("jet_black", new Image("res/images/jet_black.png"));
             sprites.put("jet_white", new Image("res/images/jet_white.png"));
+            sprites.put("selection_highlight", new Image("res/images/selection.png"));
         }
         catch(SlickException e)
         {
@@ -64,11 +66,12 @@ public class SpriteRenderSystem extends EntitySystem
     
     protected void process(Entity e)
     {
-//        if(pm.has(e))
-//        {
             Position p = pm.getSafe(e);
             Sprite s = sm.get(e);
-                        
+                       
+            if(s == null)
+                System.out.println("whahdf");
+            
             Image img = sprites.get(s.name.toLowerCase());
             
             if(img == null)
@@ -78,8 +81,7 @@ public class SpriteRenderSystem extends EntitySystem
             float posY = height - p.y - (img.getHeight() / 2 * s.scaleY);
 
             img.setRotation((float)(s.rot / Math.PI * 180));
-            img.draw(posX, posY, s.scaleX);
-//        }
+            img.draw(posX, posY, s.scaleX); ///, new Color(0,0,0)
     }
     
     @Override

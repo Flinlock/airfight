@@ -7,13 +7,11 @@ import org.newdawn.slick.KeyListener;
 import org.newdawn.slick.MouseListener;
 
 import airf.component.Jet;
-import airf.component.ManeuverQueue;
 import airf.component.Position;
+import airf.component.Select;
 
-import com.artemis.ComponentMapper;
 import com.artemis.ComponentType;
 import com.artemis.Entity;
-import com.artemis.annotations.Mapper;
 
 public class InputToIntent implements KeyListener, MouseListener
 {    
@@ -24,14 +22,18 @@ public class InputToIntent implements KeyListener, MouseListener
     private Entity selectedJet;
     private ComponentType pt;
     private ComponentType jt;
+    private ComponentType st;
+    private int screenHeight;
     
-    public InputToIntent()
+    public InputToIntent(int screenHeight)
     {
+        this.screenHeight = screenHeight;
         shiftDown = false;
         playerJets = new ArrayList<>();
         selectedJet = null;
         pt = ComponentType.getTypeFor(Position.class);
         jt = ComponentType.getTypeFor(Jet.class);
+        st = ComponentType.getTypeFor(Select.class);
     }
     
     @Override
@@ -42,6 +44,8 @@ public class InputToIntent implements KeyListener, MouseListener
     @Override
     public void inputStarted()
     {
+        System.out.println("Input starting...");
+        System.out.flush();
         if(selectedJet == null)
             throw new IllegalStateException("A jet must always be selected");
     }
@@ -78,6 +82,7 @@ public class InputToIntent implements KeyListener, MouseListener
     {
         if(button == Input.MOUSE_LEFT_BUTTON)
         {
+            y = screenHeight - y;
             Entity closest = null;
             float distance = Float.POSITIVE_INFINITY;
             for(Entity e : playerJets)
@@ -90,7 +95,11 @@ public class InputToIntent implements KeyListener, MouseListener
                     closest = e;
                 }
             }
-            
+
+            Select sOld = (Select)selectedJet.getComponent(st);
+            Select sNew = (Select)closest.getComponent(st);
+            sOld.state = sOld.state.setSelected(false);
+            sNew.state = sNew.state.setSelected(true);
             selectedJet = closest;
         }
     }
@@ -157,9 +166,9 @@ public class InputToIntent implements KeyListener, MouseListener
         }
     }
 
-    public void addJet(Entity jet1)
+    public void addJet(Entity jet)
     {
-        playerJets.add(jet1);
+        playerJets.add(jet);
     }
 
     public Entity getSelectedJet()
