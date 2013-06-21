@@ -1,6 +1,6 @@
 package airf.component;
 
-import airf.jetstates.JetState;
+import airf.states.JetState;
 
 import com.artemis.Component;
 

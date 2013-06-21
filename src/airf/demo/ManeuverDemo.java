@@ -11,13 +11,13 @@ import org.newdawn.slick.SlickException;
 
 import airf.EntityFactory;
 import airf.EntityFactory.JetType;
-import airf.component.Jet;
 import airf.input.InputToIntent;
-import airf.jetstates.IdleState;
 import airf.pathing.ManeuverFactory;
+import airf.states.jet.player.IdleState;
 import airf.system.DiscreteTimeSystem;
 import airf.system.JetSystem;
 import airf.system.PathSystem;
+import airf.system.PinToSystem;
 import airf.system.SpriteRenderSystem;
 
 import com.artemis.Entity;
@@ -30,7 +30,7 @@ public class ManeuverDemo extends BasicGame
     public static final int QUEUE_MAX = 3;
     public static final int TIME_SLOT_PERIOD = 5000;
     public static final int UPDATE_PERIOD = 33;
-    
+        
     public static void main(String[] args) throws SlickException, FileNotFoundException
     {
         AppGameContainer app = new AppGameContainer(new ManeuverDemo(new World()));
@@ -51,6 +51,7 @@ public class ManeuverDemo extends BasicGame
     @Override
     public void render(GameContainer container, Graphics g) throws SlickException
     {
+        world.process(true);
         g.clear();
         spriteRenderSystem.process();
     }
@@ -62,7 +63,7 @@ public class ManeuverDemo extends BasicGame
         
         c.getGraphics().setBackground(Color.white);
         
-        InputToIntent mapper = new InputToIntent();
+        InputToIntent mapper = new InputToIntent(HEIGHT);
         c.getInput().addMouseListener(mapper);
         c.getInput().addKeyListener(mapper);
                 
@@ -71,6 +72,7 @@ public class ManeuverDemo extends BasicGame
         JetSystem jsystem = new JetSystem();
         world.setSystem(jsystem);
         world.setSystem(new PathSystem());
+        world.setSystem(new PinToSystem());
         
         spriteRenderSystem = world.setSystem(new SpriteRenderSystem(HEIGHT), true);
         
@@ -81,7 +83,15 @@ public class ManeuverDemo extends BasicGame
                 new IdleState(jsystem, mf),
                 QUEUE_MAX);
         jet.addToWorld();
-        mapper.setPlayerJet(jet.getComponent(Jet.class));
+        mapper.setSelectedJet(jet);
+        mapper.addJet(jet);
+        
+        jet = EntityFactory.createJet(world, 150, 300, false, JetType.WHITE, 
+                mf.createCourseStraight(0, false),
+                new IdleState(jsystem, mf),
+                QUEUE_MAX);
+        jet.addToWorld();
+        mapper.addJet(jet);
                 
         timeSinceLastUpdate = 0;
     }
@@ -93,7 +103,7 @@ public class ManeuverDemo extends BasicGame
         while(timeSinceLastUpdate >= UPDATE_PERIOD)
         {
             world.setDelta(UPDATE_PERIOD);
-            world.process();
+            world.process(false);
             timeSinceLastUpdate -= UPDATE_PERIOD;
         }
     }

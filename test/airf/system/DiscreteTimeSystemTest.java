@@ -9,7 +9,7 @@ import org.junit.Test;
 
 import airf.component.ManeuverQueue;
 import airf.component.Path;
-import airf.jetstates.Maneuver;
+import airf.pathing.Maneuver;
 import airf.pathing.ManeuverFactory;
 
 import com.artemis.Entity;

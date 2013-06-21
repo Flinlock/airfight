@@ -9,11 +9,11 @@ import util.bezier.BezierCurve;
 import airf.component.Heading;
 import airf.component.Path;
 import airf.component.Position;
-import airf.jetstates.Maneuver;
-import airf.jetstates.Maneuver.AccType;
 import airf.pathing.AccelerationProfile;
 import airf.pathing.Course;
+import airf.pathing.Maneuver;
 import airf.pathing.PathDefinition;
+import airf.pathing.Maneuver.AccType;
 
 import com.artemis.Entity;
 import com.artemis.World;

@@ -1,12 +1,12 @@
-package airf.jetstates.ai;
+package airf.states.jet.ai;
 
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import airf.jetstates.IntentType;
-import airf.jetstates.JetState;
+import airf.states.JetState;
+import airf.states.jet.player.IntentType;
 import airf.system.JetSystem;
 
 import com.artemis.Entity;

@@ -1,10 +1,12 @@
-package airf.jetstates;
+package airf.states.jet.player;
 
 import airf.component.Jet;
 import airf.component.ManeuverQueue;
 import airf.component.Path;
-import airf.jetstates.Maneuver.AccType;
+import airf.pathing.Maneuver;
+import airf.pathing.Maneuver.AccType;
 import airf.pathing.ManeuverFactory;
+import airf.states.JetState;
 import airf.system.JetSystem;
 
 import com.artemis.Entity;

@@ -1,6 +1,6 @@
-package airf.jetstates.ai;
+package airf.states.jet.ai;
 
-import airf.jetstates.JetState;
+import airf.states.JetState;
 import airf.system.JetSystem;
 
 import com.artemis.Entity;

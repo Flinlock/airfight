@@ -5,10 +5,13 @@ import airf.component.Jet;
 import airf.component.ManeuverQueue;
 import airf.component.Path;
 import airf.component.Position;
+import airf.component.Select;
 import airf.component.Sprite;
-import airf.jetstates.JetState;
-import airf.jetstates.Maneuver;
+import airf.pathing.Maneuver;
+import airf.states.JetState;
+import airf.states.selectable.Unselected;
 
+import com.artemis.ComponentType;
 import com.artemis.Entity;
 import com.artemis.World;
 
@@ -68,6 +71,13 @@ public class EntityFactory
         j.state = state;
         j.fast = false;
         e.addComponent(j);
+        
+        Select s = new Select();
+        Entity eHl = w.createEntity();
+        eHl.addToWorld();
+        s.state = new Unselected(e, ComponentType.getTypeFor(Sprite.class), 
+                ComponentType.getTypeFor(Position.class), eHl);
+        e.addComponent(s);
 
         return e;
     }

@@ -7,7 +7,6 @@ import java.awt.geom.Point2D;
 import org.junit.Before;
 import org.junit.Test;
 
-import airf.jetstates.Maneuver;
 
 public class ManeuverFactoryTest
 {
