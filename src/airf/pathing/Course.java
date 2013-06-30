@@ -108,30 +108,6 @@ public class Course
         return path.getHeading(p);
     }
 
-//    /**
-//     * Get the end heading in radians.
-//     * 
-//     * @return Final heading in radians.
-//     */
-//    public float getEndHeading()
-//    {
-//        Point2D.Float p2 = path.getPoint(1.0f);
-//        Point2D.Float p1 = path.getPoint(0.999f);
-//        
-//        float ret = 0;
-//        
-//        if(p2.x == p1.x)
-//        {
-//            if(p2.y > p1.y)
-//                ret = 180f;
-//            else if(p2.y < p1.y)
-//                ret = 0f;
-//        }
-//        else
-//            ret = (float)(Math.atan2(p2.y - p1.y, p2.x - p1.x)) + (float)Math.PI;  // add PI to change range from -pi,+pi to 0,2pi
-//        
-//        return ret;
-//    }
     
     public float getLength()
     {

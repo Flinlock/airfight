@@ -1,0 +1,437 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="744.09448819"
+   height="1052.3622047"
+   id="svg2"
+   version="1.1"
+   inkscape:version="0.48.2 r9819"
+   sodipodi:docname="envelope_calcs.svg">
+  <defs
+     id="defs4" />
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="0.7"
+     inkscape:cx="450.74218"
+     inkscape:cy="414.10626"
+     inkscape:document-units="px"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     inkscape:window-width="1600"
+     inkscape:window-height="837"
+     inkscape:window-x="-8"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1" />
+  <metadata
+     id="metadata7">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <path
+       style="fill:#c9c9ff;fill-opacity:1;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="M 646.52868,417.49884 274.76149,632.13872 647.0833,864.34393"
+       id="path3811"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="ccc" />
+    <path
+       transform="translate(-171.42857,245.71429)"
+       style="color:#000000;fill:none;stroke:#ff0000;stroke-width:4;stroke-miterlimit:4;stroke-opacity:1;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+       d="m 691.32746,458.47961 c -31.98384,105.31491 -129.84762,181.96146 -245.61317,181.96146 -141.74406,0 -256.65033,-114.90627 -256.65033,-256.65033 0,-141.74406 114.90627,-256.65033 256.65033,-256.65033 141.74407,0 256.65033,114.90627 256.65033,256.65033"
+       id="path2985"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="csssc" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m 274.76149,329.09296 0,605.08137"
+       id="path3755"
+       inkscape:connector-curvature="0" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m 577.30218,631.63364 -605.081369,0"
+       id="path3755-1"
+       inkscape:connector-curvature="0" />
+    <path
+       sodipodi:type="arc"
+       style="color:#000000;fill:#000000;stroke:#000000;stroke-width:8;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+       id="path3775"
+       sodipodi:cx="272.74118"
+       sodipodi:cy="633.14886"
+       sodipodi:rx="6.0609155"
+       sodipodi:ry="6.0609155"
+       d="m 278.8021,633.14886 a 6.0609155,6.0609155 0 1 1 -12.12184,0 6.0609155,6.0609155 0 1 1 12.12184,0 z"
+       transform="translate(2.020305,-1.0101525)" />
+    <text
+       xml:space="preserve"
+       style="font-size:12px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       x="-315.40759"
+       y="406.04807"
+       id="text3781"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan3785"
+         x="-315.40759"
+         y="406.04807"
+         style="font-size:20px">Attacker is heading 0 Degrees</tspan><tspan
+         sodipodi:role="line"
+         x="-315.40759"
+         y="431.04807"
+         id="tspan3789"
+         style="font-size:20px">which is straight to the right.</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:20px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       x="566.22278"
+       y="474.71594"
+       id="text3817"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan3819"
+         x="566.22278"
+         y="474.71594">Firing Envelope</tspan></text>
+    <path
+       sodipodi:type="arc"
+       style="color:#000000;fill:#000080;stroke:#000080;stroke-width:8;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+       id="path3775-4"
+       sodipodi:cx="272.74118"
+       sodipodi:cy="633.14886"
+       sodipodi:rx="6.0609155"
+       sodipodi:ry="6.0609155"
+       d="m 278.8021,633.14886 a 6.0609155,6.0609155 0 1 1 -12.12184,0 6.0609155,6.0609155 0 1 1 12.12184,0 z"
+       transform="translate(188.89853,-275.77163)" />
+    <text
+       xml:space="preserve"
+       style="font-size:20px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#0000ff;fill-opacity:1;stroke:none;font-family:Sans"
+       x="491.94427"
+       y="349.29602"
+       id="text3839"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan3841"
+         x="491.94427"
+         y="349.29602">Target1</tspan></text>
+    <path
+       style="color:#000000;fill:none;stroke:#999999;stroke-width:4;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+       d="m 356.72625,585.87685 c 7.72721,13.66132 12.13768,29.44648 12.13768,46.26175"
+       id="path3775-0"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="cc" />
+    <path
+       style="color:#000000;fill:none;stroke:#999999;stroke-width:4;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dashoffset:0;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+       d="m 300.7199,649.11112 c -5.53892,8.45423 -15.09653,14.03853 -25.9584,14.03853 -17.12689,0 -31.011,-13.88406 -31.011,-31.01099 0,-17.12688 13.88411,-31.01095 31.011,-31.01095 17.12688,0 31.01099,13.88407 31.01099,31.01095"
+       id="path3775-0-4"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="csssc" />
+    <text
+       xml:space="preserve"
+       style="font-size:20px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       x="194.08055"
+       y="651.99512"
+       id="text3777"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan3779"
+         x="194.08055"
+         y="651.99512">Attacker</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:20px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#808080;fill-opacity:1;stroke:#808080;font-family:Sans"
+       x="244.45691"
+       y="601.83417"
+       id="text3891"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan3893"
+         x="244.45691"
+         y="601.83417">R</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:20px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#808080;fill-opacity:1;stroke:#808080;font-family:Sans"
+       x="372.74628"
+       y="609.41028"
+       id="text3895"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan3897"
+         x="372.74628"
+         y="609.41028">L</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:12px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       x="-314.28571"
+       y="470.93359"
+       id="text3899"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan3901"
+         x="-314.28571"
+         y="470.93359"
+         style="font-size:20px">The Attacker's firing envelope is</tspan><tspan
+         sodipodi:role="line"
+         x="-314.28571"
+         y="495.93359"
+         id="tspan3903"
+         style="font-size:20px">defined by angles L and R.</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:20px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       x="-317.14285"
+       y="536.64789"
+       id="text3905"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan3907"
+         x="-317.14285"
+         y="536.64789">Let's move the target around</tspan><tspan
+         sodipodi:role="line"
+         x="-317.14285"
+         y="561.64789"
+         id="tspan3911">and examine the target's bearing</tspan><tspan
+         sodipodi:role="line"
+         x="-317.14285"
+         y="586.64789"
+         id="tspan3915">relative to the firing envelope's </tspan><tspan
+         sodipodi:role="line"
+         x="-317.14285"
+         y="611.64789"
+         id="tspan3917">angles.</tspan></text>
+    <path
+       sodipodi:type="arc"
+       style="color:#000000;fill:#008000;stroke:#008000;stroke-width:8;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+       id="path3775-4-8"
+       sodipodi:cx="272.74118"
+       sodipodi:cy="633.14886"
+       sodipodi:rx="6.0609155"
+       sodipodi:ry="6.0609155"
+       d="m 278.8021,633.14886 a 6.0609155,6.0609155 0 1 1 -12.12184,0 6.0609155,6.0609155 0 1 1 12.12184,0 z"
+       transform="translate(331.62849,-68.874747)" />
+    <text
+       xml:space="preserve"
+       style="font-size:20px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#008000;fill-opacity:1;stroke:none;font-family:Sans"
+       x="634.67426"
+       y="556.19293"
+       id="text3839-8"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan3841-2"
+         x="634.67426"
+         y="556.19293">Target2</tspan></text>
+    <path
+       sodipodi:type="arc"
+       style="color:#000000;fill:#ff0000;stroke:#ff0000;stroke-width:8;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+       id="path3775-4-4"
+       sodipodi:cx="272.74118"
+       sodipodi:cy="633.14886"
+       sodipodi:rx="6.0609155"
+       sodipodi:ry="6.0609155"
+       d="m 278.8021,633.14886 a 6.0609155,6.0609155 0 1 1 -12.12184,0 6.0609155,6.0609155 0 1 1 12.12184,0 z"
+       transform="translate(321.62849,92.553824)" />
+    <text
+       xml:space="preserve"
+       style="font-size:20px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#ff0000;fill-opacity:1;stroke:none;font-family:Sans"
+       x="624.67426"
+       y="717.62146"
+       id="text3839-5"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan3841-5"
+         x="624.67426"
+         y="717.62146">Target3</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:20px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000080;fill-opacity:1;stroke:none;font-family:Sans"
+       x="827.14288"
+       y="453.79077"
+       id="text3954"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan3956"
+         x="827.14288"
+         y="453.79077">Target1</tspan><tspan
+         sodipodi:role="line"
+         x="827.14288"
+         y="478.79077"
+         id="tspan3958">T1 &gt; L</tspan><tspan
+         sodipodi:role="line"
+         x="827.14288"
+         y="503.79077"
+         id="tspan3960">T1 &lt; R</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:20px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#008000;fill-opacity:1;stroke:none;font-family:Sans"
+       x="822.85718"
+       y="598.07648"
+       id="text3962"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan3964"
+         x="822.85718"
+         y="598.07648">Target2</tspan><tspan
+         sodipodi:role="line"
+         x="822.85718"
+         y="623.07648"
+         id="tspan3966">T2 &lt; L</tspan><tspan
+         sodipodi:role="line"
+         x="822.85718"
+         y="648.07648"
+         id="tspan3968">T2 &lt; R</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:20px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#ff0000;fill-opacity:1;stroke:none;font-family:Sans"
+       x="821.42859"
+       y="723.79077"
+       id="text3970"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan3972"
+         x="821.42859"
+         y="723.79077">Target3</tspan><tspan
+         sodipodi:role="line"
+         x="821.42859"
+         y="748.79077"
+         id="tspan3974">T3 &gt; L</tspan><tspan
+         sodipodi:role="line"
+         x="821.42859"
+         y="773.79077"
+         id="tspan3976">T3 &gt; R</tspan></text>
+    <path
+       style="fill:#008000;stroke:#008000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="M 272.85714,630.93361 604.28571,562.36218"
+       id="path3978"
+       inkscape:connector-curvature="0" />
+    <path
+       style="fill:none;stroke:#ff0000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m 594.28571,726.6479 -320,-95.71429"
+       id="path3980"
+       inkscape:connector-curvature="0" />
+    <path
+       style="fill:#000080;stroke:#000080;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="M 462.85714,356.6479 274.28571,632.36218"
+       id="path3982"
+       inkscape:connector-curvature="0" />
+    <path
+       transform="matrix(0.78624893,0,0,0.78624893,-76.156665,327.74997)"
+       style="color:#000000;fill:none;stroke:#008000;stroke-width:5.08744717;stroke-miterlimit:4;stroke-opacity:1;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+       d="m 697.21666,332.39165 c 3.37575,16.60665 5.14796,33.79591 5.14796,51.39909"
+       id="path2985-1"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="cc" />
+    <path
+       transform="matrix(0.57797866,0,0,0.57797866,16.672371,407.68217)"
+       style="color:#000000;fill:none;stroke:#000080;stroke-width:6.92067051;stroke-miterlimit:4;stroke-opacity:1;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+       d="m 594.90186,174.93039 c 65.06143,46.55594 107.46276,122.75646 107.46276,208.86035"
+       id="path2985-1-7"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="cc" />
+    <text
+       xml:space="preserve"
+       style="font-size:20px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       x="441.42856"
+       y="842.36218"
+       id="text4023"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan4025"
+         x="441.42856"
+         y="842.36218"
+         style="fill:#ff0000">T3</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:20px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       x="390"
+       y="525.21936"
+       id="text4027"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan4029"
+         x="390"
+         y="525.21936"
+         style="fill:#000080">T1</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:20px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       x="484.28571"
+       y="613.79077"
+       id="text4031"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan4033"
+         x="484.28571"
+         y="613.79077"
+         style="fill:#008000">T2</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:20px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       x="974.28571"
+       y="520.93359"
+       id="text4035"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan4037"
+         x="974.28571"
+         y="520.93359">Thus the target is in the</tspan><tspan
+         sodipodi:role="line"
+         x="974.28571"
+         y="545.93359"
+         id="tspan4041">envelope iff the target's</tspan><tspan
+         sodipodi:role="line"
+         x="974.28571"
+         y="570.93359"
+         id="tspan4045">angle is both less than L</tspan><tspan
+         sodipodi:role="line"
+         x="974.28571"
+         y="595.93359"
+         id="tspan4047">and R OR if the target's </tspan><tspan
+         sodipodi:role="line"
+         x="974.28571"
+         y="620.93359"
+         id="tspan4049">angle is both greater</tspan><tspan
+         sodipodi:role="line"
+         x="974.28571"
+         y="645.93359"
+         id="tspan4055">than L and R.</tspan><tspan
+         sodipodi:role="line"
+         x="974.28571"
+         y="670.93359"
+         id="tspan4061" /><tspan
+         sodipodi:role="line"
+         x="974.28571"
+         y="695.93359"
+         id="tspan4063">If the target's angle is</tspan><tspan
+         sodipodi:role="line"
+         x="974.28571"
+         y="720.93359"
+         id="tspan4065">less than R and greater</tspan><tspan
+         sodipodi:role="line"
+         x="974.28571"
+         y="745.93359"
+         id="tspan4067">than L, we know it's outside</tspan><tspan
+         sodipodi:role="line"
+         x="974.28571"
+         y="770.93359"
+         id="tspan4069">the firing envelope.</tspan></text>
+  </g>
+</svg>

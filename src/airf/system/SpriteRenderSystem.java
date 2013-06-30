@@ -80,8 +80,9 @@ public class SpriteRenderSystem extends EntitySystem
             float posX = p.x - (img.getWidth() / 2 * s.scaleX);
             float posY = height - p.y - (img.getHeight() / 2 * s.scaleY);
 
-            img.setRotation((float)(s.rot / Math.PI * 180));
-            img.draw(posX, posY, s.scaleX); ///, new Color(0,0,0)
+            // Convert s.rot to degrees, offset by 90 degrees, then switch rotation direction
+            img.setRotation((float)( 360f - (s.rot / Math.PI * 180 + 90f) ));
+            img.draw(posX, posY, s.scaleX);
     }
     
     @Override
