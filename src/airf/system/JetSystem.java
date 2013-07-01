@@ -1,16 +1,19 @@
 package airf.system;
 
+import airf.component.FiringEnvelope;
 import airf.component.Heading;
 import airf.component.Jet;
 import airf.component.ManeuverQueue;
 import airf.component.Path;
 import airf.component.Position;
+import airf.component.Radar;
 import airf.component.Sprite;
 
 import com.artemis.Aspect;
 import com.artemis.Component;
 import com.artemis.ComponentMapper;
 import com.artemis.Entity;
+import com.artemis.World;
 import com.artemis.annotations.Mapper;
 import com.artemis.systems.EntityProcessingSystem;
 
@@ -22,6 +25,8 @@ public class JetSystem extends EntityProcessingSystem
     @Mapper ComponentMapper<Path> pathm;
     @Mapper ComponentMapper<Position> pm;
     @Mapper ComponentMapper<ManeuverQueue> pqm;
+    @Mapper ComponentMapper<Radar> rm;
+    @Mapper ComponentMapper<FiringEnvelope> fem;
     
     @SuppressWarnings("unchecked")
     public JetSystem()
@@ -36,11 +41,14 @@ public class JetSystem extends EntityProcessingSystem
         Sprite s = sm.get(e);
         Jet j = jm.get(e);
 
-        s.rot = (float)((2*Math.PI - h.h) + 3*Math.PI/2);
+        s.rot = h.h;
         
         j.state = j.state.update(e);
         if(j.state.changed())
             world.changedEntity(e);
+        
+        j.stateAttack = j.stateAttack.update();
+        j.stateDamage = j.stateDamage.update();
     }
     
     public Path getPath(Entity e)
@@ -69,6 +77,17 @@ public class JetSystem extends EntityProcessingSystem
         if(type == ManeuverQueue.class)
             return (T)pqm.get(e);
         
+        if(type == Radar.class)
+            return (T)rm.get(e);
+        
+        if(type == FiringEnvelope.class)
+            return (T)fem.get(e);
+        
         throw new IllegalArgumentException();
+    }
+
+    public World getWorld()
+    {
+        return world;
     }
 }

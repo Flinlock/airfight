@@ -44,8 +44,6 @@ public class InputToIntent implements KeyListener, MouseListener
     @Override
     public void inputStarted()
     {
-        System.out.println("Input starting...");
-        System.out.flush();
         if(selectedJet == null)
             throw new IllegalStateException("A jet must always be selected");
     }

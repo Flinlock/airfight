@@ -4,5 +4,8 @@ import com.artemis.Component;
 
 public class Heading extends Component
 {
-    public float h;  // heading in radians, counter clockwise, 0 corresponds to down (0,1)
+    // heading in radians, 0 corresponds to (1,0), 
+    // (assume normal cartesian coordinates: (1,0) is right, (0,1) is up), 
+    // increasing heading corresponds to counter-clockwise rotation
+    public float h;  
 }
