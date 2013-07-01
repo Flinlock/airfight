@@ -1,13 +1,19 @@
 package airf.input;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.newdawn.slick.Input;
 
 import airf.component.Position;
+import airf.component.Select;
+import airf.component.Sprite;
+import airf.states.selectable.Selected;
+import airf.states.selectable.Unselected;
 
+import com.artemis.ComponentType;
 import com.artemis.Entity;
 import com.artemis.World;
 
@@ -28,11 +34,23 @@ public class InputToIntentTest
         Entity jet1 = w.createEntity();
         Entity jet2 = w.createEntity();
         
+        /////
+        
         Position pos = new Position();
         pos.x = 0;
         pos.y = 0;
         jet1.addComponent(pos);
+        
+        Select s = new Select();
+        Entity eHl = w.createEntity();
+        eHl.addToWorld();
+        s.state = new Unselected(jet1, ComponentType.getTypeFor(Sprite.class), 
+                ComponentType.getTypeFor(Position.class), eHl);
+        jet1.addComponent(s);
+        
         i.addJet(jet1);
+        
+        /////
         
         pos = new Position();
         pos.x = 200;
@@ -40,12 +58,23 @@ public class InputToIntentTest
         jet2.addComponent(pos);
         i.addJet(jet2);
         
-        i.setSelectedJet(jet1);
-        assertTrue(i.getSelectedJet() == jet1);
+        s = new Select();
+        eHl = w.createEntity();
+        eHl.addToWorld();
+        s.state = new Unselected(jet2, ComponentType.getTypeFor(Sprite.class), 
+                ComponentType.getTypeFor(Position.class), eHl);
+        jet2.addComponent(s);
+        
+        i.addJet(jet2);
+        
+        /////
+        
         i.mousePressed(Input.MOUSE_LEFT_BUTTON, 2, 4);
-        assertTrue(i.getSelectedJet() == jet2);
-        i.mousePressed(Input.MOUSE_LEFT_BUTTON, 900, 150);
-        assertTrue(i.getSelectedJet() == jet1);
+        assertEquals(Unselected.class, jet1.getComponent(Select.class).state.getClass());
+        assertEquals(Selected.class, jet2.getComponent(Select.class).state.getClass());
+        i.mousePressed(Input.MOUSE_LEFT_BUTTON, 200, 200);
+        assertEquals(Unselected.class, jet2.getComponent(Select.class).state.getClass());
+        assertEquals(Selected.class, jet1.getComponent(Select.class).state.getClass());
     }
 
 }

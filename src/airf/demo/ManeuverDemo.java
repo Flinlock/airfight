@@ -92,7 +92,6 @@ public class ManeuverDemo extends BasicGame
                 new IdleState(jsystem, mf),
                 QUEUE_MAX);
         jet.addToWorld();
-        mapper.setSelectedJet(jet);
         mapper.addJet(jet);
         
         Entity jetT = EntityFactory.createJet(world, 250, 150, false, JetType.WHITE, 
