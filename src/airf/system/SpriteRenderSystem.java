@@ -47,6 +47,7 @@ public class SpriteRenderSystem extends EntitySystem
             sprites.put("jet_black", new Image("res/images/jet_black.png"));
             sprites.put("jet_white", new Image("res/images/jet_white.png"));
             sprites.put("selection_highlight", new Image("res/images/selection.png"));
+            sprites.put("gun_fire", new Image("res/images/gun_fire.png"));
         }
         catch(SlickException e)
         {
@@ -75,7 +76,7 @@ public class SpriteRenderSystem extends EntitySystem
             Image img = sprites.get(s.name.toLowerCase());
             
             if(img == null)
-                return;
+                throw new IllegalArgumentException("Invalid sprite name!");
             
             float posX = p.x - (img.getWidth() / 2 * s.scaleX);
             float posY = height - p.y - (img.getHeight() / 2 * s.scaleY);

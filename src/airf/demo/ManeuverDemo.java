@@ -11,11 +11,17 @@ import org.newdawn.slick.SlickException;
 
 import airf.EntityFactory;
 import airf.EntityFactory.JetType;
+import airf.component.Jet;
 import airf.input.InputToIntent;
 import airf.pathing.ManeuverFactory;
+import airf.states.attack.AttackModeGuns;
+import airf.states.attack.NoTargetGuns;
 import airf.states.jet.player.IdleState;
 import airf.system.DiscreteTimeSystem;
+import airf.system.ExpiringSystem;
+import airf.system.JetRadarSystem;
 import airf.system.JetSystem;
+import airf.system.MovementSystem;
 import airf.system.PathSystem;
 import airf.system.PinToSystem;
 import airf.system.SpriteRenderSystem;
@@ -73,6 +79,9 @@ public class ManeuverDemo extends BasicGame
         world.setSystem(jsystem);
         world.setSystem(new PathSystem());
         world.setSystem(new PinToSystem());
+        world.setSystem(new JetRadarSystem());
+        world.setSystem(new MovementSystem());
+        world.setSystem(new ExpiringSystem());
         
         spriteRenderSystem = world.setSystem(new SpriteRenderSystem(HEIGHT), true);
         
@@ -86,12 +95,18 @@ public class ManeuverDemo extends BasicGame
         mapper.setSelectedJet(jet);
         mapper.addJet(jet);
         
-        jet = EntityFactory.createJet(world, 150, 300, false, JetType.WHITE, 
+        Entity jetT = EntityFactory.createJet(world, 250, 150, false, JetType.WHITE, 
                 mf.createCourseStraight(0, false),
                 new IdleState(jsystem, mf),
-                QUEUE_MAX);
-        jet.addToWorld();
-        mapper.addJet(jet);
+                QUEUE_MAX);        
+        jetT.addToWorld();
+        mapper.addJet(jetT);
+        
+        Jet js = jetT.getComponent(Jet.class);
+        js.stateAttack = new NoTargetGuns(jsystem, jetT);
+        
+        js = jet.getComponent(Jet.class);
+        js.stateAttack = new AttackModeGuns(jsystem, jet, jetT);
                 
         timeSinceLastUpdate = 0;
     }
