@@ -2,6 +2,7 @@ package airf.input;
 
 import java.util.ArrayList;
 
+import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.KeyListener;
 import org.newdawn.slick.MouseListener;
@@ -21,23 +22,23 @@ public class InputToIntent implements KeyListener, MouseListener
     boolean shiftDown;
     Jet playerJet;
     private ArrayList<Entity> playerJets;
-    private Entity selectedJet;
     private ComponentType pt;
     private ComponentType jt;
     private ComponentType st;
     private int screenHeight;
     InputState state;
+    GameContainer gc;
     
-    public InputToIntent(int screenHeight)
+    public InputToIntent(int screenHeight, GameContainer gc)
     {
         this.screenHeight = screenHeight;
         shiftDown = false;
         playerJets = new ArrayList<>();
-        selectedJet = null;
         pt = ComponentType.getTypeFor(Position.class);
         jt = ComponentType.getTypeFor(Jet.class);
         st = ComponentType.getTypeFor(Select.class);
         state = new NoSelectionState(this);
+        this.gc = gc;
     }
     
     @Override
@@ -48,8 +49,6 @@ public class InputToIntent implements KeyListener, MouseListener
     @Override
     public void inputStarted()
     {
-        if(selectedJet == null)
-            throw new IllegalStateException("A jet must always be selected");
     }
 
     @Override
@@ -131,7 +130,7 @@ public class InputToIntent implements KeyListener, MouseListener
         playerJets.add(jet);
     }
     
-    public Entity selectClosestJet(int x, int y)
+    public Entity findClosestJet(int x, int y)
     {
         y = screenHeight - y;
         Entity closest = null;
@@ -146,18 +145,14 @@ public class InputToIntent implements KeyListener, MouseListener
                 closest = e;
             }
         }
-
-        if(selectedJet != null)
-        {
-            Select sOld = (Select)selectedJet.getComponent(st);
-            sOld.state = sOld.state.setSelected(false);
-        }
-        Select sNew = (Select)closest.getComponent(st);
-        sNew.state = sNew.state.setSelected(true);
-        selectedJet = closest;
         
-        return selectedJet;
+        return closest;
     }
+    
+//    public void setMouseCursor(CursorType c)
+//    {
+        //gc.setMouseCursor(arg0, arg1, arg2)
+//    }
 
     @SuppressWarnings("unchecked")
     public <T extends Component> T getComponent(Class<T> type, Entity e)

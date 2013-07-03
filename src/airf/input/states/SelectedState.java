@@ -1,6 +1,7 @@
 package airf.input.states;
 
 import airf.component.Jet;
+import airf.component.Select;
 import airf.input.Command;
 import airf.input.InputState;
 import airf.input.InputToIntent;
@@ -16,6 +17,9 @@ public class SelectedState implements InputState
     {
         this.iti = iti;
         this.selectedJet = selectedJet;
+        
+        Select sNew = iti.getComponent(Select.class, selectedJet);
+        sNew.state = sNew.state.setSelected(true);
     }
 
     @Override
@@ -41,9 +45,15 @@ public class SelectedState implements InputState
     {
         if(cmd == Command.SELECT)
         {
-            Entity e = iti.selectClosestJet(x, y);
+            Entity e = iti.findClosestJet(x, y);
+            
             if(e != selectedJet)
+            {
+                Select sOld = iti.getComponent(Select.class, selectedJet);
+                sOld.state = sOld.state.setSelected(false);
+                
                 return new SelectedState(iti, e);
+            }
         }
         return this;
     }
@@ -66,6 +76,10 @@ public class SelectedState implements InputState
         Jet jet = iti.getComponent(Jet.class, selectedJet);
         switch(cmd)
         {
+            case SELECT_TARGET:
+            {
+                return new SelectingTargetState(iti, selectedJet);
+            }
             case HARD_LEFT:
             {
                 jet.state.intentHardL();

@@ -18,6 +18,11 @@ public class KeyMap
         Command ret = Command.NO_COMMAND;
         switch(key)
         {
+            case Input.KEY_END:
+            {
+                ret = Command.SELECT_TARGET;
+                break;
+            }
             case Input.KEY_LEFT:
             {
                 if(shiftDown)

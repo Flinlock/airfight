@@ -30,7 +30,7 @@ public class InputToIntentTest
     {
         int screenHeight = 1000;
         World w = new World();
-        InputToIntent i = new InputToIntent(screenHeight);
+        InputToIntent i = new InputToIntent(screenHeight, null);
         Entity jet1 = w.createEntity();
         Entity jet2 = w.createEntity();
         

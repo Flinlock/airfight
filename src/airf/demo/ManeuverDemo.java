@@ -69,7 +69,7 @@ public class ManeuverDemo extends BasicGame
         
         c.getGraphics().setBackground(Color.white);
         
-        InputToIntent mapper = new InputToIntent(HEIGHT);
+        InputToIntent mapper = new InputToIntent(HEIGHT, c);
         c.getInput().addMouseListener(mapper);
         c.getInput().addKeyListener(mapper);
                 
@@ -105,7 +105,8 @@ public class ManeuverDemo extends BasicGame
         js.stateAttack = new NoTargetGuns(jsystem, jetT);
         
         js = jet.getComponent(Jet.class);
-        js.stateAttack = new AttackModeGuns(jsystem, jet, jetT);
+        js.stateAttack = new NoTargetGuns(jsystem, jet);
+//        js.stateAttack = new AttackModeGuns(jsystem, jet, jetT);
                 
         timeSinceLastUpdate = 0;
     }

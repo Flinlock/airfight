@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import airf.component.FiringEnvelope;
 import airf.component.Heading;
+import airf.component.Jet;
 import airf.component.Position;
 import airf.component.Radar;
 
@@ -27,7 +28,7 @@ public class JetRadarSystem extends EntitySystem
     @SuppressWarnings("unchecked")
     public JetRadarSystem()
     {
-        super(Aspect.getAspectForAll(Position.class));
+        super(Aspect.getAspectForAll(Jet.class));
         
         targets = new ArrayList<>();
         attackers = new ArrayList<>();

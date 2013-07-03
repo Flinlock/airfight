@@ -11,5 +11,6 @@ public enum Command
     STRAIGHT, 
     IMMELMAN, 
     NO_COMMAND, 
-    SELECT
+    SELECT, 
+    SELECT_TARGET
 }
