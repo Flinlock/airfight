@@ -8,13 +8,15 @@ import org.newdawn.slick.KeyListener;
 import org.newdawn.slick.MouseListener;
 
 import airf.component.Jet;
+import airf.component.PinTo;
 import airf.component.Position;
-import airf.component.Select;
+import airf.component.Sprite;
 import airf.input.states.NoSelectionState;
 
 import com.artemis.Component;
 import com.artemis.ComponentType;
 import com.artemis.Entity;
+import com.artemis.World;
 
 public class InputToIntent implements KeyListener, MouseListener
 {    
@@ -24,21 +26,32 @@ public class InputToIntent implements KeyListener, MouseListener
     private ArrayList<Entity> playerJets;
     private ComponentType pt;
     private ComponentType jt;
-    private ComponentType st;
+    private ComponentType spritet;
+    private ComponentType ptt;
     private int screenHeight;
     InputState state;
     GameContainer gc;
+    World world;
+
+    Entity selectedJet;
+    Entity highlight;
     
-    public InputToIntent(int screenHeight, GameContainer gc)
+    public InputToIntent(int screenHeight, GameContainer gc, World w)
     {
         this.screenHeight = screenHeight;
+        world = w;       
         shiftDown = false;
         playerJets = new ArrayList<>();
         pt = ComponentType.getTypeFor(Position.class);
         jt = ComponentType.getTypeFor(Jet.class);
-        st = ComponentType.getTypeFor(Select.class);
+        spritet = ComponentType.getTypeFor(Sprite.class);
+        ptt = ComponentType.getTypeFor(PinTo.class);
         state = new NoSelectionState(this);
         this.gc = gc;
+        
+        selectedJet = null;
+        highlight = world.createEntity();
+        highlight.addToWorld();
     }
     
     @Override
@@ -78,7 +91,7 @@ public class InputToIntent implements KeyListener, MouseListener
     @Override
     public void mouseMoved(int oldx, int oldy, int x, int y)
     {   
-        state = state.mouseMoved(oldx, oldy, x, y);
+        //state = state.mouseMoved(oldx, oldy, x, y);
     }
 
     @Override
@@ -130,6 +143,8 @@ public class InputToIntent implements KeyListener, MouseListener
         playerJets.add(jet);
     }
     
+    //// Functions for input statemachine, not for public use ///////
+    
     public Entity findClosestJet(int x, int y)
     {
         y = screenHeight - y;
@@ -149,6 +164,50 @@ public class InputToIntent implements KeyListener, MouseListener
         return closest;
     }
     
+    public void setEntityWithSelectionHighlight(Entity s)
+    {
+        if(s == selectedJet)
+            return;
+        
+        if(selectedJet != null)
+        {
+            highlight.removeComponent(ptt);
+            highlight.removeComponent(spritet);
+            highlight.removeComponent(pt);
+            
+            highlight.changedInWorld();   
+            
+            selectedJet = null;
+        }
+        
+        if(s != null)
+        {
+            Sprite sprite = new Sprite();
+            sprite.name = "selection_highlight";
+            sprite.scaleX = 1;
+            sprite.scaleY = 1;
+            sprite.rot = 0;
+            
+            Position p = new Position();
+            Position pTarg = (Position)s.getComponent(pt);
+            p.x = pTarg.x;
+            p.y = pTarg.y;
+            p.lx = pTarg.lx;
+            p.y = pTarg.ly;
+            
+            PinTo pin = new PinTo();
+            pin.target = s;
+                        
+            highlight.addComponent(sprite);
+            highlight.addComponent(p);
+            highlight.addComponent(pin);
+            
+            highlight.changedInWorld();
+            
+            selectedJet = s;
+        }
+    }
+    
 //    public void setMouseCursor(CursorType c)
 //    {
         //gc.setMouseCursor(arg0, arg1, arg2)
@@ -159,10 +218,7 @@ public class InputToIntent implements KeyListener, MouseListener
     {        
         if(type == Jet.class)
             return (T)e.getComponent(jt);
-        
-        if(type == Select.class)
-            return (T)e.getComponent(st);
-        
+                
         if(type == Position.class)
             return (T)e.getComponent(pt);
         

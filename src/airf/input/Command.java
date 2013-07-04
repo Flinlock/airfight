@@ -12,5 +12,7 @@ public enum Command
     IMMELMAN, 
     NO_COMMAND, 
     SELECT, 
-    SELECT_TARGET
+    SELECT_TARGET, 
+    CANCEL, 
+    CLEAR_TARGET
 }

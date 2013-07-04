@@ -48,6 +48,7 @@ public class SpriteRenderSystem extends EntitySystem
             sprites.put("jet_white", new Image("res/images/jet_white.png"));
             sprites.put("selection_highlight", new Image("res/images/selection.png"));
             sprites.put("gun_fire", new Image("res/images/gun_fire.png"));
+            sprites.put("target_highlight", new Image("res/images/selection_target.png"));
         }
         catch(SlickException e)
         {

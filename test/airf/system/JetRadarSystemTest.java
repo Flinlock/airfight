@@ -1,12 +1,13 @@
 package airf.system;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 import org.junit.Before;
 import org.junit.Test;
 
 import airf.component.FiringEnvelope;
 import airf.component.Heading;
+import airf.component.Jet;
 import airf.component.Position;
 import airf.component.Radar;
 
@@ -35,6 +36,7 @@ public class JetRadarSystemTest
         eAttacker = w.createEntity();
         eTarget = w.createEntity();        
         
+        Jet j = new Jet();
         pAttacker = new Position();
         hAttacker = new Heading();
         rAttacker = new Radar();
@@ -44,11 +46,14 @@ public class JetRadarSystemTest
         eAttacker.addComponent(hAttacker);
         eAttacker.addComponent(rAttacker);
         eAttacker.addComponent(feAttacker);
+        eAttacker.addComponent(j);
         eAttacker.addToWorld();
         
         pTarget = new Position();
+        j = new Jet();
         
         eTarget.addComponent(pTarget);
+        eTarget.addComponent(j);
         eTarget.addToWorld();
         
         w.initialize();

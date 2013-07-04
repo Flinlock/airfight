@@ -1,21 +1,24 @@
 package airf.input.states;
 
-import airf.component.Jet;
+import com.artemis.Entity;
+
 import airf.input.Command;
 import airf.input.InputState;
 import airf.input.InputToIntent;
 
-import com.artemis.Entity;
-
-public class SelectingTargetState implements InputState
+public class SelectedWithTargetState implements InputState
 {
     InputToIntent iti;
     Entity selectedJet;
+    Entity target;
 
-    public SelectingTargetState(InputToIntent iti, Entity selectedJet)
+    public SelectedWithTargetState(InputToIntent iti, Entity selectedJet, Entity target)
     {
         this.iti = iti;
         this.selectedJet = selectedJet;
+        this.target = target;
+        
+        // Add highlight to target
     }
 
     @Override
@@ -41,13 +44,15 @@ public class SelectingTargetState implements InputState
     {
         if(cmd == Command.SELECT)
         {
-            Entity target = iti.findClosestJet(x, y);
+            Entity e = iti.findClosestJet(x, y);
             
-            Jet jet = iti.getComponent(Jet.class, selectedJet);
-            jet.stateAttack = jet.stateAttack.intentSetTarget(target);
-            
-            return new SelectedState(iti, selectedJet);
+            if(e != selectedJet)
+            {                
+                iti.setEntityWithSelectionHighlight(null);                
+                return new SelectedState(iti, e);
+            }
         }
+        
         return this;
     }
 
@@ -66,6 +71,28 @@ public class SelectingTargetState implements InputState
     @Override
     public InputState keyPressed(Command cmd, char c)
     {
+        if(cmd == Command.SELECT_TARGET)
+        {
+            // TODO: Remove highlight from target
+            
+            return new SelectTargetState(iti, selectedJet);
+        }
+        
+        if(cmd == Command.CANCEL)
+        {
+            iti.setEntityWithSelectionHighlight(null);
+            // TODO: Remove highlight from target
+            
+            return new NoSelectionState(iti);
+        }
+        
+        if(cmd == Command.CLEAR_TARGET)
+        {
+            // TODO: Remove highlight from target
+            // TODO: Clear target intent to selected jet
+            
+            return new SelectedState(iti, selectedJet);
+        }
         return this;
     }
 

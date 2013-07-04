@@ -69,7 +69,7 @@ public class ManeuverDemo extends BasicGame
         
         c.getGraphics().setBackground(Color.white);
         
-        InputToIntent mapper = new InputToIntent(HEIGHT, c);
+        InputToIntent mapper = new InputToIntent(HEIGHT, c, world);
         c.getInput().addMouseListener(mapper);
         c.getInput().addKeyListener(mapper);
                 

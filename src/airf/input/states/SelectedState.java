@@ -1,7 +1,6 @@
 package airf.input.states;
 
 import airf.component.Jet;
-import airf.component.Select;
 import airf.input.Command;
 import airf.input.InputState;
 import airf.input.InputToIntent;
@@ -18,8 +17,7 @@ public class SelectedState implements InputState
         this.iti = iti;
         this.selectedJet = selectedJet;
         
-        Select sNew = iti.getComponent(Select.class, selectedJet);
-        sNew.state = sNew.state.setSelected(true);
+        iti.setEntityWithSelectionHighlight(selectedJet);
     }
 
     @Override
@@ -48,13 +46,12 @@ public class SelectedState implements InputState
             Entity e = iti.findClosestJet(x, y);
             
             if(e != selectedJet)
-            {
-                Select sOld = iti.getComponent(Select.class, selectedJet);
-                sOld.state = sOld.state.setSelected(false);
-                
+            {                
+                iti.setEntityWithSelectionHighlight(null);                
                 return new SelectedState(iti, e);
             }
         }
+        
         return this;
     }
 
@@ -78,7 +75,12 @@ public class SelectedState implements InputState
         {
             case SELECT_TARGET:
             {
-                return new SelectingTargetState(iti, selectedJet);
+                return new SelectTargetState(iti, selectedJet);
+            }
+            case CANCEL:
+            {
+                iti.setEntityWithSelectionHighlight(null);
+                return new NoSelectionState(iti);
             }
             case HARD_LEFT:
             {
