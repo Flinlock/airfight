@@ -98,7 +98,9 @@ public class SelectedWithTargetState implements InputState
         if(cmd == Command.CLEAR_TARGET)
         {
             iti.setEntityWithTargetHighlight(null);
-            // TODO: Clear target intent to selected jet
+
+            Jet jet = iti.getComponent(Jet.class, selectedJet);
+            jet.stateAttack = jet.stateAttack.targetLost();
             
             return new SelectedState(iti, selectedJet);
         }

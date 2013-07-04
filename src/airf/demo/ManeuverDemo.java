@@ -106,7 +106,6 @@ public class ManeuverDemo extends BasicGame
         
         js = jet.getComponent(Jet.class);
         js.stateAttack = new NoTargetGuns(jsystem, jet);
-//        js.stateAttack = new AttackModeGuns(jsystem, jet, jetT);
                 
         timeSinceLastUpdate = 0;
     }

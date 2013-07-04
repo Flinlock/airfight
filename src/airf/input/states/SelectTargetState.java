@@ -52,13 +52,6 @@ public class SelectTargetState implements InputState
             
             return new SelectedWithTargetState(iti, selectedJet, target);
         }
-        
-        if(cmd == Command.CANCEL)
-        {
-            // TODO: remove highlights from possible targets
-            
-            return new SelectedState(iti, selectedJet);
-        }
         return this;
     }
 
@@ -77,6 +70,12 @@ public class SelectTargetState implements InputState
     @Override
     public InputState keyPressed(Command cmd, char c)
     {
+        if(cmd == Command.CANCEL)
+        {
+            // TODO: remove highlights from possible targets
+            
+            return new SelectedState(iti, selectedJet);
+        }
         return this;
     }
 

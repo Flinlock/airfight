@@ -18,6 +18,16 @@ public class KeyMap
         Command ret = Command.NO_COMMAND;
         switch(key)
         {
+            case Input.KEY_ESCAPE:
+            {
+                ret = Command.CANCEL;
+                break;
+            }
+            case Input.KEY_NEXT:
+            {
+                ret = Command.CLEAR_TARGET;
+                break;
+            }
             case Input.KEY_END:
             {
                 ret = Command.SELECT_TARGET;
