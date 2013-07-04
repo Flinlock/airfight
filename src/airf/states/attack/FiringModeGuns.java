@@ -100,4 +100,10 @@ public class FiringModeGuns implements AttackState
         return ret;
     }
 
+    @Override
+    public Entity getTarget()
+    {
+        return target;
+    }
+
 }

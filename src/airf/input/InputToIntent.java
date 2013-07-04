@@ -35,6 +35,8 @@ public class InputToIntent implements KeyListener, MouseListener
 
     Entity selectedJet;
     Entity highlight;
+    Entity targetJet;
+    Entity highlightTarget;
     
     public InputToIntent(int screenHeight, GameContainer gc, World w)
     {
@@ -50,8 +52,11 @@ public class InputToIntent implements KeyListener, MouseListener
         this.gc = gc;
         
         selectedJet = null;
+        targetJet = null;
         highlight = world.createEntity();
         highlight.addToWorld();
+        highlightTarget = world.createEntity();
+        highlightTarget.addToWorld();
     }
     
     @Override
@@ -91,7 +96,7 @@ public class InputToIntent implements KeyListener, MouseListener
     @Override
     public void mouseMoved(int oldx, int oldy, int x, int y)
     {   
-        //state = state.mouseMoved(oldx, oldy, x, y);
+        state = state.mouseMoved(oldx, oldy, x, y);
     }
 
     @Override
@@ -162,6 +167,50 @@ public class InputToIntent implements KeyListener, MouseListener
         }
         
         return closest;
+    }
+    
+    public void setEntityWithTargetHighlight(Entity t)
+    {
+        if(t == targetJet)
+            return;
+        
+        if(targetJet != null)
+        {
+            highlightTarget.removeComponent(ptt);
+            highlightTarget.removeComponent(spritet);
+            highlightTarget.removeComponent(pt);
+            
+            highlightTarget.changedInWorld();   
+            
+            targetJet = null;
+        }
+        
+        if(t != null)
+        {
+            Sprite sprite = new Sprite();
+            sprite.name = "target_highlight";
+            sprite.scaleX = 1;
+            sprite.scaleY = 1;
+            sprite.rot = 0;
+            
+            Position p = new Position();
+            Position pTarg = (Position)t.getComponent(pt);
+            p.x = pTarg.x;
+            p.y = pTarg.y;
+            p.lx = pTarg.lx;
+            p.y = pTarg.ly;
+            
+            PinTo pin = new PinTo();
+            pin.target = t;
+                        
+            highlightTarget.addComponent(sprite);
+            highlightTarget.addComponent(p);
+            highlightTarget.addComponent(pin);
+            
+            highlightTarget.changedInWorld();
+            
+            targetJet = t;
+        }        
     }
     
     public void setEntityWithSelectionHighlight(Entity s)

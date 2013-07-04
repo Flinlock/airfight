@@ -6,7 +6,10 @@ import org.junit.Before;
 import org.junit.Test;
 import org.newdawn.slick.Input;
 
+import airf.component.Jet;
 import airf.component.Position;
+import airf.states.attack.NoTargetGuns;
+import airf.system.JetSystem;
 
 import com.artemis.Entity;
 import com.artemis.World;
@@ -24,6 +27,7 @@ public class InputToIntentTest
     {
         int screenHeight = 1000;
         World w = new World();
+        JetSystem js = new JetSystem();
         InputToIntent i = new InputToIntent(screenHeight, null, w);
         Entity jet1 = w.createEntity();
         Entity jet2 = w.createEntity();
@@ -31,6 +35,9 @@ public class InputToIntentTest
         /////
         
         Position pos = new Position();
+        Jet j = new Jet();
+        j.stateAttack = new NoTargetGuns(js, jet1);
+        jet1.addComponent(j);
         pos.x = 0;
         pos.y = 0;
         jet1.addComponent(pos);
@@ -41,6 +48,9 @@ public class InputToIntentTest
         /////
         
         pos = new Position();
+        j = new Jet();
+        j.stateAttack = new NoTargetGuns(js, jet2);
+        jet2.addComponent(j);
         pos.x = 200;
         pos.y = 200;
         jet2.addComponent(pos);

@@ -9,4 +9,6 @@ public interface AttackState
     public AttackState intentSetTarget(Entity target);
     public AttackState targetLost();
     public AttackState update();
+    
+    public Entity getTarget();
 }

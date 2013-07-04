@@ -2,6 +2,7 @@ package airf.input.states;
 
 import com.artemis.Entity;
 
+import airf.component.Jet;
 import airf.input.Command;
 import airf.input.InputState;
 import airf.input.InputToIntent;
@@ -18,7 +19,8 @@ public class SelectedWithTargetState implements InputState
         this.selectedJet = selectedJet;
         this.target = target;
         
-        // Add highlight to target
+        iti.setEntityWithTargetHighlight(target);
+        iti.setEntityWithSelectionHighlight(selectedJet);
     }
 
     @Override
@@ -48,8 +50,16 @@ public class SelectedWithTargetState implements InputState
             
             if(e != selectedJet)
             {                
-                iti.setEntityWithSelectionHighlight(null);                
-                return new SelectedState(iti, e);
+                iti.setEntityWithSelectionHighlight(null);    
+                iti.setEntityWithTargetHighlight(null);
+                
+                Jet jet = iti.getComponent(Jet.class, e);
+                Entity targ = jet.stateAttack.getTarget();
+                
+                if(targ == null)
+                    return new SelectedState(iti, e);
+                else
+                    return new SelectedWithTargetState(iti, e, targ);
             }
         }
         
@@ -73,22 +83,21 @@ public class SelectedWithTargetState implements InputState
     {
         if(cmd == Command.SELECT_TARGET)
         {
-            // TODO: Remove highlight from target
-            
+            iti.setEntityWithTargetHighlight(null);            
             return new SelectTargetState(iti, selectedJet);
         }
         
         if(cmd == Command.CANCEL)
         {
             iti.setEntityWithSelectionHighlight(null);
-            // TODO: Remove highlight from target
+            iti.setEntityWithTargetHighlight(null);
             
             return new NoSelectionState(iti);
         }
         
         if(cmd == Command.CLEAR_TARGET)
         {
-            // TODO: Remove highlight from target
+            iti.setEntityWithTargetHighlight(null);
             // TODO: Clear target intent to selected jet
             
             return new SelectedState(iti, selectedJet);

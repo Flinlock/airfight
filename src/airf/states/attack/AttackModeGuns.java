@@ -49,4 +49,10 @@ public class AttackModeGuns implements AttackState
         return new NoTargetGuns(sys, jet);
     }
 
+    @Override
+    public Entity getTarget()
+    {
+        return target;
+    }
+
 }

@@ -47,11 +47,18 @@ public class SelectedState implements InputState
             
             if(e != selectedJet)
             {                
-                iti.setEntityWithSelectionHighlight(null);                
-                return new SelectedState(iti, e);
+                iti.setEntityWithSelectionHighlight(null);
+                
+                Jet jet = iti.getComponent(Jet.class, e);
+                Entity targ = jet.stateAttack.getTarget();
+                
+                if(targ == null)
+                    return new SelectedState(iti, e);
+                else
+                    return new SelectedWithTargetState(iti, e, targ);
             }
         }
-        
+                
         return this;
     }
 

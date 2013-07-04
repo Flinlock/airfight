@@ -1,5 +1,6 @@
 package airf.input.states;
 
+import airf.component.Jet;
 import airf.input.Command;
 import airf.input.InputState;
 import airf.input.InputToIntent;
@@ -39,7 +40,17 @@ public class NoSelectionState implements InputState
         if(cmd == Command.SELECT)
         {
             Entity e = iti.findClosestJet(x, y);
-            return new SelectedState(iti, e);
+
+            iti.setEntityWithSelectionHighlight(null);    
+            iti.setEntityWithTargetHighlight(null);
+
+            Jet jet = iti.getComponent(Jet.class, e);
+            Entity targ = jet.stateAttack.getTarget();
+
+            if(targ == null)
+                return new SelectedState(iti, e);
+            else
+                return new SelectedWithTargetState(iti, e, targ);
         }
         return this;
     }

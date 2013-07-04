@@ -42,5 +42,11 @@ public class NoTargetGuns implements AttackState
         return this;
     }
 
+    @Override
+    public Entity getTarget()
+    {
+        return null;
+    }
+
 
 }
